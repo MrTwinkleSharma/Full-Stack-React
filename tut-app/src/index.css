@@ -1,6 +1,6 @@
 #header{
-  color : #d23e4d;
-  text-transform:capitalize
+    text-align: center;
+    background-color: #f0ccfc;
 }
 #about{
   font-family:"Lucida Console", "Courier New", "monospace" ;
