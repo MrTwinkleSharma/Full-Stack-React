@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-//Syntax in Hindi is render.( Kya Dikhana hai , Kahana Dikhana hai )
 ReactDOM.render(
-  <React.Fragment>
+  <>
   <h1>Hi There, I am Twinkle Sharma</h1>
   <h2>I am a Sophomore at Computer Science & Engineering</h2>
   <h2>I want to be a Software Developer Engineer in Future</h2>
@@ -14,7 +13,5 @@ ReactDOM.render(
     <li>OOPs & DBMS</li>
     <li>Git & Graphics Designing</li>
   </ul>
-  </React.Fragment>, document.getElementById('root')
+  </>, document.getElementById('root')
 );
-
-//We can also use "<> </> Syntactic Sugar form" for the same purpose of <React.Fragment>
