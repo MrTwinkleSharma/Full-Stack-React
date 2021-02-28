@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Import component here
-import Myname from "./components/Myname";
+import {Myname} from "./components/Myname";
 
 //Now <Myname> is our JSX element and we can use it anywhere.
 ReactDOM.render( <Myname/>  

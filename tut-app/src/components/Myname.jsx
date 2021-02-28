@@ -1,7 +1,3 @@
 import React from 'react';
-
-function Myname(){
-    return (<h1>My name is Twinkle Sharma !</h1>);
-}
-
-export default Myname;
+const Myname = () =><h1>My name is Twinkle Sharma !</h1>;
+export {Myname}; //or use export just before const keyword
