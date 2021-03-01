@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 class Classcomponent extends Component{
     render()
     {
-        return <h1>Hello there, Welcome to our Webpage!</h1>
+        return <h1>Hello {this.props.userName}, Welcome to our Webpage!</h1>
     }
 }
 
