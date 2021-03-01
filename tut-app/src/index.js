@@ -1,15 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// Import component here
-import {Myname} from "./components/Myname";
-import  Greet from "./components/Greet";
+import Classcomponent from './components/Classcomponent.jsx';
 
-ReactDOM.render( <> <Greet name="Mr. Tiwari"/>
-  <h2>and</h2>
-  <Greet name="Mr. Tripathi">This is a Child of component</Greet>
-  <Myname/>  
-  </>
+ReactDOM.render( <Classcomponent/>
   ,document.getElementById('root')
 );
 
