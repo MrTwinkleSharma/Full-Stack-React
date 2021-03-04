@@ -1,8 +1,8 @@
 import React from 'react';
-import ConsoleClick from './Classcomponent';
+import Classcomponent from './Classcomponent';
 
 function App() {
-    return <ConsoleClick/>
+    return <Classcomponent/>
 }
 
 export default App;

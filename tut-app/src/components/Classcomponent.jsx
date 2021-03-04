@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
+import Person from './Person';
 
-class ConsoleClick extends Component{
-    constructor(){
-        super();
-        this.state = {
-           sampleArray : ["Shubham", "Shubhankar", "Navrachit", "Shashwat", "Nimish", "Hrithik", "Sabeel"]
-        }
-    }
-    
+const MyFriends = [
+    {
+        id: 0,
+        name:"Arpit Jain",
+        branch: "CSE",
+        skill: "Django Developer"
+    },
+    {
+        id: 1,
+        name:"Ayush Shrivastava",
+        branch: "IT",
+        skill: "Android Developer"
+    },
+    {
+        id: 2,
+        name:"Akansha Saxena",
+        branch: "CSE",
+        skill: "REACT Developer"
+    },
+
+];
+class Classcomponent extends Component{
     render()
     {   
-        const MyMappedArray = this.state.sampleArray.map(elem => <div>{elem}</div> );
+        const MyMappedArray = MyFriends.map(person => <Person person={person}/> );
         return  <>{MyMappedArray}</>
     }
 }
 
-export default ConsoleClick;
+export default Classcomponent;
