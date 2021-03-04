@@ -4,32 +4,19 @@ class ConsoleClick extends Component{
     constructor(){
         super();
         this.state = {
-            counter : 0
+            isLoggedIn : true
         }
-        
     }
-    clickHandler = () => {
-        console.log("Button Clicked " , this.state.counter , " Times.");
-        let i = this.state.counter;
-        i++;
-        this.setState( {counter : i} );
-        
-    }
+    
     render()
-    {   
+    { 
+        if(this.state.isLoggedIn)  
         return(
-        <>
-        <h1>Hey there! I am a Class Component</h1>
-
-        <h2>My Task is to Print the message on console for Every Click on Button </h2>
-
-        {/* <button onClick =  {this.clickHandler.bind(this)}> Click Me</button> */}
-        {/* <button onClick =  {this.clickHandler}> Click Me</button> */}
-        {/* <button onClick =  {() => this.clickHandler()}> Click Me</button> */}
-        <button onClick =  {this.clickHandler}> Click Me</button>
-        
-
-        </>
+        <h1>Welcome User!!</h1>
+        )
+        else
+        return (
+            <h1>Please Log In or Create Account </h1>
         )
     }
 }
