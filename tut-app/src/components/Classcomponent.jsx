@@ -8,7 +8,7 @@ class ConsoleClick extends Component{
         }
         
     }
-    clickHandler(){
+    clickHandler = () => {
         console.log("Button Clicked " , this.state.counter , " Times.");
         let i = this.state.counter;
         i++;
@@ -25,7 +25,8 @@ class ConsoleClick extends Component{
 
         {/* <button onClick =  {this.clickHandler.bind(this)}> Click Me</button> */}
         {/* <button onClick =  {this.clickHandler}> Click Me</button> */}
-        <button onClick =  {() => this.clickHandler()}> Click Me</button>
+        {/* <button onClick =  {() => this.clickHandler()}> Click Me</button> */}
+        <button onClick =  {this.clickHandler}> Click Me</button>
         
 
         </>
