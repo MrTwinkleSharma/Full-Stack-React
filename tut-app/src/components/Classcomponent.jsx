@@ -6,7 +6,7 @@ class ConsoleClick extends Component{
         this.state = {
             counter : 0
         }
-        this.clickHandler = this.clickHandler.bind(this);
+        
     }
     clickHandler(){
         console.log("Button Clicked " , this.state.counter , " Times.");
@@ -24,8 +24,10 @@ class ConsoleClick extends Component{
         <h2>My Task is to Print the message on console for Every Click on Button </h2>
 
         {/* <button onClick =  {this.clickHandler.bind(this)}> Click Me</button> */}
-        <button onClick =  {this.clickHandler}> Click Me</button>
+        {/* <button onClick =  {this.clickHandler}> Click Me</button> */}
+        <button onClick =  {() => this.clickHandler()}> Click Me</button>
         
+
         </>
         )
     }
