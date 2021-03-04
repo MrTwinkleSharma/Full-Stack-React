@@ -10,14 +10,10 @@ class ConsoleClick extends Component{
     
     render()
     { 
-        let message;
-        if(this.state.isLoggedIn)  
-            message = <h1>Welcome User!!</h1>;
-        
-        else
-            message = <h1>Please Log In or Create Account </h1>
-        
-        return message;
+        return this.state.isLoggedIn ? 
+        (<h1>Welcome User!!</h1>) 
+        :(<h1>Please Log In or Create Account </h1>) 
+
     }
 }
 
