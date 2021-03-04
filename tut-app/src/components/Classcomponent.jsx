@@ -4,13 +4,20 @@ class ConsoleClick extends Component{
     constructor(){
         super();
         this.state = {
-            isLoggedIn : false
+           sampleArray : ["Shubham", "Shubhankar", "Navrachit", "Shashwat", "Nimish", "Hrithik", "Sabeel"]
         }
     }
     
     render()
-    { 
-        return this.state.isLoggedIn && (<h1>Welcome User!!</h1>);
+    {   return  <>
+                <div>{this.state.sampleArray[0]}</div>
+                <div>{this.state.sampleArray[1]}</div>
+                <div>{this.state.sampleArray[2]}</div>
+                <div>{this.state.sampleArray[3]}</div>
+                <div>{this.state.sampleArray[4]}</div>
+                <div>{this.state.sampleArray[5]}</div>
+                <div>{this.state.sampleArray[6]}</div>
+                </>
     }
 }
 
