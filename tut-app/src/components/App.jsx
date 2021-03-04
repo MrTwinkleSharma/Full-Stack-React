@@ -1,5 +1,5 @@
 import React from 'react';
-import ConsoleClick from './Functioncomponent';
+import ConsoleClick from './Classcomponent';
 
 function App() {
     return <ConsoleClick/>
