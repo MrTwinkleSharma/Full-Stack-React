@@ -10,13 +10,9 @@ class ConsoleClick extends Component{
     
     render()
     {   return  <>
-                <div>{this.state.sampleArray[0]}</div>
-                <div>{this.state.sampleArray[1]}</div>
-                <div>{this.state.sampleArray[2]}</div>
-                <div>{this.state.sampleArray[3]}</div>
-                <div>{this.state.sampleArray[4]}</div>
-                <div>{this.state.sampleArray[5]}</div>
-                <div>{this.state.sampleArray[6]}</div>
+                {
+                    this.state.sampleArray.map(elem => <div>{elem}</div> )
+                }
                 </>
     }
 }
