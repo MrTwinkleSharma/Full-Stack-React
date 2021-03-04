@@ -9,11 +9,9 @@ class ConsoleClick extends Component{
     }
     
     render()
-    {   return  <>
-                {
-                    this.state.sampleArray.map(elem => <div>{elem}</div> )
-                }
-                </>
+    {   
+        const MyMappedArray = this.state.sampleArray.map(elem => <div>{elem}</div> );
+        return  <>{MyMappedArray}</>
     }
 }
 
