@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 
+const styleObj = {
+    marginRight : 'auto',
+    marginLeft:'auto'
+};
 function Functioncomponent() {
-   
-    const [stateObj, setState] = useState(0);
+    let currentTime = new Date().toLocaleTimeString();
 
-    function ClickHandler() {
-        setState(stateObj+1);
+    const [stateObj, setState] = useState(currentTime);
+
+    function ChangeTime() {
+        let newCurrentTime = new Date().toLocaleTimeString();
+        setState(newCurrentTime);
     }
-
+    
+    setInterval(ChangeTime,1000);
 
     return (
-        <>
-        <h1>Hey there! I am a Functional Component</h1>
-        <h2>My Task is to Display State for every click Event.</h2>
-        <h2>Button Clicked {stateObj} Times.</h2>
-        <button onClick =  {ClickHandler}> Click Me</button>
-        </>
+        <div style={stateObj}>
+        <h1>Digital Clock</h1>
+        <h1>{currentTime}</h1>
+        </div>
         )
 
 
