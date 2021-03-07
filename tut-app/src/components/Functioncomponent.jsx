@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-let i = 0;
-function clickHandler(){
-    let str = `Button is Clicked ${i++} times.`;
-    console.log(str);
-    
-}
+function Functioncomponent() {
+   
+    const [stateObj, setState] = useState(0);
 
-function ConsoleClick(){
+    function ClickHandler() {
+        setState(stateObj+1);
+    }
+
+
     return (
         <>
         <h1>Hey there! I am a Functional Component</h1>
-        <h2>My Task is to Print the message on console for Every Click on Button </h2>
-        <button onClick =  {clickHandler}> Click Me</button>
+        <h2>My Task is to Display State for every click Event.</h2>
+        <h2>Button Clicked {stateObj} Times.</h2>
+        <button onClick =  {ClickHandler}> Click Me</button>
         </>
+        )
 
-    )
+
 }
 
-
-export default ConsoleClick ;
+export default Functioncomponent;

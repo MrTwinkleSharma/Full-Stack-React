@@ -1,8 +1,9 @@
 import React from 'react';
-import Classcomponent from './Classcomponent';
+import Functioncomponent from './Functioncomponent';
+
 
 function App() {
-    return <Classcomponent/>
+    return <Functioncomponent/>
 }
 
 export default App;
