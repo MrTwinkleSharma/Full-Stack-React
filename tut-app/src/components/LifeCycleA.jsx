@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import LifeCycleAChild from './LifeCycleAChild.jsx';
+
 
 class LifeCycleA extends Component{   
 
@@ -22,8 +24,10 @@ class LifeCycleA extends Component{
     }
     render(){
         console.log("LifeCycleA render called!");
-       return <div>LifeCycleA</div>
-        
+       return <>
+       <div>LifeCycleA</div>
+       <LifeCycleAChild/>
+       </> 
     }
 }
 
