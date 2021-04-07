@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import Classcomponent from './Classcomponent'
+import LifeCycleA from './LifeCycleA';
 
 class App extends Component {
     render(){
-    return <Classcomponent/>
-    }
+
+    return <LifeCycleA/>
+    
+}
 }
 export default App;
 
