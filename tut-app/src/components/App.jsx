@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import ParentComponent from './ParentComponent.jsx';
+import RefsDemo from './RefsDemo.jsx';
 
 class App extends Component {
+   
     render(){
+    return <RefsDemo/>   
+    }
 
-    return <ParentComponent/>
-    
-}
 }
 export default App;
 
