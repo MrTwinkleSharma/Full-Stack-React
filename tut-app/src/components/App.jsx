@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import LifeCycleA from './LifeCycleA';
+import ParentComponent from './ParentComponent.jsx';
 
 class App extends Component {
     render(){
 
-    return <LifeCycleA/>
+    return <ParentComponent/>
     
 }
 }
