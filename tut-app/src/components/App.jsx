@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import FocusInputDemo from './FocusInputDemo.jsx';
+import FRParentInput from './FRParentInput.jsx';
+import FocusInputDemo from './FRParentInput.jsx';
 
 class App extends Component {
    
     render(){
-    return <FocusInputDemo/>   
+    return <FRParentInput/>   
     }
 
 }

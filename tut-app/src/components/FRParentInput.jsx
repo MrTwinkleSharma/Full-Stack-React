@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import InputDemo from './InputDemo.jsx';
+import FRInput from './FRInput.jsx';
 
-class FocusInputDemo extends Component{   
+class FRParentInput extends Component{   
     constructor(props)
     {
         super(props);
-        this.componentRef = React.createRef();
+        this.forwardingRef = React.createRef();
     }   
     
     
     clickHandler = () => {
-        this.componentRef.current.focusInput();
+        this.forwardingRef.current.focus();
     }
     render(){
         return <>
-        <InputDemo ref = {this.componentRef}></InputDemo>
+        <FRInput ref = {this.forwardingRef}></FRInput>
         <button onClick = {this.clickHandler}>Focus Input</button>
         </>
       }
 }
 
-export default FocusInputDemo;
+export default FRParentInput;
