@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import RefsDemo from './RefsDemo.jsx';
+import FocusInputDemo from './FocusInputDemo.jsx';
 
 class App extends Component {
    
     render(){
-    return <RefsDemo/>   
+    return <FocusInputDemo/>   
     }
 
 }
