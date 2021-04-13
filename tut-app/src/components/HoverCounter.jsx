@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import UpdatedComponent from './withCounter.jsx';
+import withCounter from './withCounter.jsx';
 
 class HoverCounter extends Component{
 
@@ -12,5 +12,5 @@ class HoverCounter extends Component{
         </> 
     }
 }
-export default UpdatedComponent(HoverCounter);
+export default withCounter(HoverCounter);
 
