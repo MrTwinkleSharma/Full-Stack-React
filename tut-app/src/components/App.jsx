@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import PortalsDemo from "./PortalDemo.jsx";
+import ErrorBoundary from './ErrorBoundaryDemo.jsx';
+import MainComponent from './MainComponent.jsx';
 
 class App extends Component {
-    clickHandler = ()=>{
-        console.log("Button Clicked");
-    }
-
+   
+    
     render(){
-
-    return  <div onClick={this.clickHandler}>
-            <PortalsDemo />   
-            </div>
+    return <>
+            <ErrorBoundary>
+                <MainComponent istrue="Yes"/>
+            </ErrorBoundary>
+            <ErrorBoundary>
+                <MainComponent istrue="No"/>
+            </ErrorBoundary>
+            <ErrorBoundary>
+                <MainComponent istrue="Yes"/>
+            </ErrorBoundary>
+        </>
     }
 
 }
