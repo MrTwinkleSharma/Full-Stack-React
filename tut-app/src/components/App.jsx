@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import ClickCounter from './ClickCounter.jsx';
 import HoverCounter from './HoverCounter.jsx';
-
-import PropsRenderingDemo from './PropsRenderingDemo.jsx';
+import CounterRPDemo from './CounterRPDemo.jsx';
 
 
 class App extends Component {
@@ -10,16 +9,19 @@ class App extends Component {
     
     render(){
     return <>
-        {/* Simple Props Rendering */}
-        {/* <PropsRenderingDemo myname1="Mr. Twinkle Sharma"/> */}
+    <CounterRPDemo render={(count, incrementCounter)=> 
+        <ClickCounter count = {count} eventHandler={incrementCounter}>
 
-        {/* Functional(returns the prop) Props Rendering */}
-        {/* <PropsRenderingDemo myname2={() => 'Mr. Twinkle Sharma'}/> */}
+        </ClickCounter>}>
 
-        {/* Functional(returns based on params) Props Rendering */}
-        {/* <PropsRenderingDemo myname3={(isLoggedIn) => isLoggedIn ? 'Mr. Twinkle Sharma' : 'Sign In'}/> */}
+    </CounterRPDemo>
+    <hr/>
+    <CounterRPDemo render={(count, incrementCounter)=> 
+        <HoverCounter count = {count} eventHandler={incrementCounter}>
 
+        </HoverCounter>}>
 
+    </CounterRPDemo>
         </>
     }
 
