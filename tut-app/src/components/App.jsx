@@ -9,20 +9,21 @@ class App extends Component {
     
     render(){
     return <>
-    <CounterRPDemo render={(count, incrementCounter)=> 
+    <CounterRPDemo >
+        {(count, incrementCounter)=> 
         <ClickCounter count = {count} eventHandler={incrementCounter}>
 
-        </ClickCounter>}>
-
+        </ClickCounter>}
     </CounterRPDemo>
     <hr/>
-    <CounterRPDemo render={(count, incrementCounter)=> 
+    <CounterRPDemo>
+        {(count, incrementCounter)=> 
         <HoverCounter count = {count} eventHandler={incrementCounter}>
 
-        </HoverCounter>}>
+        </HoverCounter>}
 
     </CounterRPDemo>
-        </>
+    </>
     }
 
 }
