@@ -5,12 +5,13 @@ class APICallDemo extends Component {
     constructor(props){
         super(props);
         this.state = {
-            jsonlist:[]
+            jsonlist:[],
+            error:null
         }
     }
     componentDidMount()
     {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('https://jsonplaceholder.typicode1.com/posts')
         .then(response => {
             this.setState({
                 jsonlist:response.data
@@ -18,11 +19,14 @@ class APICallDemo extends Component {
         })
         .catch(error=> {
             console.log(error);
+            this.setState({
+                error:"Error Retrieving Data :("
+            })
         })
     }
 
     render(){
-        const {jsonlist} = this.state
+        const {jsonlist,error} = this.state
     return <>
     <h1>
         List of Fetched Data
@@ -31,7 +35,11 @@ class APICallDemo extends Component {
     jsonlist.length ?
         jsonlist.map( data => <div key={data.id} > {data.body}</div>  ): null
     }
+    {
+        error ? this.state.error :null  
+    }
     </div>
+
     </>
     }
 
