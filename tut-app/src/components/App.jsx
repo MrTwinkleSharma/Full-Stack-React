@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import ComponentC from './ComponentC.jsx';
-import {UserProvider} from './UserContext.jsx';
-
-
+import APICallDemo from './APICallDemo.jsx';
 class App extends Component {
     render(){
-    return <ComponentC/>
+    return <APICallDemo/>
     }
 
 }
