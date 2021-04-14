@@ -1,29 +1,11 @@
 import React, { Component } from 'react';
-import ClickCounter from './ClickCounter.jsx';
-import HoverCounter from './HoverCounter.jsx';
-import CounterRPDemo from './CounterRPDemo.jsx';
-
+import ComponentC from './ComponentC.jsx';
 
 class App extends Component {
-   
-    
     render(){
     return <>
-    <CounterRPDemo >
-        {(count, incrementCounter)=> 
-        <ClickCounter count = {count} eventHandler={incrementCounter}>
-
-        </ClickCounter>}
-    </CounterRPDemo>
-    <hr/>
-    <CounterRPDemo>
-        {(count, incrementCounter)=> 
-        <HoverCounter count = {count} eventHandler={incrementCounter}>
-
-        </HoverCounter>}
-
-    </CounterRPDemo>
-    </>
+        <ComponentC/>
+        </>
     }
 
 }
