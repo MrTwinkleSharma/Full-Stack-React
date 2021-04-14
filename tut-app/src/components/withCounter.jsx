@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-const withCounter = WrappedComponent => {
+const withCounter = (WrappedComponent, additionalParam) => {
 
     class withCounter extends Component{
         constructor(props)
@@ -15,7 +15,7 @@ const withCounter = WrappedComponent => {
         eventHandler = () => {
             this.setState(prevState => {
                 return {
-                    count: prevState.count+1
+                    count: prevState.count+additionalParam
                 }
             })
         }
