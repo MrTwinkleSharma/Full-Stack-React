@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ComponentC from './ComponentC.jsx';
+import {UserProvider} from './UserContext.jsx';
+
 
 class App extends Component {
     render(){
-    return <>
-        <ComponentC/>
-        </>
+    return <UserProvider value="Mr. Twinkle Sharma"> <ComponentC/> </UserProvider>
     }
 
 }
