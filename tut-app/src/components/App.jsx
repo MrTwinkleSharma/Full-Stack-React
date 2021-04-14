@@ -2,16 +2,24 @@ import React, { Component } from 'react';
 import ClickCounter from './ClickCounter.jsx';
 import HoverCounter from './HoverCounter.jsx';
 
-const str = "I am Passing Props in Original Component(ClickCounter) which is going to be Updated through HOC";
+import PropsRenderingDemo from './PropsRenderingDemo.jsx';
+
 
 class App extends Component {
    
     
     render(){
     return <>
-            <ClickCounter randomprops={str}/>
-            <hr/>
-            <HoverCounter/>
+        {/* Simple Props Rendering */}
+        {/* <PropsRenderingDemo myname1="Mr. Twinkle Sharma"/> */}
+
+        {/* Functional(returns the prop) Props Rendering */}
+        {/* <PropsRenderingDemo myname2={() => 'Mr. Twinkle Sharma'}/> */}
+
+        {/* Functional(returns based on params) Props Rendering */}
+        {/* <PropsRenderingDemo myname3={(isLoggedIn) => isLoggedIn ? 'Mr. Twinkle Sharma' : 'Sign In'}/> */}
+
+
         </>
     }
 
