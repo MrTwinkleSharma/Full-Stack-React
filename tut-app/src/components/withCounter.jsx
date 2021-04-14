@@ -21,10 +21,13 @@ const withCounter = WrappedComponent => {
         }
 
         render(){
+        
+        // console.log(this.props.randomprops);  //this is not undefined here 
         return <>
-            <WrappedComponent count={this.state.count} eventHandler={this.eventHandler}/>
+            <WrappedComponent count={this.state.count} eventHandler={this.eventHandler} {...this.props}/>
             </>
         }
+        //we have passed remaining props back to clickHandler through spread operator 
     }
     return withCounter;
 }
