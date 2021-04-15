@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import APICallDemo from './APICallDemo.jsx';
+import HookCounter from './HookCounter.jsx';
 
 class App extends Component {
     render(){
-    return <APICallDemo/>
+        return <HookCounter/>;
     }
-
 }
 export default App;
 
