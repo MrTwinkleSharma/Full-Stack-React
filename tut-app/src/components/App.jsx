@@ -1,15 +1,13 @@
 import React from 'react';
-import UpdateTitleFunc from './UpdateTitleFunc.jsx';
-import UpdateTitleClass from './UpdateTitleClass.jsx';
+import MouseClass from './MouseClass.jsx';
+import MouseFunctional from './MouseFunctional.jsx';
 
-
-//See Console for perfomance reduction through this approach 
 function App(){
 
         return <>
-        <UpdateTitleClass/>
+        <MouseClass/>
         <hr/>
-        <UpdateTitleFunc/>
+        <MouseFunctional/>
         </>
 }
 
