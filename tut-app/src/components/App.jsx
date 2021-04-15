@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import HookCounter from './useStateObj.jsx';
+import UseStateArray from './UseStateArray.jsx';
 
 class App extends Component {
     render(){
-        return <HookCounter/>;
+        return <UseStateArray/>;
     }
 }
 export default App;
