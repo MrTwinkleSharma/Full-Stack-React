@@ -13,9 +13,11 @@ class UpdateTitleClass extends Component{
         document.title = `Clickesd ${this.state.titleCount} Times`;
     }
 
-    componentDidUpdate(){
-        console.log("Document Title Update from Class!");
-        document.title = `Clicked ${this.state.titleCount} Times`;
+    componentDidUpdate(prevProps, prevState){
+        if(prevState.titleCount != this.state.titleCount){
+            console.log("Document Title Update from Class!");
+            document.title = `Clicked ${this.state.titleCount} Times`;
+        }
     }
     
     render(){

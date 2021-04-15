@@ -14,7 +14,7 @@ function UpdateTitleFunc () {
             console.log("Document Title Update from Function!");       
             document.title=`Clicked ${titleCount} Times`
         }
-    )
+    ,[titleCount])
    
     return <>    
         <button onClick={()=> {setextraVar(extraVar => extraVar+1)}}>Change a State Variable</button>
