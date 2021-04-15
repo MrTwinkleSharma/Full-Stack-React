@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
-import UseStateArray from './UseStateArray.jsx';
+import React from 'react';
+import UpdateTitleFunc from './UpdateTitleFunc.jsx';
+import UpdateTitleClass from './UpdateTitleClass.jsx';
 
-class App extends Component {
-    render(){
-        return <UseStateArray/>;
-    }
+function App(){
+
+        return <>
+        <UpdateTitleClass/>
+        <UpdateTitleFunc/>
+        </>
 }
+
 export default App;
 
