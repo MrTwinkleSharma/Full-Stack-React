@@ -4,12 +4,16 @@ import axios from 'axios';
 function DataFetchingFunctional () {
 
     const [post,SetPost] = useState({});
+   
+    //Important for controlled input
     const [id, SetId] = useState(1);
-    const [changed, setChange] = useState(false);
+    
+    //Important for our useEffect
+    const [idForRender, setidForRender] = useState(1);
     
     useEffect(
         ()=>{
-            let url = `https://jsonplaceholder.typicode.com/posts/${id}`;
+            let url = `https://jsonplaceholder.typicode.com/posts/${idForRender}`;
             axios.get(url)
             .then(response => {
                 console.log(response);
@@ -19,14 +23,17 @@ function DataFetchingFunctional () {
             // setChange(false);
         }
             
-    ,[changed])
+    ,[idForRender])
 
     return  <> <h1>Fetched Data</h1>
         <span>Enter Id Number: 
             <input type='text' value={id} onChange={(event)=>SetId(event.target.value)}/>
-            <button onClick={()=>setChange(true)}>Get Data</button>
+            <button onClick={()=>setidForRender(id)}>Get Data</button>
         </span>
-        <div key={post.id}> {post.title}</div>
+        <h2>
+        <div>Showing Id Number {idForRender}</div>
+        <div key={post.idForRender}> {post.title}</div>
+        </h2>
         </>
 }
 

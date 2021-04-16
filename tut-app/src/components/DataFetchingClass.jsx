@@ -7,13 +7,13 @@ class DataFetchingClass extends Component{
         this.state ={  
          post:{},
          id:1,
-         changed:false
+         idForRender:1
         }
     }
 
     componentDidMount(){ 
         let url='https://jsonplaceholder.typicode.com/posts/';
-        url+=(this.state.id);
+        url+=(this.state.idForRender);
         
         console.log(url);
         axios.get(url)
@@ -24,8 +24,8 @@ class DataFetchingClass extends Component{
         .catch(error=> console.log(error))
     }
     componentDidUpdate(prevProps,prevState){
-    if(this.state.changed){
-        this.setState({changed:false})
+    if(prevState.idForRender!==this.state.idForRender){
+        
         let url='https://jsonplaceholder.typicode.com/posts/';
         url+=(this.state.id);
         
@@ -45,12 +45,12 @@ class DataFetchingClass extends Component{
         <span>Enter Id Number: 
             <input type='text' name="id" value={this.state.id} onChange={(event)=>this.setState({id: event.target.value})}/>
         </span>
-        <button onClick={()=>this.setState({changed:true})}>Show Data</button>
+        <button onClick={()=>this.setState({idForRender:this.state.id})}>Show Data</button>
         <h2>
         
-        <div>Showing Id Number {this.state.id}</div>
+        <div>Showing Id Number {this.state.idForRender}</div>
         
-        <div key={this.state.id}> {this.state.post.title} </div>
+        <div key={this.state.idForRender}> {this.state.post.title} </div>
         </h2>
     </>
     }
