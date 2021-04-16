@@ -1,16 +1,16 @@
 import React from 'react';
-import SetIntervalClass from './SetIntervalClass';
-import SetIntervalFunctional from './SetIntervalFunctional';
+import DataFetchingClass from './DataFetchingClass';
+import DataFetchingFunctional from './DataFetchingFunctional';
 
 function App(){
 
         return <>
         <div> Class Component </div>
-        <SetIntervalClass/>
+        <DataFetchingClass/>
         <hr/>
 
         <div> Functional Component </div>
-        <SetIntervalFunctional/>
+        <DataFetchingFunctional/>
         </>
 }
 
