@@ -1,10 +1,16 @@
 import React from 'react';
-import TogglingComponent from './TogglingComponent';
+import SetIntervalClass from './SetIntervalClass';
+import SetIntervalFunctional from './SetIntervalFunctional';
 
 function App(){
 
         return <>
-        <TogglingComponent/>
+        <div> Class Component </div>
+        <SetIntervalClass/>
+        <hr/>
+
+        <div> Functional Component </div>
+        <SetIntervalFunctional/>
         </>
 }
 
