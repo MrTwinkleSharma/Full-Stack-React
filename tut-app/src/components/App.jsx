@@ -1,13 +1,10 @@
 import React from 'react';
-import MouseClass from './MouseClass.jsx';
-import MouseFunctional from './MouseFunctional.jsx';
+import TogglingComponent from './TogglingComponent';
 
 function App(){
 
         return <>
-        <MouseClass/>
-        <hr/>
-        <MouseFunctional/>
+        <TogglingComponent/>
         </>
 }
 

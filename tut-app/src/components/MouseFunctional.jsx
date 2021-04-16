@@ -1,15 +1,14 @@
 import React, { useState,useEffect } from 'react';
 
-
 function MouseFunctional () {
     
     const [mousePosition, setMousePosition] = useState({
-
-        x:0,
-        y:0
-
+            x:0,
+            y:0
         }
     );
+    
+
     const logMousePosition = (event) => {
         setMousePosition ({
             x: event.clientX,
@@ -18,14 +17,14 @@ function MouseFunctional () {
     }
     useEffect(
         ()=>{
-        console.log("Event Listener will be added only Once (Functional)!")
-        window.addEventListener('mousemove', logMousePosition);        
+        console.log("Event Listener added (Functional)!")
+        window.addEventListener('mousemove', logMousePosition);     
+        
+        return ()=>{window.removeEventListener('mousemove', logMousePosition)}
         }
     ,[]);   
         
-    return <>  
-    <div>X - {mousePosition.x}<br/> Y- {mousePosition.y}</div>
-    </>
+    return <div>X - {mousePosition.x}<br/> Y- {mousePosition.y}</div>
 }
 
 
