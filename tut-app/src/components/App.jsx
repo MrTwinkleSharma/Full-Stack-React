@@ -1,16 +1,19 @@
-import React, { useContext } from 'react';
-import ComponentA from './ComponentA';
+import React from 'react';
+import ComponentA from './ComponentA'
 
-const UserContext = React.createContext();
-
+export const UserContext1 = React.createContext();
+export const UserContext2 = React.createContext();
 function App(){
 
         return <>
-        <UserContext.Provider value = "Mr Twinkle Sharma">
-                <ComponentA/>
-        </UserContext.Provider>
+        <UserContext1.Provider value = "Mr Twinkle Sharma">
+                <UserContext2.Provider value = "Full Stack Developer">
+                        <ComponentA/>
+                </UserContext2.Provider>
+        </UserContext1.Provider>
+       
         </>
 }
 
 export default App;
-export {UserContext}; //Or you can export from just before const keyword
+
