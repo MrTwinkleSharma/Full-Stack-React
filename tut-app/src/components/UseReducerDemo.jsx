@@ -1,30 +1,51 @@
 import React, { useReducer } from 'react';
 
-const initialState = 0;
+const initialState = {
+        counter:0
+};
 
 const reducer = (currentState, action) => {
 
-        switch(action)
+        // console.log(action);
+        switch(action.type)
         {
                 case 'Increment':
-                        return currentState + 1;
+                        // console.log(currentState);
+                        return {counter : currentState.counter + action.value}
+                        // console.log(currentState);
+                        // return currentState;
                 case 'Decrement':
-                        return currentState - 1;
+                        // console.log(currentState);
+                        return {counter : currentState.counter - action.value}
+                        // console.log(currentState);
+                        // return currentState;
                 case 'Reset':
                         return initialState;
                 default:
                         return currentState;
         }
+
+      
 }
 
 function UseReducerDemo(){
 
         const [currentState, dispatch] = useReducer(reducer, initialState);
+        
+        // console.log(currentState);
+
         return<>
-        <h3>Current Counter is {currentState}</h3>
-        <button onClick={()=>{dispatch('Increment')}}>Increment</button>
-        <button onClick={()=>{dispatch('Decrement')}}>Decrement</button>
-        <button onClick={()=>{dispatch('Reset')}}>Reset</button>
+        {/* <h1>{JSON.stringify(currentState)}</h1> */}
+        <h3>Current Counter is {currentState.counter}</h3>
+        <button onClick={()=>{dispatch({type:'Increment',value:1})}}>Increment</button>
+        <button onClick={()=>{dispatch({type:'Decrement',value:1})}}>Decrement</button>
+
+        <button onClick={()=>{dispatch({type:'Reset'})}}>Reset</button>
+
+        <div>
+        <button onClick={()=>{dispatch({type:'Increment',value:5})}}>Increment 5</button>
+        <button onClick={()=>{dispatch({type:'Decrement',value:5})}}>Decrement 5</button>
+        </div>
         </>
 }
 
