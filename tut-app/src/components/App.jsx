@@ -1,11 +1,11 @@
 import React from 'react';
-import ComponentA from './useReducerFetching';
+import UseCallbackDemo from './UseCallbackDemo.jsx';
+
 
 function App(){
 
-       
         return <>
-        <ComponentA/>
+        <UseCallbackDemo/>
         </>
 }
 
