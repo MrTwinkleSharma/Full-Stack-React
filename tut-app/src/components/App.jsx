@@ -1,5 +1,5 @@
 import React from 'react';
-import ComponentA from './ComponentA';
+import ComponentA from './useReducerFetching';
 
 function App(){
 
