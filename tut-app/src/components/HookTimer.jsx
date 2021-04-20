@@ -17,6 +17,8 @@ function HookTimer(){
         
         return <>
         <h1>Timer is: {timer}</h1>
+
+        <button>Stop Timer</button>
         </>
 }
 
