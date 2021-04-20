@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import useDocumentTitle from './Custom Hooks/useDocumentTitle';
+import React from 'react';
+import useCounter from './Custom Hooks/useCounter';
 
 function CustomHook(){
 
-       const [count, setCount] = useState(0);
-       useDocumentTitle(count);
-
+       const [count, increment, decrement, reset] = useCounter(0,1);
+     
        return<>
-       <button onClick={()=>setCount(count+1)}>Count {count}</button>
+       <h1>Count is {count}</h1>
+       <button onClick={increment}> Increment </button>
+       <button onClick={decrement}> Decrement </button>
+       <button onClick={reset}> Reset </button>
        </> 
 }
 
