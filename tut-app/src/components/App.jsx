@@ -1,16 +1,12 @@
 import React from 'react';
-import HookTimer from './HookTimer.jsx';
-import ClassTimer from './ClassTimer.jsx';
+import CustomHook from './CustomHook';
 
 function App(){
 
-        return <>
-        <div>Class Component!</div>
-        <ClassTimer/>
-        <hr/>
-        <div>Functional Component!</div>
-        <HookTimer/>
-        </>
+       return<>
+       Using Custom Hook !<br/>
+       <CustomHook/>
+       </>
 }
 
 export default App;
