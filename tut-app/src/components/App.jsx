@@ -1,11 +1,10 @@
 import React from 'react';
-import UseCallbackDemo from './UseCallbackDemo.jsx';
-
+import UseMemo from './UseMemo.jsx';
 
 function App(){
 
         return <>
-        <UseCallbackDemo/>
+        <UseMemo/>
         </>
 }
 
