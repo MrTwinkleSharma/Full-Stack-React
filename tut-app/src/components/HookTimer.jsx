@@ -3,22 +3,24 @@ import React, { useRef, useEffect, useState} from 'react';
 
 function HookTimer(){
        
-
+      const myRef = useRef()
       const[timer, setTimer] = useState(0);
 
-      const interval  = () =>{
+      const incrementFunc  = () =>{
             setTimer(prevtimer => prevtimer+1);
       }
       
       useEffect(() => {
-            setInterval(interval, 1000)
-            
+           myRef.current =  setInterval(incrementFunc, 1000)
+            return ()=>{
+                  clearInterval(myRef.current);
+            }
         }, []);
         
         return <>
         <h1>Timer is: {timer}</h1>
 
-        <button>Stop Timer</button>
+        <button onClick={ ()=> clearInterval(myRef.current)}>Stop Timer</button>
         </>
 }
 
