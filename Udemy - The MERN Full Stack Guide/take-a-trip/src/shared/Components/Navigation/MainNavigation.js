@@ -1,15 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import MainHeader from './MainHeader';
-import NavLinks from './NavLinks';
+import MainHeader from './MainHeader.js';
+import SideDrawer from './SideDrawer.js';
+import Navlinks from './NavLinks.js';
 
 import './MainNavigation.css'
-import './MainHeader.css';
 
 function MainNavigation (props){
 
-    return <MainHeader>
+    return <>
+    <SideDrawer>
+        <nav className='main-navigation__drawer-nav'>
+            <Navlinks/>
+        </nav>
+    </SideDrawer>
+    <MainHeader>
         <button className='main-navigation__menu-btn'>
             <span/>
             <span/>
@@ -18,9 +24,10 @@ function MainNavigation (props){
         <h1 className='main-navigation__title'>
             <Link to='/'> Your Places </Link>
         </h1>
-        <nav>
-            <NavLinks/>
+        <nav className='main-navigation__header-nav'>
+            <Navlinks/>
         </nav>
     </MainHeader>
+    </>
 }
 export default MainNavigation;
