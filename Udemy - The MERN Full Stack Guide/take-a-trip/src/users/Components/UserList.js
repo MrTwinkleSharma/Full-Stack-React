@@ -1,5 +1,7 @@
 import React from 'react';
 import UserItem from './UserItem';
+
+import Card from '../../shared/Components/UIElements/Card';
 import './UserList.css';
 
 function UserList (props){
@@ -22,7 +24,12 @@ function UserList (props){
             }
         </ul>
         :
-        <div className='center'><h2>No Items are Uploaded Yet!</h2></div>
+        <div className='center'>
+            <Card>
+                <h2>No Items are Uploaded Yet!</h2>
+            </Card>
+
+        </div>
     }
 
     </>

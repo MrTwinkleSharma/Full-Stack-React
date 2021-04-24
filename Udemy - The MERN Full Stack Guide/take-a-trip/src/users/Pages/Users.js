@@ -11,8 +11,6 @@ const ITEMS = [{
 ]
 
 function Users (){
-
-
     return <>
     <UserList items={ITEMS}></UserList>
     </>
