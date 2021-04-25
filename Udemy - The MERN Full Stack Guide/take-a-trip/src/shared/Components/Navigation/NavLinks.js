@@ -11,7 +11,7 @@ function Navlinks(props)
     <NavLink to='/users' exact> ALL USERS</NavLink>
     </li>
     <li>
-        <NavLink to='/id/places' >MY PLACES</NavLink>
+        <NavLink to='/:userId/places' >MY PLACES</NavLink>
     </li> 
     <li>
         <NavLink to='/newplace' >ADD PLACE</NavLink>
