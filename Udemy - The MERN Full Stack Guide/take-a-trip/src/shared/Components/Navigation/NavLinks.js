@@ -14,7 +14,7 @@ function Navlinks(props)
         <NavLink to='/:userId/places' >MY PLACES</NavLink>
     </li> 
     <li>
-        <NavLink to='/newplace' >ADD PLACE</NavLink>
+        <NavLink to='/places/new' >ADD PLACE</NavLink>
     </li> 
     <li>
         <NavLink to='/auth' >AUTHENTICATE</NavLink>

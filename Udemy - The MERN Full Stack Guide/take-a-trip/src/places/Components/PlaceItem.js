@@ -4,6 +4,7 @@ import './PlaceItem.css'
 import Card from '../../shared/Components/UIElements/Card';
 import Button from '../../shared/Components/FormElements/Button/Button.js'
 import Modal from '../../shared/Components/UIElements/Modal';
+import Map from '../../shared/Components/UIElements/Map';
 
 
 function PlaceItem (props){
@@ -22,7 +23,9 @@ function PlaceItem (props){
         contentClass='place-item__modal-content'
         footerClass='place-item__modal-actions'
     >
-    <div className='map-container'></div>
+    <div className='map-container'>
+        <Map center={props.coordinates} zoom="16"/>
+    </div>
     </Modal>
     <li className='place-item'> 
     <Card className='place-item__content'> 
