@@ -15,6 +15,6 @@ function SideDrawer (props){
         >
             <aside className='side-drawer'>{props.children}</aside>
         </CSSTransition>
-        ,document.getElementById('drawer'));
+        ,document.getElementById('drawer-portal'));
 }
 export default SideDrawer;
