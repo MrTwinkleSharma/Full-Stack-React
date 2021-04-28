@@ -1,13 +1,17 @@
 import React from 'react';
 import Input from '../../shared/Components/FormElements/Input/Input.js'
+import {VALIDATOR_REQUIRE} from '../../shared/util/validators.js'
+
 import './NewPlace.css'
+
+
 
 function NewPlace (props)
 {
 
     return <>
     <form className='place-form'>
-        <Input element = 'input' id={`1`} type='text' label='Title' validation={[]} errorText='Please Enter a Valid Title'/>
+        <Input element = 'input' id={`1`} type='text' label='Title' validators={[VALIDATOR_REQUIRE()]} errorText='Please Enter a Valid Title'/>
     </form>
     </>
 }
