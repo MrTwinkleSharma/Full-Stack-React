@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import { validate } from '../../../util/validators';
 
 import './Input.css';
@@ -30,13 +30,14 @@ const Input = props => {
   
   const [currentValue, dispatch] = useReducer(reducer, initialValue);
 
+  useEffect( ()=>{},[] );
   const changeHandler = event => {
     dispatch({type:'change', val:event.target.value, validators: props.validators})
   }
   const touchHandler = event => {
     dispatch({type:'touch'})
   }
-
+  
   const element = props.element==='input' ?(
 
     <input id={props.id} type={props.type} placeholder={props.placeholder} value={currentValue.value} onChange={changeHandler} onBlur={touchHandler}/>
@@ -47,6 +48,7 @@ const Input = props => {
 
     );
 
+  console.log(`Rendered for ${props.id}`);
   return <div className={`form-control ${!currentValue.isValid && currentValue.isTouched && 'form-control--invalid'}`}>
    <label htmlFor={props.id} > {props.label}</label>
    {element}
