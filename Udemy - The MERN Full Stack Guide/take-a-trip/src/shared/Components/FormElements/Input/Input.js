@@ -13,8 +13,7 @@ const reducer = (currentValue, action) =>{
       return {
         ...currentValue, 
         value:action.val,
-        isValid:validate(action.val, action.validators),
-        isTouched:false
+        isValid:validate(action.val, action.validators)
       };
     case 'touch':
       return {
