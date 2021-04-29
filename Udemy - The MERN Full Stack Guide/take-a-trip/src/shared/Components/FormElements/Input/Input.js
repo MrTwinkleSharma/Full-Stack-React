@@ -30,7 +30,14 @@ const Input = props => {
   
   const [currentValue, dispatch] = useReducer(reducer, initialValue);
 
-  useEffect( ()=>{},[] );
+  const {value, isValid} = currentValue;
+  const {onInput,id} = props;
+
+  useEffect( ()=>{
+      onInput(id, value, isValid);
+
+  },[value, isValid, id, onInput]);
+  
   const changeHandler = event => {
     dispatch({type:'change', val:event.target.value, validators: props.validators})
   }
