@@ -34,7 +34,10 @@ const formReducer = (currentStateOfInput, action) =>{
                 currentStateOfInput.isFormValid = currentStateOfInput.isFormValid && currentStateOfInput.inputs[inputId].isValid;
             }
             // console.log(currentStateOfInput);
-            return currentStateOfInput;                    
+            return {
+                ...currentStateOfInput,
+                currentStateOfInput
+            };                    
         default:
             return currentStateOfInput;
     }
@@ -90,3 +93,4 @@ function NewPlace(props) {
 }
 
 export default NewPlace;
+
