@@ -11,33 +11,29 @@ const formReducer = (currentStateOfInput, action) =>{
     {
         case 'input_change':
             
-            // console.log(currentStateOfInput.inputs.title);
-            currentStateOfInput.isFormValid = true;
+            
+            let isFormValid = true;
             for(const inputId in currentStateOfInput.inputs)
             {
-                // console.log(inputId);
                 // Considering the input field which is changed
                 if(action.inputId === inputId)
                 {
-
-                    // console.log(currentStateOfInput[inputId]);
-                    
-                    // console.log(typeof(inputId));
-                    currentStateOfInput.isFormValid = currentStateOfInput.isFormValid && action.isValid
-                    currentStateOfInput.inputs[inputId].value = action.value;
-                    currentStateOfInput.inputs[inputId].isValid = action.isValid;
+                    isFormValid = isFormValid && action.isValid
                 }
 
 
                 // Considering the input field which were not changed in last event
                 else
-                currentStateOfInput.isFormValid = currentStateOfInput.isFormValid && currentStateOfInput.inputs[inputId].isValid;
+                isFormValid = isFormValid && currentStateOfInput.inputs[inputId].isValid;
             }
-            // console.log(currentStateOfInput);
             return {
                 ...currentStateOfInput,
-                currentStateOfInput
-            };                    
+                inputs: {
+                  ...currentStateOfInput.inputs,
+                  [action.inputId]: { value: action.value, isValid: action.isValid }
+                },
+                isFormValid: isFormValid
+              };                
         default:
             return currentStateOfInput;
     }
@@ -64,9 +60,12 @@ function NewPlace(props) {
 
     },[]);
     
-    console.log(currentStateOfInput.isFormValid);
+    const submitHandler = (event) =>{
+        event.preventDefault();
+        console.log(currentStateOfInput);
+    };
     return <>
-        <form className='place-form'>
+        <form className='place-form' onSubmit={submitHandler} >
 
             <Input element='input'
             id='title' 
@@ -85,7 +84,7 @@ function NewPlace(props) {
             errorText='Please Enter a Valid Description' 
             onInput={inputChangeHandler}/>
 
-            <Button type='submit' disabled={!currentStateOfInput.isFormValid}>
+            <Button type='submit' disabled={!currentStateOfInput.isFormValid} >
                 ADD PLACE 
             </Button>
         </form>
