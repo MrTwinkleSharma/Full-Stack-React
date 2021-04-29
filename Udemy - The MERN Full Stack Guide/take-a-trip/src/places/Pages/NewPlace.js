@@ -1,27 +1,12 @@
 import React, { useCallback, useReducer } from 'react';
 import Input from '../../shared/Components/FormElements/Input/Input.js'
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
+import Button from '../../shared/Components/FormElements/Button/Button.js';
 
-import './NewPlace.css'
-const initialStateOfInput = {
-
-    inputs:{
-        title:{
-            value:'',
-            isValid:false
-        },
-        description:{
-            value:'',
-            isValid:false
-        }
-    },
-    isFormValid:false
-
-};
+import './NewPlace.css';
 
 const formReducer = (currentStateOfInput, action) =>{
 
-    console.log(currentStateOfInput.isFormValid);
     switch(action.type)
     {
         case 'input_change':
@@ -47,45 +32,59 @@ const formReducer = (currentStateOfInput, action) =>{
                 // Considering the input field which were not changed in last event
                 else
                 currentStateOfInput.isFormValid = currentStateOfInput.isFormValid && currentStateOfInput.inputs[inputId].isValid;
-
             }
-
+            // console.log(currentStateOfInput);
             return currentStateOfInput;                    
         default:
             return currentStateOfInput;
     }
+  
 };
 function NewPlace(props) {
-    const titleChangeHandler = useCallback((id, currentValue, isValid) => {
-        dispatch({type:'input_change',inputId:id, isValid:isValid, value:currentValue});
 
-    },[]);
+    const [currentStateOfInput,dispatch] = useReducer(formReducer, { 
+        inputs:{
+        title:{
+            value:'',
+            isValid:false
+        },
+        description:{
+            value:'',
+            isValid:false
+        }
+    },
+    isFormValid:false
+});
 
-    const descriptionChangeHandler = useCallback((id, currentValue, isValid) => {
+    const inputChangeHandler = useCallback((id, currentValue, isValid) => {
         dispatch({type:'input_change',inputId:id, isValid:isValid, value:currentValue});
 
     },[]);
     
-   const [currentStateOfInput,dispatch] = useReducer(formReducer, initialStateOfInput);
-    
+    console.log(currentStateOfInput.isFormValid);
     return <>
         <form className='place-form'>
+
             <Input element='input'
             id='title' 
             type='text' 
             label='Title' 
             validators={[VALIDATOR_REQUIRE()]} 
             errorText='Please Enter a Valid Title' 
-            onInput={titleChangeHandler} />
+            onInput={inputChangeHandler} />
 
             <Input element='textarea'
             id='description' 
             type='text' 
+            row = '5'
             label='Description' 
             validators={[VALIDATOR_MINLENGTH(5)]} 
             errorText='Please Enter a Valid Description' 
-            onInput={descriptionChangeHandler}/>
+            onInput={inputChangeHandler}/>
 
+            <Button type='submit' disabled={!currentStateOfInput.isFormValid}>
+                ADD PLACE 
+            </Button>
         </form>
     </>
 }
