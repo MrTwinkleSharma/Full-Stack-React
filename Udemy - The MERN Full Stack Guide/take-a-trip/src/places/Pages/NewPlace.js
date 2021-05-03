@@ -1,48 +1,17 @@
-import React, { useCallback, useReducer } from 'react';
+import React from 'react';
+
+import useForm from '../../shared/util/formHook.js';
 import Input from '../../shared/Components/FormElements/Input/Input.js'
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
 import Button from '../../shared/Components/FormElements/Button/Button.js';
 
 import './PlaceForm.css';
 
-const formReducer = (currentStateOfInput, action) =>{
-
-    switch(action.type)
-    {
-        case 'input_change':
-            
-            
-            let isFormValid = true;
-            for(const inputId in currentStateOfInput.inputs)
-            {
-                // Considering the input field which is changed
-                if(action.inputId === inputId)
-                {
-                    isFormValid = isFormValid && action.isValid
-                }
-
-
-                // Considering the input field which were not changed in last event
-                else
-                isFormValid = isFormValid && currentStateOfInput.inputs[inputId].isValid;
-            }
-            return {
-                ...currentStateOfInput,
-                inputs: {
-                  ...currentStateOfInput.inputs,
-                  [action.inputId]: { value: action.value, isValid: action.isValid }
-                },
-                isFormValid: isFormValid
-              };                
-        default:
-            return currentStateOfInput;
-    }
-  
-};
 function NewPlace(props) {
 
-    const [currentStateOfInput,dispatch] = useReducer(formReducer, { 
-        inputs:{
+
+    //Pass the Initial State of Form and Initial Validity 
+    const [currentStateOfInput,inputChangeHandler] = useForm({
         title:{
             value:'',
             isValid:false
@@ -55,21 +24,15 @@ function NewPlace(props) {
             value:'',
             isValid:false
         }
-    },
-    isFormValid:false
-});
-
-    const inputChangeHandler = useCallback((id, currentValue, isValid) => {
-        dispatch({type:'input_change',inputId:id, isValid:isValid, value:currentValue});
-
-    },[]);
+    }, false);
     
-    const submitHandler = (event) =>{
+    
+    const addSubmitHandler = (event) =>{
         event.preventDefault();
         console.log(currentStateOfInput);
     };
     return <>
-        <form className='place-form' onSubmit={submitHandler} >
+        <form className='place-form' onSubmit={addSubmitHandler} >
 
             <Input element='input'
             id='title' 

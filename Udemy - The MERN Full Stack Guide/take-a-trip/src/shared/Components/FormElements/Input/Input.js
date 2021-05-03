@@ -1,8 +1,8 @@
 import React, {useEffect, useReducer} from 'react';
+
 import { validate } from '../../../util/validators';
 
 import './Input.css';
-
 
 
 const reducer = (currentValue, action) =>{
@@ -27,19 +27,18 @@ const reducer = (currentValue, action) =>{
 }
 const Input = props => {
   
-  const [currentValue, dispatch] = useReducer(reducer, {value:props.value || '', isValid:props.isValid || false, isTouched:false});
-
+  const [currentValue, dispatch] = useReducer(reducer, {value:props.initialValue || '', isValid:props.initialValid || false, isTouched:false});
   const {value, isValid} = currentValue;
   const {onInput,id} = props;
 
   useEffect( ()=>{
       onInput(id, value, isValid);
-
   },[value, isValid, id, onInput]);
   
   const changeHandler = event => {
     dispatch({type:'change', val:event.target.value, validators: props.validators})
   }
+
   const touchHandler = event => {
     dispatch({type:'touch'})
   }
@@ -52,9 +51,9 @@ const Input = props => {
 
       <textarea id={props.id} rows={props.rows || 3} value={currentValue.value} onChange={changeHandler} onBlur={touchHandler} />
 
-    );
+  );
 
-  console.log(`Rendered for ${props.id}`);
+    
   return <div className={`form-control ${!currentValue.isValid && currentValue.isTouched && 'form-control--invalid'}`}>
    <label htmlFor={props.id} > {props.label}</label>
    {element}
