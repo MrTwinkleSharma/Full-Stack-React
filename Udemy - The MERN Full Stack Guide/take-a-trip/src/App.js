@@ -7,6 +7,7 @@ import UserPlaces from './places/Pages/UserPlaces';
 import NewPlace from '../src/places/Pages/NewPlace.js'
 
 import './index.css';
+import UpdatePlace from './places/Pages/UpdatePlace';
 
 function App (){
 
@@ -27,6 +28,10 @@ function App (){
     
     <Route path="/places/new" exact>
       <NewPlace/>
+    </Route>   
+    
+    <Route path="/places/:placeId" exact>
+      <UpdatePlace/>
     </Route>    
 
     <Redirect to='/' />

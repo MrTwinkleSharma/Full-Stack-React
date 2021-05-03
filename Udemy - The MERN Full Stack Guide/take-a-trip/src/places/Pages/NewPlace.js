@@ -3,7 +3,7 @@ import Input from '../../shared/Components/FormElements/Input/Input.js'
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
 import Button from '../../shared/Components/FormElements/Button/Button.js';
 
-import './NewPlace.css';
+import './PlaceForm.css';
 
 const formReducer = (currentStateOfInput, action) =>{
 
@@ -50,6 +50,10 @@ function NewPlace(props) {
         description:{
             value:'',
             isValid:false
+        },
+        address:{
+            value:'',
+            isValid:false
         }
     },
     isFormValid:false
@@ -82,6 +86,14 @@ function NewPlace(props) {
             label='Description' 
             validators={[VALIDATOR_MINLENGTH(5)]} 
             errorText='Please Enter a Valid Description' 
+            onInput={inputChangeHandler}/>
+            
+            <Input element='input'
+            id='address' 
+            type='text'
+            label='Address' 
+            validators={[VALIDATOR_REQUIRE()]} 
+            errorText='Please Enter a Valid Address' 
             onInput={inputChangeHandler}/>
 
             <Button type='submit' disabled={!currentStateOfInput.isFormValid} >
