@@ -8,6 +8,7 @@ import Input from '../../shared/Components/FormElements/Input/Input.js'
 
 import './PlaceForm.css';
 import image from './tajmahal.jpg';
+import Card from '../../shared/Components/UIElements/Card.js';
 
 const ITEMS = [
     {
@@ -55,7 +56,9 @@ function UpdatePlace(props) {
     {
         return <>
             <div className='center'>
-                <h2>Couldn't found Place</h2>
+                <Card>
+                    <h2>Couldn't found Place</h2>
+                </Card>
             </div>
         </>
 
