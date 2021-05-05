@@ -8,6 +8,7 @@ import NewPlace from '../src/places/Pages/NewPlace.js'
 
 import './index.css';
 import UpdatePlace from './places/Pages/UpdatePlace';
+import Authenticate from './users/Pages/Authenticate';
 
 function App (){
 
@@ -16,6 +17,9 @@ function App (){
   <main>
   <Switch>
     <Route path="/" exact>
+    </Route>
+    <Route path="/auth" exact>
+      <Authenticate/>
     </Route>
 
     <Route path="/:userId/places" exact>
