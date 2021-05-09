@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Input from '../../shared/Components/FormElements/Input/Input.js'
-import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../shared/util/validators.js'
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
 import Button from '../../shared/Components/FormElements/Button/Button.js';
 import Card from '../../shared/Components/UIElements/Card.js';
 import useForm from '../../shared/util/formHook.js';
@@ -10,8 +10,18 @@ import './Authenticate.css'
 
 function Authenticate (){
 
+
+    const [switchToSignUpMode, setSwitchToSignUpMode] = useState(false);
+    const switchHandler = () =>{
+        setSwitchToSignUpMode(prevMode => !prevMode);
+    }
+
     const [currentStateOfInput, inputChangeHandler] = useForm(
         {
+            fullname:{
+                value:'',
+                isValid:false
+            },
             email:{
                 value:'',
                 isValid:false
@@ -33,6 +43,17 @@ function Authenticate (){
     return <Card className='authenticate'> 
     
         <form onSubmit={authSubmitHandler}>
+        {
+            switchToSignUpMode && 
+            <Input element='input'
+            id='fullname' 
+            type='text' 
+            label='Full Name' 
+            validators={[VALIDATOR_REQUIRE()]} 
+            errorText='Please Enter a Valid Name' 
+            onInput={inputChangeHandler} />
+        }
+
         <Input element='input'
             id='email' 
             type='text' 
@@ -48,10 +69,12 @@ function Authenticate (){
             validators={[VALIDATOR_MINLENGTH(8)]} 
             errorText='Please Enter a Valid Password' 
             onInput={inputChangeHandler}/>
-            <Button inverse to='/SignupForm'>Sign Up</Button>
 
-            <Button disabled={!currentStateOfInput.isFormValid}>Login</Button>
+            <Button disabled={!currentStateOfInput.isFormValid}>{  !switchToSignUpMode && 'Login'} {  switchToSignUpMode && 'Register'} </Button>
+            <Button onClick={switchHandler}>Switch to {  switchToSignUpMode && 'Login'} {  !switchToSignUpMode && 'SignUp'} Mode</Button>
+    
     </form>
+
     </Card>
 }
 export default Authenticate;
