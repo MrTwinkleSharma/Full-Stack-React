@@ -1,7 +1,15 @@
 const http = require('http');
+const myEvents = require('events');
+
+var myEventEmitter = new myEvents.EventEmitter();
 
 const server = http.createServer(function(req, res){
-    res.end("Server Works....")
+    myEventEmitter.emit('someone requested');
+    res.end("Server Works....");
+});
+
+myEventEmitter.on('someone requested', function(){
+    console.log("A request happened on Server.");
 });
 
 server.listen(3000,'localhost', function(){
