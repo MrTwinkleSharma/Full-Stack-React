@@ -1,0 +1,11 @@
+{
+  "name": "nodeexpress-tut-app",
+  "version": "1.0.0",
+  "description": "This is a Basic tutorial app for hands on practice of the learned concept.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mr. Twinkle Sharma",
+  "license": "ISC"
+}
