@@ -22,8 +22,7 @@ const server = http.createServer(function(req, res){
     res.end('<form method="POST"> <input type="text" name="username"><button type="submit">Create User</button></form>');
 
 });
-
-
+-
 server.listen(3000,'localhost', function(){
     console.log("Server is Listening at Port 3000!");
 });
