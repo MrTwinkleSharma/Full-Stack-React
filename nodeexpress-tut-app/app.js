@@ -3,24 +3,28 @@ const http = require('http');
 const server = http.createServer(function(req, res){
     console.log("Request is Incoming");
     console.log(req.url, req.method);
-    
-    res.setHeader('content-type', 'text/html');
-    
-    if(req.method == "POST"){
-        let body = '';
-        req.on('end',()=>{
-            console.log(body);
-            res.end("<h2>Got the POST request</h2>")
-        });
+    res.setHeader('Content-type', 'text/html')
+        
+    if(req.url=== '/')
+    {
+        
+        res.write("<h2>Welcome to Home Page</h2>")
+        res.end();
+    }
+    if(req.url==='/about')
+    {
 
-        req.on('data', (chunks)=>{
-            body+=chunks;
-        });
+        res.write(`<h2>This is About Page</h2>
+                <p>Hi, My name is Twinkle Sharma, 
+                I am Sophomore at Computer Science & Engineering</p>`);
+        res.end();
     }
 
-    else 
-    res.end('<form method="POST"> <input type="text" name="username"><button type="submit">Create User</button></form>');
-
+    res.end(`
+    <h2>Oops!</h2>
+    <p>The page you were Looking for doesn't exist</p>
+    <a href='/'>Go to HomePage</a>
+    `);
 });
 -
 server.listen(3000,'localhost', function(){
