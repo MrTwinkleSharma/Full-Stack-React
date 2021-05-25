@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 
+//Adding js file which contains data 
+const {data} = require('./randomData');
 
 const app = express();
 //We can also call function immediately after require('express)();
@@ -11,17 +13,13 @@ app.use(express.static('./public'));
 //     res.sendFile(path.resolve(__dirname, "./index.html"))
 // })
 
-app.get('/api/myjson', (req,res)=>{
-    res.json({"skills":[
-    "C++", 
-    "GIT", 
-    "Software Development", 
-    "MERN Development"], 
-    "education":[ 
-    {"2018":"Intermediate"},
-    {"2023":"B.Tech (Computer Science & Engineering"}]
-    });
+app.get('/apipage', (req,res)=>{
+    res.send('<div><h2>This is the API page, You will find json via link Below!!</h2><a href="/apipage/jsondata"> Click Here</a></div>')
 })
+
+app.get('/apipage/jsondata', (req, res)=>{
+    res.json(data);
+});
 
 app.get('/about', (req, res)=>{
     res.status(200).send("About Page")
