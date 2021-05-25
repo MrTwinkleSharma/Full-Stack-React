@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { stringify } = require('querystring');
 
 //Adding js file which contains data 
 const {data} = require('./randomData');
@@ -28,11 +29,18 @@ app.get('/apipage/jsondata', (req, res)=>{
 });
 
 //To Get a individual object/element
-app.get('/apipage/jsondata/60ad6b6a9b3dcf369739bfac', (req, res)=>{
+app.get('/apipage/jsondata/:placeHolder', (req, res)=>{
+    console.log(req.params);
+    const {placeHolder} = req.params;
     const selectedData = data.find( datas =>
-        datas._id=="60ad6b6a9b3dcf369739bfac"
-    );
+        datas._id==placeHolder
+        );
+        
+    console.log(selectedData);
+    if(selectedData!=undefined)
     res.json(selectedData);
+    else 
+    res.status(404).send("Resource Not Found")
 });
 
 app.get('/about', (req, res)=>{

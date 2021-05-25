@@ -1,6 +1,6 @@
 const data = [
     {
-        "_id": "60ad6b6a9b3dcf369739bfac",
+        "_id": "1",
         "picture": "http://placehold.it/32x32",
         "age": 27,
         "eyeColor": "blue",
@@ -39,7 +39,7 @@ const data = [
         ]
     },
     {
-        "_id": "60ad6b6afab44438ae1e56e4",
+        "_id": "2",
         "picture": "http://placehold.it/32x32",
         "age": 40,
         "eyeColor": "green",
@@ -78,7 +78,7 @@ const data = [
         ]
     },
     {
-        "_id": "60ad6b6a2e5efa5b4eb66da1",
+        "_id": "3",
         "picture": "http://placehold.it/32x32",
         "age": 38,
         "eyeColor": "green",
@@ -117,7 +117,7 @@ const data = [
         ]
     },
     {
-        "_id": "60ad6b6a63564d4ac5f1f6d1",
+        "_id": "4",
         "picture": "http://placehold.it/32x32",
         "age": 33,
         "eyeColor": "green",
@@ -156,7 +156,7 @@ const data = [
         ]
     },
     {
-        "_id": "60ad6b6aec0e4f08a9b09c0e",
+        "_id": "5",
         "picture": "http://placehold.it/32x32",
         "age": 29,
         "eyeColor": "brown",
@@ -195,7 +195,7 @@ const data = [
         ]
     },
     {
-        "_id": "60ad6b6a5dff8f4213c0b41c",
+        "_id": "6",
         "picture": "http://placehold.it/32x32",
         "age": 21,
         "eyeColor": "green",
@@ -234,7 +234,7 @@ const data = [
         ]
     },
     {
-        "_id": "60ad6b6ad242f243e9133b8c",
+        "_id": "7",
         "picture": "http://placehold.it/32x32",
         "age": 24,
         "eyeColor": "brown",
