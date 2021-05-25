@@ -1,18 +1,20 @@
 const express = require('express');
+const path = require('path');
+
 
 const app = express();
 //We can also call function immediately after require('express)();
 
 app.get('/', (req, res)=>{
-    res.send("Home Page")
+    res.sendFile(path.resolve(__dirname, "./index.html"))
 })
 
 app.get('/about', (req, res)=>{
-    res.send("About Page")
+    res.status(200).send("About Page")
 })
 
 app.all('*', (req, res)=>{
-    res.send("Resource Not Found")
+    res.status(404).send("Resource Not Found")
 })
 
 app.listen(3000, ()=>{
