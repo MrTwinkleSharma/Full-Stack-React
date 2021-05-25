@@ -5,6 +5,8 @@ const path = require('path');
 const app = express();
 //We can also call function immediately after require('express)();
 
+app.use(express.static('./public'));
+
 app.get('/', (req, res)=>{
     res.sendFile(path.resolve(__dirname, "./index.html"))
 })
