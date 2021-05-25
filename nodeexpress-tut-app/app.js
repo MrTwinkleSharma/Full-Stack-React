@@ -18,7 +18,12 @@ app.get('/apipage', (req,res)=>{
 })
 
 app.get('/apipage/jsondata', (req, res)=>{
-    res.json(data);
+    const newData = data.map( datas =>{
+        const {_id, age, gender} = datas;
+      return {_id, age, gender}
+    }
+    );
+    res.json(newData);
 });
 
 app.get('/about', (req, res)=>{
