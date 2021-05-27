@@ -160,7 +160,7 @@ const data = [
         "picture": "http://placehold.it/32x32",
         "age": 29,
         "eyeColor": "brown",
-        "name": "Twila Gaines",
+        "name": "Hwila Gaines",
         "gender": "female",
         "company": "NEBULEAN",
         "email": "twilagaines@nebulean.com",

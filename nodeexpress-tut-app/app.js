@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const { stringify } = require('querystring');
 
 //Adding js file which contains data 
 const {data} = require('./randomData');
@@ -26,6 +25,31 @@ app.get('/apipage/jsondata', (req, res)=>{
     }
     );
     res.json(newData);
+});
+
+app.get('/apipage/jsondata/query', (req, res)=>{
+    console.log(req.query);
+    const {search, limit} = req.query;
+    let newData = [...data];
+
+    if(search)
+    {
+        newData = newData.filter(datas =>{
+            // console.log(datas.name);
+            // console.log(search);
+            // console.log(datas.name.startsWith(search));
+            return datas.name.startsWith(search);
+        });
+    }
+    // console.log(newData);
+    if(limit)
+    {
+        newData = newData.slice(0, Number(limit));
+    }
+    if(newData.length <1)
+    res.status(200).send("No Data find for given Query");
+    else
+    res.status(200).send(newData);
 });
 
 //To Get a individual object/element
