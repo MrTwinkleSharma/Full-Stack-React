@@ -1,9 +1,10 @@
 const express = require('express');
+const authorize = require('./middlewareAuthorize');
 
 const app = express();
 const logger = require('./middlewareFn');
 
-app.use('/', logger);
+app.use('/', [logger, authorize]);
 
 app.get('/', (req,res) =>{
  res.send("Home Page!");
