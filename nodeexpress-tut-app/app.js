@@ -3,6 +3,8 @@ const { data } = require('./randomData');
 
 const app = express();
 
+app.use(express.urlencoded({extended:false}));
+
 app.get('/', (req,res) =>{
  res.send("Home Page!");
 });
@@ -15,7 +17,7 @@ app.get('/people/id/:placeholder', (req,res) =>{
     console.log(req.params);
     let newData = data.find( _data =>{
         return _data.id==(req.params.placeholder)
-        // console.log(typeof(_data.id));\
+        // console.log(typeof(_data.id));
         // console.log(typeof(req.params.placeholder));
     }) 
     console.log(newData);
@@ -27,7 +29,14 @@ app.get("/addpeople", (req,res)=>{
     res.send(str);
 });
 app.post("/addpeople", (req,res)=>{
-    res.send("Resource created successfully!");
+    const {people_name} = req.body;
+    // console.log(people_name);
+    // console.log(req.body);
+    if(people_name){
+        res.send(`Welcome ${people_name}`)
+    }
+    else
+    res.status(401).send("Enter Something Valid to post request");
 });
 
 app.get('/about', (req,res) =>{
