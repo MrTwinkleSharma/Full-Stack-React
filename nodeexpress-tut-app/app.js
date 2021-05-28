@@ -5,43 +5,63 @@ const app = express();
 
 app.use(express.urlencoded({extended:false}));
 
+//This was missing
+app.use(express.json())
+
 app.get('/', (req,res) =>{
  res.send("Home Page!");
 });
 
-app.get('/peoples', (req,res) =>{
+/*--------------------------GET METHOD------------------------*/
+app.get("/api/people", (req,res) =>{
     res.send({"success":true,"data":data});
 });
 
-app.get('/people/id/:placeholder', (req,res) =>{
+app.get('/api/people/:id', (req,res) =>{
     console.log(req.params);
     let newData = data.find( _data =>{
-        return _data.id==(req.params.placeholder)
+        return _data.id==(req.params.id)
         // console.log(typeof(_data.id));
-        // console.log(typeof(req.params.placeholder));
+        // console.log(typeof(req.params.id));
     }) 
     console.log(newData);
     res.send({"success":true,"data":newData});
 });
    
-app.get("/addpeople", (req,res)=>{
-    const str = '<div><h1>Add People</h1><form method="POST"><input type="text" name="people_name"/> <button type="submit">Add</button></form></div>';
-    res.send(str);
-});
-app.post("/addpeople", (req,res)=>{
-    const {people_name} = req.body;
-    // console.log(people_name);
-    // console.log(req.body);
-    if(people_name){
-        res.send(`Welcome ${people_name}`)
-    }
-    else
-    res.status(401).send("Enter Something Valid to post request");
+/*--------------------------POST METHOD------------------------*/
+app.get("/form/addpeople", (req,res)=>{
+    const element = `<div>
+                    <h1>Add People</h1>
+                    <form action="/login" method="POST">
+                    <input type="text" name="name"/> 
+                    <button type="submit">Add</button>
+                    </form>
+                </div>`;
+
+    res.send(element);
 });
 
-app.get('/about', (req,res) =>{
- res.send("About Page!");    
+app.post('/login', (req,res) =>{
+    const {name} = req.body;
+    
+    if(name){
+        res.send(`Welcome ${name}`)
+    }
+    else
+    res.status(401).send("Enter Something Valid to Post Request");
 });
+   
+app.post("/api/people", (req,res)=>{
+    const {name} = req.body;
+    console.log(req.body);
+
+    if(!name){
+        res.status(400).send({"success":false, "errorMessage":"Enter Valid Data"})    
+    }
+    else
+    res.send({"success":true, data:[...data,name]})    
+});
+
 
 app.listen(3000, ()=>{
     console.log("Server is Listening at localhost:3000");
