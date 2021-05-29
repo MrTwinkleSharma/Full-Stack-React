@@ -6,31 +6,24 @@ app.get('/', (req,res) =>{
  res.send("Home Page!");
 });
 
-/*--------------------------GET METHOD------------------------*/
-app.get("/api/people", (req,res) =>{
-  res.send("GET Request!")
-    
-});
+app.route("/api/people")
+    .get((req,res) =>{
+        res.send("GET Request!")
+    })
+    .post((req,res)=>{
+        res.send("POST Request!")
+    });
 
-app.get('/api/people/:id', (req,res) =>{
-    res.send("GET Request!")    
-});
-   
-/*--------------------------POST METHOD------------------------*/   
-app.post("/api/people", (req,res)=>{
-    res.send("POST Request!")
-});
-
-/*--------------------------PUT METHOD------------------------*/
-app.put('/api/people/:id', (req,res) =>{
-    res.send("PUT Request!")     
-});
-   
-
-/*--------------------------DELETE METHOD------------------------*/
-app.delete('/api/people/:id', (req,res) =>{
-    res.send("DELETE Request!")       
-});
+app.route("/api/people/:id")
+    .get((req,res) =>{
+        res.send("GET Request!")    
+    })
+    .put((req,res) =>{
+        res.send("PUT Request!")     
+    })
+    .delete((req,res) =>{
+        res.send("DELETE Request!")       
+    });
    
 
 app.listen(3000, ()=>{
