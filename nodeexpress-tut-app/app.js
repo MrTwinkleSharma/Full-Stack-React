@@ -62,6 +62,30 @@ app.post("/api/people", (req,res)=>{
     res.send({"success":true, data:[...data,name]})    
 });
 
+/*--------------------------PUT METHOD------------------------*/
+app.put('/api/people/:id', (req,res) =>{
+    const {id} = req.params;
+    const {name} = req.body;
+    console.log(id,name);
+
+    let find = false;
+    const newData = data.map(person =>{
+        if(person.id==id)
+        {
+            find = true;
+            person.name = name;
+        }
+        return person;
+    })
+
+    if(!find){
+        res.status(400).send({"success":false, "errorMessage":"No Person exist for given id."})    
+    } 
+    else
+    res.json({"success":true,"data":newData});
+    // res.send("PUT Request Successful");
+});
+   
 
 app.listen(3000, ()=>{
     console.log("Server is Listening at localhost:3000");
