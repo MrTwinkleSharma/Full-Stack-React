@@ -87,6 +87,25 @@ app.put('/api/people/:id', (req,res) =>{
 });
    
 
+/*--------------------------DELETE METHOD------------------------*/
+app.delete('/api/people/:id', (req,res) =>{
+    const {id} = req.params;
+    console.log(id);
+
+    let find = data.find( _data =>{
+        return _data.id==(req.params.id)
+    });
+
+    if(!find){
+        res.status(400).send({"success":false, "errorMessage":"No Person exist for given id."})    
+    } 
+    else{
+        const newData = data.filter(person =>(person.id!=id));
+        res.json({"success":true,"data":newData});
+        // res.send("Delete Request Successful");
+    }
+});
+   
 app.listen(3000, ()=>{
     console.log("Server is Listening at localhost:3000");
 })
