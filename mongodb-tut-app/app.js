@@ -17,11 +17,22 @@ const mySchema = new mongoose.Schema({
 
 const MyModelClass  = new mongoose.model("registration", mySchema);
 
-const myDocument = new MyModelClass ({
-    name:"Twinkle",
-    age:20
-})
-myDocument.save();
+const myFunctionAsync = async() => {
+    try{
+        const myDocument = new MyModelClass ({
+            name:"Twinkle",
+            age:20
+        });
+            
+        const result = await myDocument.save();
+        console.log(result);
+    }
+    catch(err){
+    console.log(err);
+    }
+}
+myFunctionAsync();
+
 
 app.get('/', (req,res) =>{
  res.send("Home Page!");
