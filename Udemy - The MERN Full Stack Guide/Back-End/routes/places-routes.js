@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const express = require('express');
 
+const HttpError = require('../models/http-errors');
+
 const router =  Router();
 
 const DUMMY_PLACES = [
@@ -47,8 +49,7 @@ router.get('/', (req, res, next)=>{
     res.json({success:true, data:DUMMY_PLACES});
    
     else {
-        const error =  new Error('No Places Found');  // Constructor accepts a string of error message
-        error.code = 404;
+        const error =  new HttpError('No Places Found',404);  // Constructor accepts a string of error message
         return next(error);
     }
     
@@ -67,8 +68,7 @@ router.get('/users/:userId', (req, res, next)=>{
     res.json({success:true, data:requiredPlace});
 
     else {
-        const error =  new Error('No Places Found for Given User Id');  // Constructor accepts a string of error message
-        error.code = 404;
+        const error =  new HttpError('No Places Found for Given User Id',404);  // Constructor accepts a string of error message and code 
         return next(error);
     }
 
@@ -86,9 +86,8 @@ router.get('/:placeId', (req, res, next)=>{
     res.json({success:true, data:requiredPlace});
    
     else {
-        const error =  new Error('No Place Found for Given Place Id');  // Constructor accepts a string of error message
-        error.code = 404;
-       return next(error);
+        const error =  new HttpError('No Place Found for Given Place Id',404);  // Constructor accepts a string of error message and code
+        return next(error);
     }
 
 });
