@@ -33,13 +33,42 @@ const getPlaceByPlaceId = (req, res, next)=>{
         return next(error);
     }
 }
+const postPlaceForLoggedUser = (req, res, next)=>{
+    const {placeId, 
+        placeTitle, 
+        placeDescription, 
+        placeAddress, 
+        loggedInUserId, 
+        placeLocationObject, 
+        placeImageUrl } = req.body;
 
-// module.exports = {
-//     getPlacesByUserId,
-//     getPlaceByPlaceId
-// }
+    const createdPlace = {
+        id:placeId,
+        title:placeTitle,
+        description:placeDescription,
+        address:placeAddress,
+        creatorId:loggedInUserId,
+        location:placeLocationObject,
+        imageUrl: placeImageUrl
+    };
+
+    if(createdPlace){
+    console.log("Place Added Successfully!");
+    console.log(createdPlace);
+    res.status(201).json({success:true, data:createdPlace});
+    }
+    else
+    res.json({success:false, message:"Error Occured due to invalid data"});
+
+}
+
+module.exports = {
+    getPlacesByUserId,
+    getPlaceByPlaceId,
+    postPlaceForLoggedUser
+}
 
 // Or 
-exports.getPlacesByUserId = getPlacesByUserId;
-exports.getPlaceByPlaceId = getPlaceByPlaceId;
+// exports.getPlacesByUserId = getPlacesByUserId;
+// exports.getPlaceByPlaceId = getPlaceByPlaceId;
     

@@ -4,6 +4,9 @@ const usersRoutes = require('./routes/users-routes');
 
 const app = express();
 
+//Middle ware for converting body into a json like object and adding to request object
+app.use(express.json())
+
 app.use('/api/places',placesRoutes);
 app.use('/api/users',usersRoutes);
 
