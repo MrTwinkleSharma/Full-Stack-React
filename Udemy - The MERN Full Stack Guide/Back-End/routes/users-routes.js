@@ -3,7 +3,7 @@ const express = require('express');
 
 const router =  Router();
 
-router.get('/places', (req, res)=>{
+router.get('/', (req, res)=>{
     console.log("Get Request in Users Route");
     res.json({success:true});
 });
