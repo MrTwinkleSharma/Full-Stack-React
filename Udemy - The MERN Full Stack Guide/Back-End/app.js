@@ -1,4 +1,5 @@
 const express = require('express');
+const HttpError = require('./models/http-errors');
 const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
 
@@ -13,6 +14,15 @@ app.use('/api/users',usersRoutes);
 app.get('/',(req, res)=>{
     console.log("Get Request on Root Url");
     res.send("HOME");
+});
+
+
+//Will be use for Error Handling if None of the other Middleware or Route has sent the Response
+//Because the all routes are above this.
+
+app.use((req, res, next)=>{
+    const error = new HttpError("Couldn't Find this Route", 404);
+    throw error; 
 });
 
 //Middle ware to handle errors while sending response
