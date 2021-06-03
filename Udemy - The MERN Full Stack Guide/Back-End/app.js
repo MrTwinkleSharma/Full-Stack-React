@@ -12,6 +12,17 @@ app.get('/',(req, res)=>{
     res.send("HOME");
 });
 
+//Middle ware to handle errors while sending response
+app.use((error, req, res, next)=>{
+    if(res.headerSent)
+    {
+        return next(error);
+    }
+    res.status(error.code || 500)  //500 means something went wrong on server
+    res.json({message:error.message || "An Unknown error has been occured, Sorry for Inconvenience!"})
+
+})
+
 app.listen(5000, ()=>{
 console.log("Server is listening on port 5000");
 })

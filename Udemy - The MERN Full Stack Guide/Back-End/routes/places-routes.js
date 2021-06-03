@@ -42,10 +42,15 @@ const DUMMY_PLACES = [
 
 router.get('/', (req, res)=>{
     console.log("Get Request in Places Route");
+
     if(DUMMY_PLACES.length>0)
     res.json({success:true, data:DUMMY_PLACES});
-    
-    else res.status(404).json({success:false, message:"No Places Found"});
+   
+    else {
+        const error =  new Error('No Places Found');  // Constructor accepts a string of error message
+        error.code = 404;
+        return next(error);
+    }
     
 });
 
@@ -57,13 +62,16 @@ router.get('/users/:userId', (req, res)=>{
         if(userId===place.creatorId)
         return true; 
     })
-    // console.log(requiredPlace);
-    // console.log([]!=[]);
-    // console.log([]!==[]);
-
+    
     if(requiredPlace.length>0)
     res.json({success:true, data:requiredPlace});
-    else res.status(404).json({success:false, message:"No Place Found for Given User Id"});
+
+    else {
+        const error =  new Error('No Places Found for Given User Id');  // Constructor accepts a string of error message
+        error.code = 404;
+        return next(error);
+    }
+
 });
 
 router.get('/:placeId', (req, res)=>{
@@ -76,7 +84,13 @@ router.get('/:placeId', (req, res)=>{
     })
     if(requiredPlace)
     res.json({success:true, data:requiredPlace});
-    else res.status(404).json({success:false, message:"No Place Found for Given Place id"});
+   
+    else {
+        const error =  new Error('No Place Found for Given Place Id');  // Constructor accepts a string of error message
+        error.code = 404;
+       return next(error);
+    }
+
 });
 
 module.exports = router;
