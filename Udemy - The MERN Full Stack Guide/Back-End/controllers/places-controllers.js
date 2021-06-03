@@ -1,6 +1,9 @@
 const DUMMY_PLACES = require('../dummyPlaces');
 const HttpError = require('../models/http-errors');
 
+// We can use uuid module for unique id
+const uuid = require('uuid/v4')
+
 const getPlacesByUserId = (req, res, next)=>{
     const {placeId, userId} = req.params;
 
@@ -34,7 +37,7 @@ const getPlaceByPlaceId = (req, res, next)=>{
     }
 }
 const postPlaceForLoggedUser = (req, res, next)=>{
-    const {placeId, 
+    const { 
         placeTitle, 
         placeDescription, 
         placeAddress, 
@@ -43,7 +46,7 @@ const postPlaceForLoggedUser = (req, res, next)=>{
         placeImageUrl } = req.body;
 
     const createdPlace = {
-        id:placeId,
+        id:uuid(),
         title:placeTitle,
         description:placeDescription,
         address:placeAddress,
