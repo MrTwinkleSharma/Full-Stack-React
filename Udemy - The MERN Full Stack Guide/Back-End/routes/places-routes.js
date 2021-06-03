@@ -40,7 +40,7 @@ const DUMMY_PLACES = [
     }
 ]
 
-router.get('/', (req, res)=>{
+router.get('/', (req, res, next)=>{
     console.log("Get Request in Places Route");
 
     if(DUMMY_PLACES.length>0)
@@ -54,7 +54,7 @@ router.get('/', (req, res)=>{
     
 });
 
-router.get('/users/:userId', (req, res)=>{
+router.get('/users/:userId', (req, res, next)=>{
     const {placeId, userId} = req.params;
     // console.log("Get Request in --api/places/users/:userId-- Route");
 
@@ -74,7 +74,7 @@ router.get('/users/:userId', (req, res)=>{
 
 });
 
-router.get('/:placeId', (req, res)=>{
+router.get('/:placeId', (req, res, next)=>{
     const {placeId} = req.params;
     // console.log("Get Request in --api/places/:placesId-- Route");
 

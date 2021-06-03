@@ -19,7 +19,7 @@ app.use((error, req, res, next)=>{
         return next(error);
     }
     res.status(error.code || 500)  //500 means something went wrong on server
-    res.json({message:error.message || "An Unknown error has been occured, Sorry for Inconvenience!"})
+    res.json({success:false, message:error.message || "An Unknown error has been occured, Sorry for Inconvenience!"})
 
 })
 
