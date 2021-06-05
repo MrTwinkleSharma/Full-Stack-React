@@ -65,13 +65,59 @@ const postPlaceForLoggedUser = (req, res, next)=>{
 
 }
 
+const patchUpdatePlaceByPlaceId = (req, res, next)=>{
+    const {placeId} = req.params;
+    const {updatedTitle, updatedDescription} = req.body;
+
+    let found = false;
+    
+    const newPlaces = DUMMY_PLACES.map(place=>{
+        if(placeId===place.id)
+        {
+            found = true;
+
+            if(updatedTitle)
+            place.title = updatedTitle;
+
+            if(updatedDescription)
+            place.description = updatedDescription;
+        }
+        return place;
+    });
+    
+    if(found)
+    res.json({success:true, data:newPlaces});
+   
+    else {
+        const error =  new HttpError('No Place Found for Given Place Id',404);  // Constructor accepts a string of error message and code
+        return next(error);
+    }
+};
+const deletePlaceByPlaceId = (req, res, next)=>{
+    const {placeId} = req.params;
+
+    let found = false;
+    const newPlaces = DUMMY_PLACES.filter(place=>{
+        if(placeId===place.id){
+            found = true;
+            return false;
+        }
+        else return true;
+    });
+
+    if(found)
+    res.json({success:true, data:newPlaces});
+   
+    else {
+        const error =  new HttpError('No Place Found for Given Place Id',404);  // Constructor accepts a string of error message and code
+        return next(error);
+    }
+};
+
 module.exports = {
     getPlacesByUserId,
     getPlaceByPlaceId,
-    postPlaceForLoggedUser
+    postPlaceForLoggedUser, 
+    patchUpdatePlaceByPlaceId, 
+    deletePlaceByPlaceId
 }
-
-// Or 
-// exports.getPlacesByUserId = getPlacesByUserId;
-// exports.getPlaceByPlaceId = getPlaceByPlaceId;
-    
