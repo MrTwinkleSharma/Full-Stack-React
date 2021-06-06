@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const DUMMY_USERS = require('../dummyUsers');
 const HttpError = require('../models/http-errors');
 
@@ -9,6 +10,13 @@ const getUsers = (req, res, next)=>{
 
 //Create User and LogIn
 const signUp = (req, res, next)=>{   
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        console.log(errors);
+        const error =  new HttpError('Invalid Inputs, Please check your Data.',422); 
+        throw error;
+    }
+
     const {id, name, email, password} = req.body;
     const hasUser = DUMMY_USERS.find(user => user.email===email);
     
@@ -31,6 +39,12 @@ const signUp = (req, res, next)=>{
 
 //LogIn User
 const logIn = (req, res, next)=>{   
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        console.log(errors);
+        const error =  new HttpError('Invalid Inputs, Please check your Data.',422); 
+        throw error;
+    }
     const {email, password} = req.body;
 
     const identifiedUser = DUMMY_USERS.find(user => user.email === email)
