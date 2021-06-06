@@ -1,10 +1,13 @@
 const { Router } = require('express');
+const router = Router();
 
-const router =  Router();
-
-router.get('/', (req, res)=>{
-    console.log("Get Request in Users Route");
-    res.json({success:true});
-});
+const {
+        signUp, 
+        logIn, 
+        getUsers } = require('../controllers/users-controllers');
+ 
+router.get('/', getUsers);
+router.post('/signup', signUp);
+router.post('/login', logIn);
 
 module.exports = router;
