@@ -2,7 +2,8 @@ const DUMMY_PLACES = require('../dummyPlaces');
 const HttpError = require('../models/http-errors');
 
 // We can use uuid module for unique id
-const uuid = require('uuid/v4')
+const uuid = require('uuid/v4');
+const { validationResult } = require('express-validator');
 
 const getPlacesByUserId = (req, res, next)=>{
     const {placeId, userId} = req.params;
@@ -37,6 +38,12 @@ const getPlaceByPlaceId = (req, res, next)=>{
     }
 }
 const postPlaceForLoggedUser = (req, res, next)=>{
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        console.log(errors);
+        const error =  new HttpError('Invalid Inputs, Please check your Data.',422); 
+        throw error;
+    }
     const { 
         placeTitle, 
         placeDescription, 
@@ -66,6 +73,13 @@ const postPlaceForLoggedUser = (req, res, next)=>{
 }
 
 const patchUpdatePlaceByPlaceId = (req, res, next)=>{
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        console.log(errors);
+        const error =  new HttpError('Invalid Inputs, Please check your Data.',422); 
+        throw error;
+    }
+
     const {placeId} = req.params;
     const {updatedTitle, updatedDescription} = req.body;
 
