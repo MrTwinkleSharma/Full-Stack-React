@@ -1,5 +1,6 @@
 const DUMMY_PLACES = require('../dummyPlaces');
 const HttpError = require('../models/http-errors');
+const Place = require('../models/place');
 
 // We can use uuid module for unique id
 const uuid = require('uuid/v4');
@@ -37,7 +38,7 @@ const getPlaceByPlaceId = (req, res, next)=>{
         return next(error);
     }
 }
-const postPlaceForLoggedUser = (req, res, next)=>{
+const postPlaceForLoggedUser = async(req, res, next)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         console.log(errors);
@@ -52,24 +53,23 @@ const postPlaceForLoggedUser = (req, res, next)=>{
         placeLocationObject, 
         placeImageUrl } = req.body;
 
-    const createdPlace = {
-        id:uuid(),
-        title:placeTitle,
-        description:placeDescription,
-        address:placeAddress,
-        creatorId:loggedInUserId,
-        location:placeLocationObject,
-        imageUrl: placeImageUrl
-    };
-
-    if(createdPlace){
-    console.log("Place Added Successfully!");
-    console.log(createdPlace);
-    res.status(201).json({success:true, data:createdPlace});
+    const createdPlace = new Place({
+            title:placeTitle,
+            description:placeDescription,
+            address:placeAddress,
+            creator:loggedInUserId,
+            location:placeLocationObject,
+            image: placeImageUrl
+    });
+    try{
+        await createdPlace.save();
     }
-    else
-    res.json({success:false, message:"Error Occured due to invalid data"});
-
+    catch{
+        const error = new HttpError("Couldn't post Place, Please try again.", 500);
+        return next(error);
+    }
+    
+    res.status(201).json({success:true, data:createdPlace});
 }
 
 const patchUpdatePlaceByPlaceId = (req, res, next)=>{
