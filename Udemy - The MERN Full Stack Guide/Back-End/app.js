@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
 const HttpError = require('./models/http-errors');
 const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
@@ -36,6 +38,16 @@ app.use((error, req, res, next)=>{
 
 })
 
-app.listen(5000, ()=>{
-console.log("Server is listening on port 5000");
+
+//connect returns a promise
+mongoose.connect('mongodb+srv://MrTwinkleSharma:Twinkle@451@mongodbcluster.mcnv5.mongodb.net/mongodatabase?retryWrites=true&w=majority',{ useNewUrlParser: true, useUnifiedTopology: true})
+.then(()=>{
+    app.listen(5000, ()=>{
+        console.log("Server is listening on port 5000");
+    })
 })
+.catch((error)=>{
+    console.log("A error has been occurred while connecting to database, Sorry for inconvenience !!");
+    // console.log(error);
+})
+
