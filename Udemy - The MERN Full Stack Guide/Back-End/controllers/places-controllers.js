@@ -6,8 +6,8 @@ const Place = require('../models/place');
 const uuid = require('uuid/v4');
 const { validationResult } = require('express-validator');
 
-const getPlacesByUserId = (req, res, next)=>{
-    const {placeId, userId} = req.params;
+const getPlacesByUserId =  (req, res, next)=>{
+    const {userId} = req.params;
 
     const requiredPlace = DUMMY_PLACES.filter(place=>{
         if(userId===place.creatorId)
@@ -23,20 +23,27 @@ const getPlacesByUserId = (req, res, next)=>{
     }
 };
 
-const getPlaceByPlaceId = (req, res, next)=>{
+const getPlaceByPlaceId = async (req, res, next)=>{
     const {placeId} = req.params;
 
-    const requiredPlace = DUMMY_PLACES.find(place=>{
-        if(placeId===place.id)
-        return true;
-    })
-    if(requiredPlace)
-    res.json({success:true, data:requiredPlace});
-   
-    else {
-        const error =  new HttpError('No Place Found for Given Place Id',404);  // Constructor accepts a string of error message and code
+    let place;
+    try{
+        place = await Place.findById(placeId); 
+    }
+    catch{
+        // console.log(error);
+        const error = new HttpError("Couldn't retrieve the place, Something went wrong.",500);
+        return next(error);
+    } 
+
+    //Note :- These 2 errors are different
+    if(!place)
+    {
+        const error = new HttpError("No Place found for given id.",404);
         return next(error);
     }
+    res.status(200).json({success:true, data:place});
+    
 }
 const postPlaceForLoggedUser = async(req, res, next)=>{
     const errors = validationResult(req);
