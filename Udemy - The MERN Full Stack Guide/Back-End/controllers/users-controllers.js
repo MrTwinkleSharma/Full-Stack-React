@@ -20,7 +20,7 @@ const getUsers = async (req, res, next)=>{
         const error =  new HttpError("No Users Found.",500); 
         return next(error);        
     }
-    res.status(200).json({success:true, data:allUsers});
+    res.status(200).json({success:true, data:allUsers.map(user=>{user.toObject({getters:true})})});
 
 };
 
@@ -54,7 +54,8 @@ const signUp = async(req, res, next)=>{
         password,
         image:"Image Url"
     });
-    
+    // console.log(typeof(existingUser));
+    // console.log(typeof(newUser));
     try{
         await newUser.save();
     }
@@ -63,7 +64,7 @@ const signUp = async(req, res, next)=>{
         return next(error);
     }
 
-    res.status(201).json({success:true, data: newUser});
+    res.status(201).json({success:true, data: newUser.toObject({getters:true})});
 };
 
 

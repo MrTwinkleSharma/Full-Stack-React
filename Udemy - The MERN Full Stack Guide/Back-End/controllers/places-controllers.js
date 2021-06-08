@@ -25,7 +25,7 @@ const getPlacesByUserId = async (req, res, next)=>{
         const error = new HttpError("No Places found for given User.",404);
         return next(error);
     }
-    res.status(200).json({success:true, data:places});
+    res.status(200).json({success:true, data:places.map(user=>{user.toObject({getters:true})})});
 };
 
 const getPlaceByPlaceId = async (req, res, next)=>{
@@ -47,7 +47,7 @@ const getPlaceByPlaceId = async (req, res, next)=>{
         const error = new HttpError("No Place found for given id.",404);
         return next(error);
     }
-    res.status(200).json({success:true, data:place});
+    res.status(200).json({success:true, data:place.toObject({getters:true})});
     
 }
 const postPlaceForLoggedUser = async(req, res, next)=>{
@@ -81,7 +81,7 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
         return next(error);
     }
     
-    res.status(201).json({success:true, data:createdPlace});
+    res.status(201).json({success:true, data:createdPlace.toObject({getters:true})});
 }
 
 const patchUpdatePlaceByPlaceId = async (req, res, next)=>{
@@ -123,7 +123,7 @@ const patchUpdatePlaceByPlaceId = async (req, res, next)=>{
         return next(error);
     }
 
-    res.json({success:true, data:place});
+    res.json({success:true, data:place.toObject({getters:true})});
    
 };
 const deletePlaceByPlaceId = async (req, res, next)=>{
