@@ -6,21 +6,26 @@ const Place = require('../models/place');
 const uuid = require('uuid/v4');
 const { validationResult } = require('express-validator');
 
-const getPlacesByUserId =  (req, res, next)=>{
+const getPlacesByUserId = async (req, res, next)=>{
     const {userId} = req.params;
 
-    const requiredPlace = DUMMY_PLACES.filter(place=>{
-        if(userId===place.creatorId)
-        return true; 
-    })
-    
-    if(requiredPlace.length>0)
-    res.json({success:true, data:requiredPlace});
+    let places;
+    try{
+        places = await Place.find({creator:userId}); 
+    }
+    catch{
+        // console.log(error);
+        const error = new HttpError("Couldn't retrieve the places, Something went wrong.",500);
+        return next(error);
+    } 
 
-    else {
-        const error =  new HttpError('No Places Found for Given User Id',404);  // Constructor accepts a string of error message and code 
+    //Note :- These 2 errors are different
+    if(!places || places.length===0)
+    {
+        const error = new HttpError("No Places found for given User.",404);
         return next(error);
     }
+    res.status(200).json({success:true, data:places});
 };
 
 const getPlaceByPlaceId = async (req, res, next)=>{
