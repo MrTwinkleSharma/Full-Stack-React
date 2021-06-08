@@ -53,22 +53,29 @@ const signUp = async(req, res, next)=>{
 
 
 //LogIn User
-const logIn = (req, res, next)=>{   
+const logIn = async (req, res, next)=>{   
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        console.log(errors);
+        // console.log(errors);
         const error =  new HttpError('Invalid Inputs, Please check your Data.',422); 
-        throw error;
-    }
+        return next(error);
+   }
     const {email, password} = req.body;
 
-    const identifiedUser = DUMMY_USERS.find(user => user.email === email)
-    if(!identifiedUser || identifiedUser.password!==password){
-
-        //401 Authentication Error 
-        throw new Error("Couldn't Log In, Credentials may be Wrong", 401);
+    let existingUser;
+    try{
+        existingUser = await User.findOne({email:email});
     }
-    res.status(200).json({success:true, message:`User ${identifiedUser.name} Successfully Logged In!`});
+    catch{
+        // console.log(error);
+        const error =  new HttpError("Couldn't Log In, Something went wrong.",500); 
+        return next(error);
+    }
+    if(!existingUser || existingUser.password!==password){
+        const error = Error("Couldn't Log In, Credentials may be Wrong", 401);
+        return next(error);
+    }
+    res.status(200).json({success:true, message:`User ${existingUser.name} Successfully Logged In!`});
 };
 
 
