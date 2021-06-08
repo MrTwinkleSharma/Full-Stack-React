@@ -5,8 +5,23 @@ const HttpError = require('../models/http-errors');
 
 
 //Retrieve the all users
-const getUsers = (req, res, next)=>{   
-    res.status(200).json({success:true, data:DUMMY_USERS});
+const getUsers = async (req, res, next)=>{   
+    let allUsers;
+
+    try{
+        allUsers = await User.find({}, "-password");
+    }
+    catch{
+        const error =  new HttpError("Couldn't retrieve Users, Something went wrong.",500); 
+        return next(error);    
+    }
+    if(!allUsers)
+    {
+        const error =  new HttpError("No Users Found.",500); 
+        return next(error);        
+    }
+    res.status(200).json({success:true, data:allUsers});
+
 };
 
 //Create User and LogIn
