@@ -126,25 +126,31 @@ const patchUpdatePlaceByPlaceId = async (req, res, next)=>{
     res.json({success:true, data:place});
    
 };
-const deletePlaceByPlaceId = (req, res, next)=>{
+const deletePlaceByPlaceId = async (req, res, next)=>{
     const {placeId} = req.params;
 
-    let found = false;
-    const newPlaces = DUMMY_PLACES.filter(place=>{
-        if(placeId===place.id){
-            found = true;
-            return false;
-        }
-        else return true;
-    });
-
-    if(found)
-    res.json({success:true, data:newPlaces});
-   
-    else {
+    let place;
+    try{
+        place = await Place.findById(placeId); 
+    }
+    catch{
+        // console.log(error);
+        const error = new HttpError("Couldn't Delete the place, Something went wrong.",500);
+        return next(error);
+    } 
+    if(!place){
         const error =  new HttpError('No Place Found for Given Place Id',404);  // Constructor accepts a string of error message and code
         return next(error);
     }
+    try{
+       await place.remove(); 
+    }
+    catch{
+        // console.log(error);
+        const error = new HttpError("Couldn't Delete the place, Something went wrong.",500);
+        return next(error);
+    } 
+    res.status(200).json({success:true, message:"Place was Deleted Successfully!"});
 };
 
 module.exports = {
