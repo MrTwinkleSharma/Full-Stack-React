@@ -84,7 +84,7 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
     res.status(201).json({success:true, data:createdPlace});
 }
 
-const patchUpdatePlaceByPlaceId = (req, res, next)=>{
+const patchUpdatePlaceByPlaceId = async (req, res, next)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         console.log(errors);
@@ -95,29 +95,36 @@ const patchUpdatePlaceByPlaceId = (req, res, next)=>{
     const {placeId} = req.params;
     const {updatedTitle, updatedDescription} = req.body;
 
-    let found = false;
-    
-    const newPlaces = DUMMY_PLACES.map(place=>{
-        if(placeId===place.id)
-        {
-            found = true;
+    let place;
+    try{
+        place = await Place.findById(placeId); 
+    }
+    catch{
+        // console.log(error);
+        const error = new HttpError("Couldn't Update the place, Something went wrong.",500);
+        return next(error);
+    } 
+    place.title = updatedTitle;
+    place.description = updatedDescription;
 
-            if(updatedTitle)
-            place.title = updatedTitle;
+    try{
+        await place.save();
+    }
+    catch{
+        // console.log(error);
+        const error = new HttpError("Couldn't Update the place, Something went wrong.",500);
+        return next(error);
+    } 
 
-            if(updatedDescription)
-            place.description = updatedDescription;
-        }
-        return place;
-    });
+
     
-    if(found)
-    res.json({success:true, data:newPlaces});
-   
-    else {
+    if(!place){
         const error =  new HttpError('No Place Found for Given Place Id',404);  // Constructor accepts a string of error message and code
         return next(error);
     }
+
+    res.json({success:true, data:place});
+   
 };
 const deletePlaceByPlaceId = (req, res, next)=>{
     const {placeId} = req.params;
