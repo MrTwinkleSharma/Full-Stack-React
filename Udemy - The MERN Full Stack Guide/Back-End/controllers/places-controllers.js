@@ -1,6 +1,9 @@
 const HttpError = require('../models/http-errors');
 const Place = require('../models/place');
+const User = require('../models/user');
+
 const { validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 
 const getPlacesByUserId = async (req, res, next)=>{
     const {userId} = req.params;
@@ -69,11 +72,33 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
             location:placeLocationObject,
             image: "image url appears here"
     });
+    let user;
+
     try{
-        await createdPlace.save();
+        user = await User.findById(loggedInUserId);
+    }
+    catch{        
+        const error = new HttpError("Couldn't post Place, Please try again.", 500);
+        return next(error);   
+    }
+    if(!user){
+        const error = new HttpError("Couldn't find User", 404);
+        return next(error);   
+    }
+
+    try{
+        console.log(user);
+        
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+        await createdPlace.save({session:sess});
+        user.places.push(createdPlace);
+        await user.save({session:sess});
+        await sess.commitTransaction();
     }
     catch{
         const error = new HttpError("Couldn't post Place, Please try again.", 500);
+        
         return next(error);
     }
     
