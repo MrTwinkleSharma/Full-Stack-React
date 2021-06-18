@@ -1,9 +1,5 @@
-const DUMMY_PLACES = require('../dummyPlaces');
 const HttpError = require('../models/http-errors');
 const Place = require('../models/place');
-
-// We can use uuid module for unique id
-const uuid = require('uuid/v4');
 const { validationResult } = require('express-validator');
 
 const getPlacesByUserId = async (req, res, next)=>{
@@ -63,7 +59,7 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
         placeAddress, 
         loggedInUserId, 
         placeLocationObject, 
-        placeImageUrl } = req.body;
+        } = req.body;
 
     const createdPlace = new Place({
             title:placeTitle,
@@ -71,7 +67,7 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
             address:placeAddress,
             creator:loggedInUserId,
             location:placeLocationObject,
-            image: placeImageUrl
+            image: "image url appears here"
     });
     try{
         await createdPlace.save();

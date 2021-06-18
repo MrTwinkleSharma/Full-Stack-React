@@ -52,10 +52,10 @@ const signUp = async(req, res, next)=>{
         name, 
         email,
         password,
-        image:"Image Url"
+        image:"Image Url",
+        places:[]
     });
-    // console.log(typeof(existingUser));
-    // console.log(typeof(newUser));
+    
     try{
         await newUser.save();
     }
