@@ -12,19 +12,10 @@ import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../s
 import './Authenticate.css'
 
 function Authenticate (){
+    const [loginMode, setloginMode] = useState(true);
 
-
-    const [loginMode, setloginMode] = useState(false);
-    const switchHandler = () =>{
-        setloginMode(prevMode => !prevMode);
-    }
-
-    const [currentStateOfInput, inputChangeHandler] = useForm(
+    const [currentStateOfInput, inputChangeHandler, setFormData] = useForm(
         {
-            fullname:{
-                value:'',
-                isValid:false
-            },
             email:{
                 value:'',
                 isValid:false
@@ -38,6 +29,34 @@ function Authenticate (){
         ,false
     )
 
+    const switchHandler = () =>{
+        if(!loginMode){
+
+            console.log(currentStateOfInput);
+            setFormData(
+                {
+                    ...currentStateOfInput,
+                    name:undefined
+                }, 
+                currentStateOfInput.inputs.email.isValid && currentStateOfInput.inputs.password.isValid                
+            )
+        }
+        else{
+            setFormData(
+                {
+                    ...currentStateOfInput.inputs,
+                    name:{
+                        value: '',
+                        isValid :false
+                    }
+                },
+                false
+            )
+        }
+        setloginMode(prevMode => !prevMode);
+    }
+
+
     const authSubmitHandler = (event) =>{
         event.preventDefault();
         console.log("Authenticated" , currentStateOfInput);
@@ -47,9 +66,9 @@ function Authenticate (){
     
         <form onSubmit={authSubmitHandler}>
         {
-            loginMode && 
+            !loginMode && 
             <Input element='input'
-            id='fullname' 
+            id='name' 
             type='text' 
             label='Full Name' 
             validators={[VALIDATOR_REQUIRE()]} 
@@ -73,11 +92,12 @@ function Authenticate (){
             errorText='Please Enter a Valid Password' 
             onInput={inputChangeHandler}/>
 
-            <Button disabled={!currentStateOfInput.isFormValid}>{  !loginMode && 'Login'} {  loginMode && 'Register'} </Button>
-            <Button onClick={switchHandler}>Switch to {  loginMode && 'Login'} {  !loginMode && 'SignUp'} Mode</Button>
+            <Button disabled={!currentStateOfInput.isFormValid}>{  !loginMode && 'Register'} {  loginMode && 'Login'} </Button>
+            <Button onClick={switchHandler}>Switch to {  loginMode && 'SignUp'} {  !loginMode && 'Login'} Mode</Button>
     
     </form>
 
     </Card>
 }
 export default Authenticate;
+
