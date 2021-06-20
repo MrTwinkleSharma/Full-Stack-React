@@ -1,9 +1,11 @@
+//3rd Party Modules
 import React, {useEffect, useReducer} from 'react';
 
+//Local Modules
 import { validate } from '../../../util/validators';
 
+//CSS Files
 import './Input.css';
-
 
 const reducer = (currentValue, action) =>{
   switch(action.type)

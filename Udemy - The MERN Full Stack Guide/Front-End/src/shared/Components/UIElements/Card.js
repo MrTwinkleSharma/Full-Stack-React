@@ -1,6 +1,7 @@
-
+//3rd Party Modules
 import React from 'react';
 
+//CSS Files
 import './Card.css';
 
 const Card = props => {

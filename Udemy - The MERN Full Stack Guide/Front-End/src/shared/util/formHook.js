@@ -1,8 +1,7 @@
+//3rd Party Modules
 import { useCallback, useReducer } from 'react';
 
-
 const formReducer = (currentStateOfInput, action) =>{
-
     switch(action.type)
     {
         case 'input_change':            
@@ -32,9 +31,6 @@ const formReducer = (currentStateOfInput, action) =>{
     }
   
 };
-
-
-
 function useForm (initialStateofForm, initialValidityOfForm){
 
    const [currentStateOfInput, dispatch] = useReducer(formReducer,{
@@ -45,11 +41,7 @@ function useForm (initialStateofForm, initialValidityOfForm){
         dispatch({type:'input_change',inputId:id, isValid:isValid, value:currentValue});
     
     },[]);
-
-
     return [currentStateOfInput,inputChangeHandler];
 }
-
-
 
 export default useForm;

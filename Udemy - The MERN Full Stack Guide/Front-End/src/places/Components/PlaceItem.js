@@ -1,14 +1,17 @@
+//3rd Party Modules
 import React, { useState } from 'react';
-import './PlaceItem.css'
 
+//Local Modules
 import Card from '../../shared/Components/UIElements/Card';
 import Button from '../../shared/Components/FormElements/Button/Button.js'
 import Modal from '../../shared/Components/UIElements/Modal';
 import Map from '../../shared/Components/UIElements/Map';
 
+//CSS Files
+import './PlaceItem.css'
+
 
 function PlaceItem (props){
-
     const [showMap, setShowMap] = useState(false);
     const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
     
@@ -20,7 +23,6 @@ function PlaceItem (props){
 
     const confirmedDeleteHandler = () => {
         setDeleteConfirmationModal(false);
-        console.log("Deleting.....");
     };
     
     

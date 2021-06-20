@@ -1,4 +1,7 @@
+//3rd Party Modules
 import React from 'react';
+
+//CSS Files
 import './Avatar.css';
 
 const Avatar = props => {

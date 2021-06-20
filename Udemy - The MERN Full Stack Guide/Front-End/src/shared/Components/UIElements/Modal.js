@@ -1,8 +1,12 @@
+//3rd Party Modules
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BackDrop from './BackDrop';
-import {CSSTransition} from 'react-transition-group'
+import {CSSTransition} from 'react-transition-group';
 
+//Local Modules
+import BackDrop from './BackDrop';
+
+//CSS Files
 import './Modal.css';
 
 const ModalOverlay = props => {

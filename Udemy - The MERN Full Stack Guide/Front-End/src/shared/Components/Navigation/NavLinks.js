@@ -1,6 +1,8 @@
+//3rd Party Modules
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+//CSS Files
 import './NavLinks.css';
 
 function Navlinks(props)

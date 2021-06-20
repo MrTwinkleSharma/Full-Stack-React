@@ -1,5 +1,7 @@
+//3rd Party Modules
 import React from 'react';
 
+//CSS Files
 import './MainHeader.css';
 
 function MainHeader (props){

@@ -1,14 +1,17 @@
+//3rd Party Modules
 import React from 'react';
 import {BrowserRouter as Router, Route,Redirect,Switch} from 'react-router-dom';
 
+//Local Modules
 import Users from './users/Pages/Users';
 import MainNavigation from './shared/Components/Navigation/MainNavigation';
 import UserPlaces from './places/Pages/UserPlaces';
 import NewPlace from '../src/places/Pages/NewPlace.js'
-
-import './index.css';
 import UpdatePlace from './places/Pages/UpdatePlace';
 import Authenticate from './users/Pages/Authenticate';
+
+//CSS Files
+import './index.css';
 
 function App (){
 

@@ -1,8 +1,12 @@
+//3rd Party Modules
 import React from 'react';
-import Avatar from '../../shared/Components/UIElements/Avatar';
-import Card from '../../shared/Components/UIElements/Card';
 import {Link} from 'react-router-dom';
 
+//Local Modules
+import Avatar from '../../shared/Components/UIElements/Avatar';
+import Card from '../../shared/Components/UIElements/Card';
+
+//CSS Files
 import './UserItem.css'
 
 function UserItem (props)

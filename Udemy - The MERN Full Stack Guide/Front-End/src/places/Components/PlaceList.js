@@ -1,9 +1,13 @@
+//3rd Party Modules
 import React from 'react';
-import Card from '../../shared/Components/UIElements/Card';
-import PlaceItem from './PlaceItem'
-import './PlaceList.css'
 
+//Local Modules
+import Card from '../../shared/Components/UIElements/Card';
+import PlaceItem from './PlaceItem';
 import Button from '../../shared/Components/FormElements/Button/Button.js';
+
+//CSS Files
+import './PlaceList.css';
 
 
 function PlaceList (props){

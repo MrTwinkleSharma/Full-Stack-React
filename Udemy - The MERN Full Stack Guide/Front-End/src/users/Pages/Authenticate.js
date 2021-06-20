@@ -1,19 +1,22 @@
+//3rd Party Modules
 import React, { useState } from 'react';
 
+//Local Modules
 import Input from '../../shared/Components/FormElements/Input/Input.js'
-import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
 import Button from '../../shared/Components/FormElements/Button/Button.js';
 import Card from '../../shared/Components/UIElements/Card.js';
 import useForm from '../../shared/util/formHook.js';
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
 
+//CSS Files
 import './Authenticate.css'
 
 function Authenticate (){
 
 
-    const [switchToSignUpMode, setSwitchToSignUpMode] = useState(false);
+    const [loginMode, setloginMode] = useState(false);
     const switchHandler = () =>{
-        setSwitchToSignUpMode(prevMode => !prevMode);
+        setloginMode(prevMode => !prevMode);
     }
 
     const [currentStateOfInput, inputChangeHandler] = useForm(
@@ -44,7 +47,7 @@ function Authenticate (){
     
         <form onSubmit={authSubmitHandler}>
         {
-            switchToSignUpMode && 
+            loginMode && 
             <Input element='input'
             id='fullname' 
             type='text' 
@@ -70,8 +73,8 @@ function Authenticate (){
             errorText='Please Enter a Valid Password' 
             onInput={inputChangeHandler}/>
 
-            <Button disabled={!currentStateOfInput.isFormValid}>{  !switchToSignUpMode && 'Login'} {  switchToSignUpMode && 'Register'} </Button>
-            <Button onClick={switchHandler}>Switch to {  switchToSignUpMode && 'Login'} {  !switchToSignUpMode && 'SignUp'} Mode</Button>
+            <Button disabled={!currentStateOfInput.isFormValid}>{  !loginMode && 'Login'} {  loginMode && 'Register'} </Button>
+            <Button onClick={switchHandler}>Switch to {  loginMode && 'Login'} {  !loginMode && 'SignUp'} Mode</Button>
     
     </form>
 

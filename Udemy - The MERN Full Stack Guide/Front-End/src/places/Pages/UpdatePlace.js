@@ -1,14 +1,17 @@
+//3rd Party Modules
 import React from 'react';
 import { useParams } from 'react-router';
 
+//Local Modules
 import useForm from '../../shared/util/formHook.js';
+import Card from '../../shared/Components/UIElements/Card.js';
 import Button from '../../shared/Components/FormElements/Button/Button';
-import {VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from '../../shared/util/validators';
 import Input from '../../shared/Components/FormElements/Input/Input.js'
+import {VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from '../../shared/util/validators';
 
+//CSS Files
 import './PlaceForm.css';
 import image from './tajmahal.jpg';
-import Card from '../../shared/Components/UIElements/Card.js';
 
 const ITEMS = [
     {

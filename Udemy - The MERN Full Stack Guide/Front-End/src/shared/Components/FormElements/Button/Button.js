@@ -1,6 +1,8 @@
+//3rd Party Modules
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+//CSS Files
 import './Button.css';
 
 const Button = props => {

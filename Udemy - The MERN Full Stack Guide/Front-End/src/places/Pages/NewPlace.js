@@ -1,14 +1,16 @@
+//3rd Party Modules
 import React from 'react';
 
+//Local Modules
 import useForm from '../../shared/util/formHook.js';
 import Input from '../../shared/Components/FormElements/Input/Input.js'
-import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
 import Button from '../../shared/Components/FormElements/Button/Button.js';
+import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js';
 
+//CSS Files
 import './PlaceForm.css';
 
 function NewPlace(props) {
-
 
     //Pass the Initial State of Form and Initial Validity 
     const [currentStateOfInput,inputChangeHandler] = useForm({

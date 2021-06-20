@@ -1,5 +1,10 @@
+//3rd Party Modules
 import React from 'react';
+
+//Local Modules
 import UserList from '../Components/UserList';
+
+//Image
 import myImage from './Twinkle.jpg'
 
 const ITEMS = [{

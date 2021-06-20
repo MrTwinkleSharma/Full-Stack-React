@@ -1,6 +1,11 @@
+//3rd Party Modules
 import React from 'react';
 import { useParams } from 'react-router';
+
+//Local Modules
 import PlaceList from '../Components/PlaceList';
+
+//Image
 import image from './tajmahal.jpg';
 
 const ITEMS = [
@@ -21,11 +26,10 @@ const ITEMS = [
 function UserPlaces(){
 
     const userId = useParams().userId;
-
     const loadedPlaces = ITEMS.filter(place => place.creatorId===userId)
 
     return <>
-    <PlaceList places = {loadedPlaces}    />
+    <PlaceList places = {loadedPlaces}/>
     </>
 }
 export default UserPlaces;

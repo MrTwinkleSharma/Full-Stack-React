@@ -1,4 +1,7 @@
+//3rd Party Modules
 import React, { useRef, useEffect } from 'react';
+
+//CSS Modules
 import './Map.css';
 
 const Map = props => {

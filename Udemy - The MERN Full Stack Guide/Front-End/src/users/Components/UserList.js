@@ -1,7 +1,11 @@
+//3rd Party Modules
 import React from 'react';
-import UserItem from './UserItem';
 
+//Local Modules
+import UserItem from './UserItem';
 import Card from '../../shared/Components/UIElements/Card';
+
+//CSS Files
 import './UserList.css';
 
 function UserList (props){
