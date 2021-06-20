@@ -8,23 +8,22 @@ const mongoose = require('mongoose');
 const getPlacesByUserId = async (req, res, next)=>{
     const {userId} = req.params;
 
-    let places;
+    let userPlaces;
     try{
-        places = await Place.find({creator:userId}); 
+        userPlaces = await User.findById(userId).populate('places'); 
     }
     catch{
         // console.log(error);
         const error = new HttpError("Couldn't retrieve the places, Something went wrong.",500);
         return next(error);
     } 
-
     //Note :- These 2 errors are different
-    if(!places || places.length===0)
+    if(!userPlaces || userPlaces.places.length===0)
     {
         const error = new HttpError("No Places found for given User.",404);
         return next(error);
     }
-    res.status(200).json({success:true, data:places.map(user=>{user.toObject({getters:true})})});
+    res.status(200).json({success:true, data:userPlaces.places.map(user => user.toObject({getters:true}))});
 };
 
 const getPlaceByPlaceId = async (req, res, next)=>{
