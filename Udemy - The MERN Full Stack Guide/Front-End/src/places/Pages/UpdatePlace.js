@@ -1,5 +1,5 @@
 //3rd Party Modules
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 //Local Modules
@@ -27,33 +27,43 @@ const ITEMS = [
         imageUrl:image
     }
 ]
-
 function UpdatePlace(props) {
     const placeId = useParams().placeId;
-
-    const loadedPlace = ITEMS.find(place => place.id===placeId)
-    
-    // console.log(loadedPlace);
-    // console.log(ITEMS[0].id===placeId);
+    const [isLoading, setisLoading] = useState(true);
     
     const updateSubmitHandler = (event) =>{
         event.preventDefault();
         console.log(currentStateOfInput);
     };
 
-
-    //Pass the Initial State of Form and Initial Validity 
-    const [currentStateOfInput,inputChangeHandler] = useForm({
+    const [currentStateOfInput,inputChangeHandler, setFormData] = useForm({
         title:{
-            value:loadedPlace.title,
-            isValid:true
+            value:'',
+            isValid:false
         },
         description:{
-            value:loadedPlace.description,
-            isValid:true
+            value:'',
+            isValid:false
         }
         
-    }, true);
+    }, false);
+
+    
+    const loadedPlace = ITEMS.find(place => place.id===placeId)
+        
+    useEffect(()=>{
+        setFormData({
+            title:{
+                value:loadedPlace.title,
+                isValid:true
+            },
+            description:{
+                value: loadedPlace.description,
+                isValid:true
+            }
+        }, true)
+        setisLoading(false);
+    },[setFormData, loadedPlace])
     
     if(!loadedPlace)
     {
@@ -64,7 +74,16 @@ function UpdatePlace(props) {
                 </Card>
             </div>
         </>
-
+    }
+    if(isLoading)
+    {
+        return <>
+            <div className='center'>
+                <Card>
+                    <h2>Loading.....</h2>
+                </Card>
+            </div>
+        </>
     }
 
     return <>
@@ -77,7 +96,7 @@ function UpdatePlace(props) {
     errorText='Please Enter a Valid Title' 
     onInput={inputChangeHandler}
     initialValue={currentStateOfInput.inputs.title.value} 
-    initialValid={true}/>
+    initialValid={currentStateOfInput.inputs.title.isValid}/>
 
     <Input element='textarea'
     id='description' 
@@ -88,7 +107,7 @@ function UpdatePlace(props) {
     errorText='Please Enter a Valid Description' 
     onInput={inputChangeHandler}
     initialValue={currentStateOfInput.inputs.description.value}
-    initialValid={true}/>
+    initialValid={currentStateOfInput.inputs.description.isValid}/>
 
 
     <Button type='submit' disabled={!currentStateOfInput.isFormValid} >
