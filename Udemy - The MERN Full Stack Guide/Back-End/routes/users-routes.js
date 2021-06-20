@@ -1,7 +1,8 @@
+//3rd Party Modules
 const { Router } = require('express');
 const { check } = require('express-validator');
-const router = Router();
 
+const router = Router();
 const {
         signUp, 
         logIn, 

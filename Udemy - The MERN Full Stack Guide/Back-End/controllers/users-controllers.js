@@ -1,10 +1,10 @@
+//3rd Party Modules
 const { validationResult } = require('express-validator');
 
+//Local Modules
 const User = require('../models/user');
 const HttpError = require('../models/http-errors');
 
-
-//Retrieve the all users
 const getUsers = async (req, res, next)=>{   
     let allUsers;
 
@@ -20,19 +20,15 @@ const getUsers = async (req, res, next)=>{
         const error =  new HttpError("No Users Found.",500); 
         return next(error);        
     }
-    res.status(200).json({success:true, data:allUsers.map(user=>{user.toObject({getters:true})})});
-
+    res.status(200).json({success:true, data:allUsers. map(user => user.toObject({getters:true}))});
 };
 
-//Create User and LogIn
 const signUp = async(req, res, next)=>{   
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        // console.log(errors);
         const error =  new HttpError('Invalid Inputs, Please check your Data.',422); 
         return next(error);
     }
-
     const {name, email, password} = req.body;
     
     let existingUser;
@@ -40,14 +36,14 @@ const signUp = async(req, res, next)=>{
         existingUser = await User.findOne({email:email});
     }
     catch{
-        // console.log(error);
         const error =  new HttpError("Couldn't Signup, Something went wrong.",500); 
         return next(error);
     }
-    if(!existingUser){
+    if(existingUser){
         const error =  new HttpError('User Exists Already, Do Login',422); 
         return next(error);
     }
+
     const newUser = User({
         name, 
         email,
@@ -60,7 +56,7 @@ const signUp = async(req, res, next)=>{
         await newUser.save();
     }
     catch{
-        const error = new HttpError("Couldn't Signup User, Please try again.", 500);
+        const error = new HttpError("Couldn't Signup User, Something went wrong.", 500);
         return next(error);
     }
 
@@ -68,11 +64,9 @@ const signUp = async(req, res, next)=>{
 };
 
 
-//LogIn User
 const logIn = async (req, res, next)=>{   
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        // console.log(errors);
         const error =  new HttpError('Invalid Inputs, Please check your Data.',422); 
         return next(error);
    }
@@ -83,7 +77,6 @@ const logIn = async (req, res, next)=>{
         existingUser = await User.findOne({email:email});
     }
     catch{
-        // console.log(error);
         const error =  new HttpError("Couldn't Log In, Something went wrong.",500); 
         return next(error);
     }

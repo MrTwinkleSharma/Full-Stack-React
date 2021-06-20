@@ -1,3 +1,4 @@
+//3rd Party Modules
 const { Router } = require('express');
 const { check } = require('express-validator');
 
@@ -13,19 +14,18 @@ const {
 router.get('/users/:userId', getPlacesByUserId);
 router.get('/:placeId',getPlaceByPlaceId);
 
-//We Need to Validate data for POST & PATCH 
 router.post('/',
         [
-        check('placeTitle').not().isEmpty(), 
-        check('placeDescription').isLength({min:5}), 
-        check('placeAddress').not().isEmpty()
+        check('title').not().isEmpty(), 
+        check('description').isLength({min:5}), 
+        check('address').not().isEmpty()
         ], 
         postPlaceForLoggedUser);
 
 router.patch('/:placeId',
         [
-        check('updatedTitle').not().isEmpty(), 
-        check('updatedDescription').isLength({min:5})
+        check('title').not().isEmpty(), 
+        check('description').isLength({min:5})
         ],
         patchUpdatePlaceByPlaceId);
 
