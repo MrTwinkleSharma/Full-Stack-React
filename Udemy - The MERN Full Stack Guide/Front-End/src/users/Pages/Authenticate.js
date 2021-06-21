@@ -1,11 +1,12 @@
 //3rd Party Modules
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 //Local Modules
 import Input from '../../shared/Components/FormElements/Input/Input.js'
 import Button from '../../shared/Components/FormElements/Button/Button.js';
 import Card from '../../shared/Components/UIElements/Card.js';
 import useForm from '../../shared/util/formHook.js';
+import AuthContext from '../../shared/Context/auth-context.js';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
 
 //CSS Files
@@ -14,6 +15,7 @@ import './Authenticate.css'
 function Authenticate (){
     const [loginMode, setloginMode] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const auth = useContext(AuthContext);
     const [currentStateOfInput, inputChangeHandler, setFormData] = useForm(
         {
             email:{
@@ -78,7 +80,7 @@ function Authenticate (){
                 });
                 const responseData = await response.json();
                 setIsLoading(false);
-                // authenticate.login();
+                auth.login();
                 console.log(responseData);
             }
             catch(err){

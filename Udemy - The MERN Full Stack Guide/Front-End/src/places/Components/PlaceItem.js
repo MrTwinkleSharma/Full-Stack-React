@@ -1,11 +1,12 @@
 //3rd Party Modules
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 //Local Modules
 import Card from '../../shared/Components/UIElements/Card';
 import Button from '../../shared/Components/FormElements/Button/Button.js'
 import Modal from '../../shared/Components/UIElements/Modal';
 import Map from '../../shared/Components/UIElements/Map';
+import AuthContext from '../../shared/Context/auth-context';
 
 //CSS Files
 import './PlaceItem.css'
@@ -13,6 +14,7 @@ import './PlaceItem.css'
 
 function PlaceItem (props){
     const [showMap, setShowMap] = useState(false);
+    const auth = useContext(AuthContext); 
     const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
     
     const openMapModal = () => setShowMap(true);
@@ -66,8 +68,11 @@ function PlaceItem (props){
         </div>
         <div className='place-item__actions'>
             <Button inverse onClick={openMapModal}>VIEW ON MAP </Button>
+            {auth.isLoggedIn && 
             <Button to={``}>EDIT</Button>
+            }{auth.isLoggedIn && 
             <Button danger onClick={showDeleteConfirmationModal}>DELETE</Button>
+            }
         </div>
     </Card>
     </li>
