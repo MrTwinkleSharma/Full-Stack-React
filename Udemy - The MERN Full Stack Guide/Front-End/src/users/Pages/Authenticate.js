@@ -57,11 +57,58 @@ function Authenticate (){
     }
 
 
-    const authSubmitHandler = (event) =>{
+    const authSubmitHandler = async (event) =>{
         event.preventDefault();
-        console.log("Authenticated" , currentStateOfInput);
-    }
+        if(loginMode){
+            console.log('Came Here', 
+            currentStateOfInput.inputs.email, 
+            currentStateOfInput.inputs.password);
 
+            try{
+                const response =  await fetch('http://localhost:5000/api/users/login', {
+                    method:'POST',
+                    headers:{
+                        'content_type':'application/json'
+                    },
+                    body:JSON.stringify({
+                        email:currentStateOfInput.inputs.email,
+                        password:currentStateOfInput.inputs.password
+                    })
+                });
+                const responseData = await response.json();
+                console.log(responseData);
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+        else{          
+            console.log('Came Here', 
+            currentStateOfInput.inputs.name, 
+            currentStateOfInput.inputs.email, 
+            currentStateOfInput.inputs.password);
+
+            try{
+                const response = await fetch('http://localhost:5000/api/users/signup', {
+                method:'POST',
+                headers:{
+                    "Content-Type": "application/json; charset=UTF-8"
+                },
+                body:JSON.stringify({
+                    name:currentStateOfInput.inputs.name.value,
+                    email:currentStateOfInput.inputs.email.value,
+                    password:currentStateOfInput.inputs.password.value
+                    })
+                });
+                const responseData = await response.json();
+                console.log(responseData);
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+    }  
+   
     return <Card className='authenticate'> 
     
         <form onSubmit={authSubmitHandler}>

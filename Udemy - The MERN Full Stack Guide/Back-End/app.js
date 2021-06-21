@@ -10,6 +10,15 @@ const usersRoutes = require('./routes/users-routes');
 const app = express();
 
 app.use(express.json())
+
+//For CORS Errors
+app.use((req, res, next)=>{
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Headers','*');
+    res.setHeader('Access-Control-Allow-Methods','*');
+    next();
+});
+
 app.use('/api/places',placesRoutes);
 app.use('/api/users',usersRoutes);
 
