@@ -13,7 +13,7 @@ import './Authenticate.css'
 
 function Authenticate (){
     const [loginMode, setloginMode] = useState(true);
-
+    const [isLoading, setIsLoading] = useState(false);
     const [currentStateOfInput, inputChangeHandler, setFormData] = useForm(
         {
             email:{
@@ -65,20 +65,24 @@ function Authenticate (){
             currentStateOfInput.inputs.password);
 
             try{
+                setIsLoading(true);
                 const response =  await fetch('http://localhost:5000/api/users/login', {
                     method:'POST',
                     headers:{
-                        'content_type':'application/json'
+                        "Content-Type": "application/json; charset=UTF-8"
                     },
                     body:JSON.stringify({
-                        email:currentStateOfInput.inputs.email,
-                        password:currentStateOfInput.inputs.password
+                        email:currentStateOfInput.inputs.email.value,
+                        password:currentStateOfInput.inputs.password.value
                     })
                 });
                 const responseData = await response.json();
+                setIsLoading(false);
+                // authenticate.login();
                 console.log(responseData);
             }
             catch(err){
+                setIsLoading(false);
                 console.log(err);
             }
         }
@@ -89,6 +93,7 @@ function Authenticate (){
             currentStateOfInput.inputs.password);
 
             try{
+                setIsLoading(true);
                 const response = await fetch('http://localhost:5000/api/users/signup', {
                 method:'POST',
                 headers:{
@@ -101,17 +106,21 @@ function Authenticate (){
                     })
                 });
                 const responseData = await response.json();
+                
+                setIsLoading(false);
                 console.log(responseData);
             }
             catch(err){
+                setIsLoading(false);                
                 console.log(err);
             }
         }
     }  
    
     return <Card className='authenticate'> 
-    
+        {isLoading && <div> Loading.....</div>}
         <form onSubmit={authSubmitHandler}>
+           
         {
             !loginMode && 
             <Input element='input'
