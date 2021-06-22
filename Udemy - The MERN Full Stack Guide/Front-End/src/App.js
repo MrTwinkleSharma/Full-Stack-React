@@ -68,7 +68,7 @@ function App (){
         <Users/>
       </Route>
         
-      <Redirect to='/' />
+      <Redirect to='/auth' />
     </Switch>)
 
   }

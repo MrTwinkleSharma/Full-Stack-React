@@ -11,6 +11,7 @@ import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../s
 
 //CSS Files
 import './Authenticate.css'
+import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner.js';
 
 function Authenticate (){
     const [loginMode, setloginMode] = useState(true);
@@ -33,8 +34,6 @@ function Authenticate (){
 
     const switchHandler = () =>{
         if(!loginMode){
-
-            console.log(currentStateOfInput);
             setFormData(
                 {
                     ...currentStateOfInput,
@@ -62,9 +61,6 @@ function Authenticate (){
     const authSubmitHandler = async (event) =>{
         event.preventDefault();
         if(loginMode){
-            console.log('Came Here', 
-            currentStateOfInput.inputs.email, 
-            currentStateOfInput.inputs.password);
 
             try{
                 setIsLoading(true);
@@ -89,10 +85,6 @@ function Authenticate (){
             }
         }
         else{          
-            console.log('Came Here', 
-            currentStateOfInput.inputs.name, 
-            currentStateOfInput.inputs.email, 
-            currentStateOfInput.inputs.password);
 
             try{
                 setIsLoading(true);
@@ -120,7 +112,7 @@ function Authenticate (){
     }  
    
     return <Card className='authenticate'> 
-        {isLoading && <div> Loading.....</div>}
+        {isLoading && <LoadingSpinner asOverlay/>}
         <form onSubmit={authSubmitHandler}>
            
         {
