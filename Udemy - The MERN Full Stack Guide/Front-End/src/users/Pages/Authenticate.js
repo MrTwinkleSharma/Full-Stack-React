@@ -8,14 +8,16 @@ import Card from '../../shared/Components/UIElements/Card.js';
 import useForm from '../../shared/util/formHook.js';
 import AuthContext from '../../shared/Context/auth-context.js';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
+import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner.js';
+import ErrorModal from '../../shared/Components/UIElements/ErrorModal.js';
 
 //CSS Files
 import './Authenticate.css'
-import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner.js';
 
 function Authenticate (){
     const [loginMode, setloginMode] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
     const auth = useContext(AuthContext);
     const [currentStateOfInput, inputChangeHandler, setFormData] = useForm(
         {
@@ -76,12 +78,15 @@ function Authenticate (){
                 });
                 const responseData = await response.json();
                 setIsLoading(false);
+                if(!response.ok)
+                {
+                    throw Error(responseData.message);
+                }
                 auth.login();
-                console.log(responseData);
             }
             catch(err){
-                setIsLoading(false);
-                console.log(err);
+                setIsLoading(false);  
+                setError(err.message || 'Something Went Wrong!');
             }
         }
         else{          
@@ -99,19 +104,28 @@ function Authenticate (){
                     password:currentStateOfInput.inputs.password.value
                     })
                 });
-                const responseData = await response.json();
                 
+                const responseData = await response.json();
                 setIsLoading(false);
-                console.log(responseData);
+                if(!response.ok)
+                {
+                    throw Error(responseData.message);
+                }
             }
             catch(err){
-                setIsLoading(false);                
-                console.log(err);
+                setIsLoading(false);  
+                setError(err.message || 'Something Went Wrong!');      
             }
         }
     }  
-   
-    return <Card className='authenticate'> 
+    const errorHandler = ()=>{
+        setError(null);
+    }
+    return <>
+    { error &&
+     <ErrorModal onClear={errorHandler} error={error}/> 
+    }
+     <Card className='authenticate'> 
         {isLoading && <LoadingSpinner asOverlay/>}
         <form onSubmit={authSubmitHandler}>
            
@@ -146,8 +160,8 @@ function Authenticate (){
             <Button onClick={switchHandler}>Switch to {  loginMode && 'SignUp'} {  !loginMode && 'Login'} Mode</Button>
     
     </form>
-
     </Card>
+    </>
 }
 export default Authenticate;
 
