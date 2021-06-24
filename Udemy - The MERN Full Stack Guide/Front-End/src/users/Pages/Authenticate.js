@@ -39,7 +39,7 @@ function Authenticate (){
         if(!loginMode){
             setFormData(
                 {
-                    ...currentStateOfInput,
+                    ...currentStateOfInput.inputs,
                     name:undefined
                 }, 
                 currentStateOfInput.inputs.email.isValid && currentStateOfInput.inputs.password.isValid                
@@ -62,6 +62,7 @@ function Authenticate (){
 
 
     const authSubmitHandler = async (event) =>{
+        console.log("authSubmitHandler");
         event.preventDefault();
         if(loginMode){
             sendRequest({
@@ -123,10 +124,10 @@ function Authenticate (){
             errorText='Please Enter a Valid Password' 
             onInput={inputChangeHandler}/>
 
-            <Button disabled={!currentStateOfInput.isFormValid}>{  !loginMode && 'Register'} {  loginMode && 'Login'} </Button>
-            <Button onClick={switchHandler}>Switch to {  loginMode && 'SignUp'} {  !loginMode && 'Login'} Mode</Button>
-    
+            <Button type='submit' disabled={!currentStateOfInput.isFormValid}>{  !loginMode && 'Register'} {  loginMode && 'Login'} </Button>
     </form>
+    <hr/>
+    <Button onClick={switchHandler}>Switch to {  loginMode && 'SignUp'} {  !loginMode && 'Login'} Mode</Button>
     </Card>
     </>
 }
