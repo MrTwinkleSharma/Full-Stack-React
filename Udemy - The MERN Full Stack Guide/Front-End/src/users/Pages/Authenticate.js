@@ -13,11 +13,12 @@ import ErrorModal from '../../shared/Components/UIElements/ErrorModal.js';
 
 //CSS Files
 import './Authenticate.css'
+import { useHttpClient } from '../../shared/util/useHttpClient.js';
 
 function Authenticate (){
     const [loginMode, setloginMode] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState();
+    const [isLoading, error, clearError, sendRequest] = useHttpClient();
+
     const auth = useContext(AuthContext);
     const [currentStateOfInput, inputChangeHandler, setFormData] = useForm(
         {
@@ -62,67 +63,34 @@ function Authenticate (){
 
     const authSubmitHandler = async (event) =>{
         event.preventDefault();
-
-        setIsLoading(true);
         if(loginMode){
-            try{
-                const response =  await fetch('http://localhost:5000/api/users/login', {
-                    method:'POST',
-                    headers:{
-                        "Content-Type": "application/json; charset=UTF-8"
-                    },
-                    body:JSON.stringify({
-                        email:currentStateOfInput.inputs.email.value,
-                        password:currentStateOfInput.inputs.password.value
-                    })
-                });
-                const responseData = await response.json();
-                setIsLoading(false);
-                if(!response.ok)
-                {
-                    throw Error(responseData.message);
-                }
+            sendRequest({
+                method:"POST",
+                body:{
+                    email:currentStateOfInput.inputs.email.value,
+                    password:currentStateOfInput.inputs.password.value
+                },
+                api:'/api/users/login'
+            });
+            if(!error){
                 auth.login();
             }
-            catch(err){
-                setIsLoading(false);  
-                setError(err.message || 'Something Went Wrong!');
-            }
         }
-        else{          
-
-            try{
-                const response = await fetch('http://localhost:5000/api/users/signup', {
-                method:'POST',
-                headers:{
-                    "Content-Type": "application/json; charset=UTF-8"
-                },
-                body:JSON.stringify({
+        else{   
+            sendRequest({
+                method:"POST",
+                body:{
                     name:currentStateOfInput.inputs.name.value,
                     email:currentStateOfInput.inputs.email.value,
                     password:currentStateOfInput.inputs.password.value
-                    })
-                });
-                
-                const responseData = await response.json();
-                setIsLoading(false);
-                if(!response.ok)
-                {
-                    throw Error(responseData.message);
-                }
-            }
-            catch(err){
-                setIsLoading(false);  
-                setError(err.message || 'Something Went Wrong!');      
-            }
+                },
+                api:'/api/users/signup'
+            });            
         }
-    }  
-    const errorHandler = ()=>{
-        setError(null);
     }
     return <>
     { error &&
-     <ErrorModal onClear={errorHandler} error={error}/> 
+     <ErrorModal onClear={clearError} error={error}/> 
     }
      <Card className='authenticate'> 
         {isLoading && <LoadingSpinner asOverlay/>}
