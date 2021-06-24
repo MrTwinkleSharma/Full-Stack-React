@@ -24,7 +24,7 @@ function UserItem (props)
                         <h2>{props.name}</h2>
                     </div>
                     <div>
-                        <h3>{props.places} {props.places===1 ? 'Place' : 'Places' }</h3>
+                        <h3>{props.places.length} {props.places.length===1 ? 'Place' : 'Places' }</h3>
                     </div>
                 </div>
             </Link>

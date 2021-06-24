@@ -62,10 +62,10 @@ function Authenticate (){
 
     const authSubmitHandler = async (event) =>{
         event.preventDefault();
-        if(loginMode){
 
+        setIsLoading(true);
+        if(loginMode){
             try{
-                setIsLoading(true);
                 const response =  await fetch('http://localhost:5000/api/users/login', {
                     method:'POST',
                     headers:{
@@ -92,7 +92,6 @@ function Authenticate (){
         else{          
 
             try{
-                setIsLoading(true);
                 const response = await fetch('http://localhost:5000/api/users/signup', {
                 method:'POST',
                 headers:{
