@@ -5,49 +5,35 @@ import React, { useEffect,useState } from 'react';
 import UserList from '../Components/UserList';
 import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner';
 import ErrorModal from '../../shared/Components/UIElements/ErrorModal';
+import { useHttpClient } from '../../shared/util/useHttpClient';
 
 function Users (){
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState();
     const [loadedUsers, setLoadedUsers] = useState([]);
-    
+    const {isLoading, error, clearError, sendRequest} = useHttpClient();
+
     useEffect(()=>{
 
-        //IIFE
-        const sendRequest = async ()=>{
+       const fetchUsers = async ()=> {
             try{
-                setIsLoading(true);
-                const response  = await fetch('http://localhost:5000/api/users',{
+                const response = await sendRequest({
+                    api:'/api/users',
                     headers:{
                         'Content-Type':"application/json ; charset=UTF-8"                    
                     },
                     method:'GET'                 
-                })
-                const responseData = await response.json();
-                setIsLoading(false);
-
-                if(!response.ok) throw Error(response.message);
-
-                const ITEMS = responseData.data;
-                setLoadedUsers(ITEMS);
-                // console.log(ITEMS);
+                });
+                setLoadedUsers(response.data);
             }
             catch(err){
-                setIsLoading(false);
-                setError(err.message || "Something Went Wrong!");
+                
             }
         }
-        sendRequest();
-
+        fetchUsers();
     }
-    ,[]);
-    const errorHandler = ()=>{
-        setError(null);
-    }
-
+    ,[sendRequest]);
     return <>
     {isLoading && <div className='center'> <LoadingSpinner asOverlay/> </div>}
-    {error && <ErrorModal onClear={errorHandler} error={error}/>}
+    {error && <ErrorModal onClear={clearError} error={error}/>}
     {!isLoading && !error && <UserList items={loadedUsers}></UserList> }
     </>
 }

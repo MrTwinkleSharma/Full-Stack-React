@@ -30,7 +30,7 @@ function UserList (props){
         :
         <div className='center'>
             <Card>
-                <h2>No Items are Uploaded Yet!</h2>
+                <h2>No Items Found!!</h2>
             </Card>
 
         </div>

@@ -65,7 +65,8 @@ function Authenticate (){
         event.preventDefault();
         if(loginMode){
             try{
-            const response = await sendRequest({
+            // const response = 
+            await sendRequest({
                 method:"POST",
                 body:{
                     email:currentStateOfInput.inputs.email.value,
@@ -79,7 +80,8 @@ function Authenticate (){
         }
         else{  
             try{ 
-            const response = await sendRequest({
+            // const response =
+            await sendRequest({
                 method:"POST",
                 body:{
                     name:currentStateOfInput.inputs.name.value,
