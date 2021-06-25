@@ -9,7 +9,7 @@ export const useHttpClient =  () =>{
     }
 
     const sendRequest = useCallback(async (requestObject) => {
-        console.log(requestObject)
+        console.log(requestObject);
         setIsLoading(true);
         try{
             const response =  await fetch(`http://localhost:5000${requestObject.api}`, {
@@ -19,8 +19,9 @@ export const useHttpClient =  () =>{
                 },
                 body:JSON.stringify(requestObject.body)
             });
+            // console.log(response);
             const responseData = await response.json();
-            console.log("Working Inside", responseData);
+            // console.log("Working Inside", responseData);
             setIsLoading(false);
             if(!response.ok)
             {
@@ -30,9 +31,11 @@ export const useHttpClient =  () =>{
 
         }
         catch(err){
-            setIsLoading(false);  
             setError(err.message || 'Something Went Wrong!');
+            setIsLoading(false);  
+            throw err;
         }
     },[]);
-    return [isLoading, error, clearError, sendRequest];
+
+    return {isLoading, error, clearError, sendRequest};
 }

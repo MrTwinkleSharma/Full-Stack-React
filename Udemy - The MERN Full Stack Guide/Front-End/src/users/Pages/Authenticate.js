@@ -10,14 +10,14 @@ import AuthContext from '../../shared/Context/auth-context.js';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js'
 import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner.js';
 import ErrorModal from '../../shared/Components/UIElements/ErrorModal.js';
+import { useHttpClient } from '../../shared/util/useHttpClient.js';
 
 //CSS Files
-import './Authenticate.css'
-import { useHttpClient } from '../../shared/util/useHttpClient.js';
+import './Authenticate.css';
 
 function Authenticate (){
     const [loginMode, setloginMode] = useState(true);
-    const [isLoading, error, clearError, sendRequest] = useHttpClient();
+    const {isLoading, error, clearError, sendRequest} = useHttpClient();
 
     const auth = useContext(AuthContext);
     const [currentStateOfInput, inputChangeHandler, setFormData] = useForm(
@@ -26,7 +26,6 @@ function Authenticate (){
                 value:'',
                 isValid:false
             },
-
             password:{
                 value:'',
                 isValid:false
@@ -65,7 +64,8 @@ function Authenticate (){
         console.log("authSubmitHandler");
         event.preventDefault();
         if(loginMode){
-            sendRequest({
+            try{
+            const response = await sendRequest({
                 method:"POST",
                 body:{
                     email:currentStateOfInput.inputs.email.value,
@@ -73,12 +73,13 @@ function Authenticate (){
                 },
                 api:'/api/users/login'
             });
-            if(!error){
-                auth.login();
+            auth.login();
             }
+            catch(err){}
         }
-        else{   
-            sendRequest({
+        else{  
+            try{ 
+            const response = await sendRequest({
                 method:"POST",
                 body:{
                     name:currentStateOfInput.inputs.name.value,
@@ -86,7 +87,10 @@ function Authenticate (){
                     password:currentStateOfInput.inputs.password.value
                 },
                 api:'/api/users/signup'
-            });            
+            });
+            auth.login();
+            }
+        catch(err){}
         }
     }
     return <>
@@ -127,7 +131,7 @@ function Authenticate (){
             <Button type='submit' disabled={!currentStateOfInput.isFormValid}>{  !loginMode && 'Register'} {  loginMode && 'Login'} </Button>
     </form>
     <hr/>
-    <Button onClick={switchHandler}>Switch to {  loginMode && 'SignUp'} {  !loginMode && 'Login'} Mode</Button>
+    <Button inverse onClick={switchHandler}>Switch to {  loginMode && 'SignUp'} {  !loginMode && 'Login'} Mode</Button>
     </Card>
     </>
 }
