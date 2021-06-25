@@ -9,12 +9,11 @@ import Button from '../../shared/Components/FormElements/Button/Button.js';
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js';
 import { useHttpClient } from '../../shared/util/useHttpClient.js';
 import AuthContext from '../../shared/Context/auth-context.js';
-
-//CSS Files
-import './PlaceForm.css';
 import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner.js';
 import ErrorModal from '../../shared/Components/UIElements/ErrorModal.js';
 
+//CSS Files
+import './PlaceForm.css';
 function NewPlace() {
 
     const {isLoading, error, clearError, sendRequest} = useHttpClient();
@@ -41,7 +40,8 @@ function NewPlace() {
     const addSubmitHandler = async (event) =>{
         event.preventDefault();
         try{
-            const response  = await sendRequest({
+            // const response  =
+            await sendRequest({
                 api:'/api/places',
                 headers:{
                     'Content-Type':"application/json ; charset=UTF-8"                    
@@ -55,7 +55,6 @@ function NewPlace() {
                 }
             })
             history.push(`/places/users/${auth.userId}`);
-            console.log(response);
         }
         catch(err){}
     };

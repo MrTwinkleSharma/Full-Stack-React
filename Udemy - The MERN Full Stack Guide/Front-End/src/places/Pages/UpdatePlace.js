@@ -1,6 +1,6 @@
 //3rd Party Modules
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams, useHistory } from 'react-router';
 
 //Local Modules
 import useForm from '../../shared/util/formHook.js';
@@ -11,6 +11,7 @@ import {VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from '../../shared/util/validato
 import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner';
 import ErrorModal from '../../shared/Components/UIElements/ErrorModal';
 import { useHttpClient } from '../../shared/util/useHttpClient';
+import AuthContext from '../../shared/Context/auth-context.js';
 
 //CSS Files
 import './PlaceForm.css';
@@ -21,11 +22,13 @@ function UpdatePlace() {
     const [loadedPlace, setLoadedPlace] = useState();
     const {isLoading, error, clearError, sendRequest} = useHttpClient();
 
-    
+    const history = useHistory();
+    const auth = useContext(AuthContext);
+
     const updateSubmitHandler = async (event) =>{
         event.preventDefault();
         try{
-            const response = 
+            // const response = 
             await sendRequest({
                 method:"PATCH",
                 body:{
@@ -33,8 +36,8 @@ function UpdatePlace() {
                     description:currentStateOfInput.inputs.description.value
                 },
                 api:`/api/places/${placeId}`
-            });
-            console.log(response);
+            });            
+            history.push(`/places/users/${auth.userId}`);
             }
             catch(err){}
     };

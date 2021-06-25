@@ -74,7 +74,6 @@ function Authenticate (){
                 },
                 api:'/api/users/login'
             });
-            console.log(response);
             auth.login(response.data.id);
             }
             catch(err){}

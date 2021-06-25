@@ -1,5 +1,5 @@
 //3rd Party Modules
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 
 //Local Modules
 import Card from '../../shared/Components/UIElements/Card';
@@ -33,7 +33,8 @@ function PlaceItem (props){
 
         setDeleteConfirmationModal(false);
             try{
-                const response = await sendRequest({
+                // const response = 
+                await sendRequest({
                     api:`/api/places/${props.id}`,
                     headers:{
                         'Content-Type':"application/json ; charset=UTF-8"                    
@@ -47,10 +48,7 @@ function PlaceItem (props){
                 
             }
     };
-    
-
-
-    
+        
     return <>
     {error && <ErrorModal onClear={clearError} error={error}/>}
     <Modal 
