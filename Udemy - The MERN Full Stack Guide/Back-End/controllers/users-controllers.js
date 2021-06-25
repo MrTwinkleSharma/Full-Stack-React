@@ -84,7 +84,7 @@ const logIn = async (req, res, next)=>{
         const error = Error("Couldn't Log In, Credentials may be Wrong", 401);
         return next(error);
     }
-    res.status(200).json({success:true, message:`User ${existingUser.name} Successfully Logged In!`});
+    res.status(200).json({success:true, message:`User ${existingUser.name} Successfully Logged In!`, data: existingUser.toObject({getters:true})});
 };
 
 

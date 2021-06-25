@@ -19,9 +19,7 @@ export const useHttpClient =  () =>{
                 },
                 body:JSON.stringify(requestObject.body)
             });
-            // console.log(response);
             const responseData = await response.json();
-            // console.log("Working Inside", responseData);
             setIsLoading(false);
             if(!response.ok)
             {

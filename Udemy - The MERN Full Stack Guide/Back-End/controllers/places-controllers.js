@@ -67,8 +67,8 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
             address,
             creator,
             location:{
-                lat:71.1751448,
-                lng:82.0421422
+                lat:11.1751448,
+                lng:98.0421422
                 },
             image: "image url appears here"
     });

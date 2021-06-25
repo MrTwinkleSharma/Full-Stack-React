@@ -1,18 +1,24 @@
 //3rd Party Modules
-import React from 'react';
+import React, { useContext } from 'react';
 
 //Local Modules
 import useForm from '../../shared/util/formHook.js';
 import Input from '../../shared/Components/FormElements/Input/Input.js'
 import Button from '../../shared/Components/FormElements/Button/Button.js';
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators.js';
+import { useHttpClient } from '../../shared/util/useHttpClient.js';
+import AuthContext from '../../shared/Context/auth-context.js';
 
 //CSS Files
 import './PlaceForm.css';
+import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner.js';
+import ErrorModal from '../../shared/Components/UIElements/ErrorModal.js';
 
-function NewPlace(props) {
+function NewPlace() {
 
-    //Pass the Initial State of Form and Initial Validity 
+    const {isLoading, error, clearError, sendRequest} = useHttpClient();
+    const auth = useContext(AuthContext);
+
     const [currentStateOfInput,inputChangeHandler] = useForm({
         title:{
             value:'',
@@ -29,11 +35,30 @@ function NewPlace(props) {
     }, false);
     
     
-    const addSubmitHandler = (event) =>{
+    const addSubmitHandler = async (event) =>{
         event.preventDefault();
-        console.log(currentStateOfInput);
+        try{
+            const response  = await sendRequest({
+                api:'/api/places',
+                headers:{
+                    'Content-Type':"application/json ; charset=UTF-8"                    
+                },
+                method:'POST',    
+                body:{
+                    title:currentStateOfInput.inputs.title.value,
+                    description:currentStateOfInput.inputs.description.value,
+                    address:currentStateOfInput.inputs.address.value,
+                    creator: auth.userId
+                }
+            })
+
+            console.log(response);
+        }
+        catch(err){}
     };
     return <>
+        { isLoading && <LoadingSpinner asOverlay/> }
+        { error && <ErrorModal onClear={clearError} error={error} /> }
         <form className='place-form' onSubmit={addSubmitHandler} >
 
             <Input element='input'

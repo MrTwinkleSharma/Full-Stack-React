@@ -65,7 +65,7 @@ function Authenticate (){
         event.preventDefault();
         if(loginMode){
             try{
-            // const response = 
+            const response = 
             await sendRequest({
                 method:"POST",
                 body:{
@@ -74,13 +74,14 @@ function Authenticate (){
                 },
                 api:'/api/users/login'
             });
-            auth.login();
+            console.log(response);
+            auth.login(response.data.id);
             }
             catch(err){}
         }
         else{  
             try{ 
-            // const response =
+            const response =
             await sendRequest({
                 method:"POST",
                 body:{
@@ -90,7 +91,7 @@ function Authenticate (){
                 },
                 api:'/api/users/signup'
             });
-            auth.login();
+            auth.login(response.data.id);
             }
         catch(err){}
         }
