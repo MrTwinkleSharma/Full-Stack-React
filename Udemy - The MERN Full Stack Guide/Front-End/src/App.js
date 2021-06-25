@@ -35,7 +35,7 @@ function App (){
       <Route path="/" exact>
       </Route>
   
-      <Route path="/:userId/places" exact>
+      <Route path="/places/users/:userId" exact>
         <UserPlaces/>
       </Route>
   
@@ -63,7 +63,7 @@ function App (){
         <Authenticate/>
       </Route>
       
-      <Route path="/:userId/places" exact>
+      <Route path="/places/users/:userId" exact>
         <UserPlaces/>
       </Route>
 

@@ -1,35 +1,47 @@
 //3rd Party Modules
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router';
 
 //Local Modules
 import PlaceList from '../Components/PlaceList';
+import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner';
+import ErrorModal from '../../shared/Components/UIElements/ErrorModal';
+import { useHttpClient } from '../../shared/util/useHttpClient';
+import AuthContext from '../../shared/Context/auth-context';
 
-//Image
-import image from './tajmahal.jpg';
-
-const ITEMS = [
-    {
-        id:"p1",
-        title:"Taj Mahal",
-        description:"One of the seven Wonders of World, people often called it symbol of Love",
-        address:"Agra, India",
-        creatorId:'u1',
-        location:{
-            lat:27.1751448,
-            lng:78.0421422
-            },
-        imageUrl:image
-    }
-]
 
 function UserPlaces(){
 
-    const userId = useParams().userId;
-    const loadedPlaces = ITEMS.filter(place => place.creatorId===userId)
+    const auth = useContext(AuthContext);
+    const [loadedPlaces, setLoadedPlaces] = useState([]);
+    const {isLoading, error, clearError, sendRequest} = useHttpClient();
+
+    useEffect(()=>{
+
+        const fetchPlaces = async ()=> {
+             try{
+                 const response = await sendRequest({
+                     api:`/api/places/users/${auth.userId}`,
+                     headers:{
+                         'Content-Type':"application/json ; charset=UTF-8"                    
+                     },
+                     method:'GET'                 
+                 });
+                 setLoadedPlaces(response.data);
+             }
+             catch(err){
+                 
+             }
+         }
+         fetchPlaces();
+     }
+     ,[sendRequest]);
+
 
     return <>
-    <PlaceList places = {loadedPlaces}/>
+    {isLoading && <div className='center'> <LoadingSpinner asOverlay/> </div>}
+    {error && <ErrorModal onClear={clearError} error={error}/>}
+    {!isLoading && !error && <PlaceList places={loadedPlaces}></PlaceList> }
     </>
 }
 export default UserPlaces;

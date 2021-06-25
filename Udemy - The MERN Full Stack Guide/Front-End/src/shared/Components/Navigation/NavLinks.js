@@ -12,14 +12,14 @@ import './NavLinks.css';
 function Navlinks(props){
 
     const auth = useContext(AuthContext);
-
+    
     return <ul className='nav-links'>
     <li>
     <NavLink to='/users' exact> ALL USERS</NavLink>
     </li>
     { auth.isLoggedIn &&
         <li>
-            <NavLink to='/:userId/places' >MY PLACES</NavLink>
+            <NavLink to={`/places/users/${auth.userId}`} >MY PLACES</NavLink>
         </li> 
     }
     { auth.isLoggedIn &&
