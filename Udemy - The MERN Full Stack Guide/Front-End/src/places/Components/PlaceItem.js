@@ -1,5 +1,5 @@
 //3rd Party Modules
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 //Local Modules
 import Card from '../../shared/Components/UIElements/Card';
@@ -7,6 +7,9 @@ import Button from '../../shared/Components/FormElements/Button/Button.js'
 import Modal from '../../shared/Components/UIElements/Modal';
 import Map from '../../shared/Components/UIElements/Map';
 import AuthContext from '../../shared/Context/auth-context';
+import { useHttpClient } from '../../shared/util/useHttpClient';
+import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner';
+import ErrorModal from '../../shared/Components/UIElements/ErrorModal';
 
 //CSS Files
 import './PlaceItem.css'
@@ -14,7 +17,6 @@ import './PlaceItem.css'
 
 function PlaceItem (props){
     const [showMap, setShowMap] = useState(false);
-    const auth = useContext(AuthContext); 
     const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
     
     const openMapModal = () => setShowMap(true);
@@ -23,12 +25,34 @@ function PlaceItem (props){
     const showDeleteConfirmationModal = () => setDeleteConfirmationModal(true);
     const closeDeleteConfirmationModal = () => setDeleteConfirmationModal(false);
 
-    const confirmedDeleteHandler = () => {
+    const auth = useContext(AuthContext); 
+
+    const {isLoading, error, clearError, sendRequest} = useHttpClient();
+
+    const confirmedDeleteHandler = async () => {
+
         setDeleteConfirmationModal(false);
+            try{
+                const response = await sendRequest({
+                    api:`/api/places/${props.id}`,
+                    headers:{
+                        'Content-Type':"application/json ; charset=UTF-8"                    
+                    },
+                    method:'DELETE'                 
+                });
+            
+                props.onDelete(props.id);
+            }
+            catch(err){
+                
+            }
     };
     
+
+
     
     return <>
+    {error && <ErrorModal onClear={clearError} error={error}/>}
     <Modal 
         show={showMap} 
         onCancel={closeMapModal}
@@ -54,10 +78,12 @@ function PlaceItem (props){
         contentClass='place-item__modal-content'
         footerClass='place-item__modal-actions'
     >
-        Do you want to proceed and delete? Please note that it can't be undone thereafter. 
+        Do you want to proceed and delete this {props.title} place? Please note that it can't be undone thereafter. 
     </Modal>
     <li className='place-item'> 
     <Card className='place-item__content'> 
+
+    {isLoading && <div className='center'> <LoadingSpinner asOverlay/> </div>}
         <div className='place-item__image'>
             <img src={props.image} alt={props.title}/>
         </div>

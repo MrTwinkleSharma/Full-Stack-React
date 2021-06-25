@@ -1,5 +1,6 @@
 //3rd Party Modules
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
 
 //Local Modules
 import useForm from '../../shared/util/formHook.js';
@@ -35,6 +36,8 @@ function NewPlace() {
     }, false);
     
     
+    const history = useHistory();
+
     const addSubmitHandler = async (event) =>{
         event.preventDefault();
         try{
@@ -51,7 +54,7 @@ function NewPlace() {
                     creator: auth.userId
                 }
             })
-
+            history.push(`/places/users/${auth.userId}`);
             console.log(response);
         }
         catch(err){}

@@ -28,6 +28,7 @@ function UserPlaces(){
                      method:'GET'                 
                  });
                  setLoadedPlaces(response.data);
+                 console.log(loadedPlaces);
              }
              catch(err){
                  
@@ -38,10 +39,18 @@ function UserPlaces(){
      ,[sendRequest]);
 
 
+     const placeDeletionHandler = deletedPlaceId => {
+        //Don't Write {} inside setState
+        setLoadedPlaces(prevPlaces =>
+          prevPlaces.filter(place => place.id !== deletedPlaceId)
+        );
+      };
+    
+
     return <>
     {isLoading && <div className='center'> <LoadingSpinner asOverlay/> </div>}
     {error && <ErrorModal onClear={clearError} error={error}/>}
-    {!isLoading && !error && <PlaceList places={loadedPlaces}></PlaceList> }
+    {!isLoading && !error && <PlaceList places={loadedPlaces} placeDeletionHandler={placeDeletionHandler}></PlaceList> }
     </>
 }
 export default UserPlaces;

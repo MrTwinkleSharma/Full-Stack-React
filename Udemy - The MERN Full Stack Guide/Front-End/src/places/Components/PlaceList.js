@@ -26,6 +26,7 @@ function PlaceList (props){
                     creator={place.creator}
                     location={place.location}
                     image={place.image}
+                    onDelete={props.placeDeletionHandler}
                     />)
             }
         </ul>
