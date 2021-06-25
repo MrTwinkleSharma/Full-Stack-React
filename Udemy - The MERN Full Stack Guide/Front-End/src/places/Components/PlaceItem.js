@@ -69,7 +69,7 @@ function PlaceItem (props){
         <div className='place-item__actions'>
             <Button inverse onClick={openMapModal}>VIEW ON MAP </Button>
             {auth.isLoggedIn && 
-            <Button to={``}>EDIT</Button>
+            <Button to={`/places/${props.id}`}>EDIT</Button>
             }{auth.isLoggedIn && 
             <Button danger onClick={showDeleteConfirmationModal}>DELETE</Button>
             }

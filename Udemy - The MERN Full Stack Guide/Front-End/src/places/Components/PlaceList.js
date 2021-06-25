@@ -23,9 +23,9 @@ function PlaceList (props){
                     title={place.title}
                     description={place.description}
                     address={place.address}
-                    creatorId={place.creator}
-                    coordinates={place.location}
-                    image={place.imageUrl}
+                    creator={place.creator}
+                    location={place.location}
+                    image={place.image}
                     />)
             }
         </ul>

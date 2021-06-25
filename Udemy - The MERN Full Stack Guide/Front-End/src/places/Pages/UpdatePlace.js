@@ -8,32 +8,35 @@ import Card from '../../shared/Components/UIElements/Card.js';
 import Button from '../../shared/Components/FormElements/Button/Button';
 import Input from '../../shared/Components/FormElements/Input/Input.js'
 import {VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from '../../shared/util/validators';
+import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner';
+import ErrorModal from '../../shared/Components/UIElements/ErrorModal';
+import { useHttpClient } from '../../shared/util/useHttpClient';
 
 //CSS Files
 import './PlaceForm.css';
-import image from './tajmahal.jpg';
 
-const ITEMS = [
-    {
-        id:"p1",
-        title:"Taj Mahal",
-        description:"One of the seven Wonders of World, people often called it symbol of Love",
-        address:"Agra, India",
-        creatorId:'u1',
-        location:{
-            lat:27.1751448,
-            lng:78.0421422
-            },
-        imageUrl:image
-    }
-]
-function UpdatePlace(props) {
+function UpdatePlace() {
     const placeId = useParams().placeId;
-    const [isLoading, setisLoading] = useState(true);
     
-    const updateSubmitHandler = (event) =>{
+    const [loadedPlace, setLoadedPlace] = useState();
+    const {isLoading, error, clearError, sendRequest} = useHttpClient();
+
+    
+    const updateSubmitHandler = async (event) =>{
         event.preventDefault();
-        console.log(currentStateOfInput);
+        try{
+            const response = 
+            await sendRequest({
+                method:"PATCH",
+                body:{
+                    title:currentStateOfInput.inputs.title.value,
+                    description:currentStateOfInput.inputs.description.value
+                },
+                api:`/api/places/${placeId}`
+            });
+            console.log(response);
+            }
+            catch(err){}
     };
 
     const [currentStateOfInput,inputChangeHandler, setFormData] = useForm({
@@ -48,24 +51,40 @@ function UpdatePlace(props) {
         
     }, false);
 
+
+    useEffect(()=>{ 
     
-    const loadedPlace = ITEMS.find(place => place.id===placeId)
+    const fetchPlace = async ()=> {
+        try{
+            const response = await sendRequest({
+                api:`/api/places/${placeId}`,
+                headers:{
+                    'Content-Type':"application/json ; charset=UTF-8"                    
+                },
+                method:'GET'                 
+            });
+            setLoadedPlace(response.data);
+
+            setFormData({
+                title:{
+                    value:response.data.title,
+                    isValid:true
+                },
+                description:{
+                    value: response.data.description,
+                    isValid:true
+                }
+            }, true)
         
-    useEffect(()=>{
-        setFormData({
-            title:{
-                value:loadedPlace.title,
-                isValid:true
-            },
-            description:{
-                value: loadedPlace.description,
-                isValid:true
-            }
-        }, true)
-        setisLoading(false);
-    },[setFormData, loadedPlace])
-    
-    if(!loadedPlace)
+        }
+        catch(err){
+            
+        }
+    }
+    fetchPlace();
+    },[setFormData, placeId, sendRequest]);
+   
+    if(!loadedPlace && !error)
     {
         return <>
             <div className='center'>
@@ -80,13 +99,15 @@ function UpdatePlace(props) {
         return <>
             <div className='center'>
                 <Card>
-                    <h2>Loading.....</h2>
+                <LoadingSpinner />
                 </Card>
             </div>
         </>
     }
-
     return <>
+    {isLoading && <div className='center'> <LoadingSpinner asOverlay/> </div>}
+    {error && <ErrorModal onClear={clearError} error={error}/>}
+    { !isLoading && loadedPlace &&
     <form className='place-form' onSubmit={updateSubmitHandler} >
     <Input element='input'
     id='title' 
@@ -95,8 +116,8 @@ function UpdatePlace(props) {
     validators={[VALIDATOR_REQUIRE()]} 
     errorText='Please Enter a Valid Title' 
     onInput={inputChangeHandler}
-    initialValue={currentStateOfInput.inputs.title.value} 
-    initialValid={currentStateOfInput.inputs.title.isValid}/>
+    initialValue={loadedPlace.title} 
+    initialValid={true}/>
 
     <Input element='textarea'
     id='description' 
@@ -106,14 +127,15 @@ function UpdatePlace(props) {
     validators={[VALIDATOR_MINLENGTH(5)]} 
     errorText='Please Enter a Valid Description' 
     onInput={inputChangeHandler}
-    initialValue={currentStateOfInput.inputs.description.value}
-    initialValid={currentStateOfInput.inputs.description.isValid}/>
+    initialValue={loadedPlace.description}
+    initialValid={true}/>
 
 
     <Button type='submit' disabled={!currentStateOfInput.isFormValid} >
         UPDATE
     </Button>
     </form>
+    }
     </>
 }
 
