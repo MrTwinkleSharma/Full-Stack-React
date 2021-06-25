@@ -94,9 +94,9 @@ function PlaceItem (props){
         </div>
         <div className='place-item__actions'>
             <Button inverse onClick={openMapModal}>VIEW ON MAP </Button>
-            {auth.isLoggedIn && 
+            {(auth.userId===props.creator) && 
             <Button to={`/places/${props.id}`}>EDIT</Button>
-            }{auth.isLoggedIn && 
+            }{(auth.userId===props.creator) && 
             <Button danger onClick={showDeleteConfirmationModal}>DELETE</Button>
             }
         </div>

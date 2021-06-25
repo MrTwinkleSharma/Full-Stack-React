@@ -127,7 +127,7 @@ function Authenticate (){
             id='password' 
             type='password' 
             label='Password'
-            validators={[VALIDATOR_MINLENGTH(8)]} 
+            validators={[VALIDATOR_MINLENGTH(6)]} 
             errorText='Please Enter a Valid Password' 
             onInput={inputChangeHandler}/>
 
