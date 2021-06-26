@@ -1,5 +1,5 @@
 //3rd Party Modules
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 //Local Modules
 import Button from './Button/Button';
@@ -9,10 +9,53 @@ import './ImageUpload.css';
 
 const ImageUpload = props =>{
     const fileRef = useRef();
+    const [file, setFile] = useState(); //To manage File
+    const [previewUrl, setPreviewUrl] = useState();
+    const [isValid, setIsValid] = useState(false);
+
 
     const pickedImageHandler = event => {
-        console.log(event.target);
+        // event.target.files, it will contain files, of that input element which is connected with that event
+        // console.log(event.target);
+        let filePicked;
+        let ourIsValid;
+        if(event.target.files && event.target.files.length===1){
+            const filePicked = event.target.files[0];
+            setFile(filePicked);
+            ourIsValid = true;
+            setIsValid(true);
+        }
+        else{
+        setIsValid(false);
+        ourIsValid = false;
+        }
+
+        //To save the input element for further backend process
+        //Note: isValid Takes time to update hence we are using our own variable
+        props.onInput(props.id, filePicked, ourIsValid);
     };
+
+    //To see Preview at each state change
+    useEffect(()=>{
+        if(!file)
+        return;
+
+        //Creating the url from file content
+        //FileReader is a Web API
+        const fileReader = new FileReader();
+
+        // The FileReader.onload property contains an event handler 
+        // executed when the load event is fired, when content read with readAsDataURL is available
+        fileReader.onload = ()=>{
+            setPreviewUrl(fileReader.result);
+        };
+
+
+        // Starts reading the contents of the specified Blob, 
+        // once finished, the result attribute contains a URL representing the file's data
+        fileReader.readAsDataURL(file); 
+        
+    },[file]);
 
     const pickImageHandler = () =>{
         //This method exist on DOM Node and will open up that File Picker means 
@@ -30,10 +73,12 @@ const ImageUpload = props =>{
         />
         <div className={`image-upload ${props.center && 'center'}`} >
             <div className='image-upload__preview'>
-                <img src='' alt='preview'/>
+                {previewUrl && <img src={previewUrl} alt='preview'/>}
+                {!previewUrl && <p> Choose a Image to Display!</p>}
             </div>
             <Button type='button' onClick={pickImageHandler} >Choose Image</Button>
         </div>
+        {/* {!isValid && <p>{props.errorText}</p>} */}
     </div>
     </>
 }

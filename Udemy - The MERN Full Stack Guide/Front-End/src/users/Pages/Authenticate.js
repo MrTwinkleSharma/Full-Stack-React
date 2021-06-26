@@ -41,7 +41,8 @@ function Authenticate (){
             setFormData(
                 {
                     ...currentStateOfInput.inputs,
-                    name:undefined
+                    name:undefined,
+                    image:undefined
                 }, 
                 currentStateOfInput.inputs.email.isValid && currentStateOfInput.inputs.password.isValid                
             )
@@ -52,6 +53,10 @@ function Authenticate (){
                     ...currentStateOfInput.inputs,
                     name:{
                         value: '',
+                        isValid :false
+                    },
+                    image:{
+                        value: null,
                         isValid :false
                     }
                 },
@@ -115,7 +120,7 @@ function Authenticate (){
             errorText='Please Enter a Valid Name' 
             onInput={inputChangeHandler} />
         }
-        {!loginMode && <ImageUpload center id='image'/>}
+        {!loginMode && <ImageUpload id='image' center errorText={`Upload a Valid Image`} onInput={inputChangeHandler}/>}
         <Input element='input'
             id='email' 
             type='text' 
