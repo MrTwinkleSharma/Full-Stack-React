@@ -68,16 +68,18 @@ function Authenticate (){
 
 
     const authSubmitHandler = async (event) =>{
-        console.log("authSubmitHandler");
         event.preventDefault();
         if(loginMode){
             try{
             const response = 
             await sendRequest({
                 method:"POST",
-                body:{
+                body:JSON.stringify({
                     email:currentStateOfInput.inputs.email.value,
                     password:currentStateOfInput.inputs.password.value
+                }),
+                headers:{
+                    "Content-Type": "application/json; charset=UTF-8"
                 },
                 api:'/api/users/login'
             });
@@ -86,16 +88,20 @@ function Authenticate (){
             catch(err){}
         }
         else{  
-            try{ 
+            try{             
+            // A web API to send different types of inputs to backend
+            const formData = new FormData();
+            console.log(currentStateOfInput.inputs);
+            formData.append('name',currentStateOfInput.inputs.name.value);
+            formData.append('email',currentStateOfInput.inputs.email.value);
+            formData.append('password',currentStateOfInput.inputs.password.value);
+            formData.append('image', currentStateOfInput.inputs.image.value);
+
             const response =
             await sendRequest({
                 method:"POST",
-                body:{
-                    name:currentStateOfInput.inputs.name.value,
-                    email:currentStateOfInput.inputs.email.value,
-                    password:currentStateOfInput.inputs.password.value
-                },
-                api:'/api/users/signup'
+                body:formData, 
+                api:'/api/users/signup',
             });
             auth.login(response.data.id);
             }

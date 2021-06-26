@@ -18,9 +18,9 @@ const ImageUpload = props =>{
         // event.target.files, it will contain files, of that input element which is connected with that event
         // console.log(event.target);
         let filePicked;
-        let ourIsValid;
+        let ourIsValid = isValid;
         if(event.target.files && event.target.files.length===1){
-            const filePicked = event.target.files[0];
+            filePicked = event.target.files[0];
             setFile(filePicked);
             ourIsValid = true;
             setIsValid(true);

@@ -13,11 +13,9 @@ export const useHttpClient =  () =>{
         setIsLoading(true);
         try{
             const response =  await fetch(`http://localhost:5000${requestObject.api}`, {
-                method:requestObject.method,
-                headers:{
-                    "Content-Type": "application/json; charset=UTF-8"
-                },
-                body:JSON.stringify(requestObject.body)
+                method: requestObject.method, 
+                headers: requestObject.headers,
+                body: requestObject.body          
             });
             const responseData = await response.json();
             setIsLoading(false);
