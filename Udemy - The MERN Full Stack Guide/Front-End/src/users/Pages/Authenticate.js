@@ -11,6 +11,7 @@ import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../s
 import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner.js';
 import ErrorModal from '../../shared/Components/UIElements/ErrorModal.js';
 import { useHttpClient } from '../../shared/util/useHttpClient.js';
+import ImageUpload from '../../shared/Components/FormElements/ImageUpload.js';
 
 //CSS Files
 import './Authenticate.css';
@@ -20,6 +21,7 @@ function Authenticate (){
     const {isLoading, error, clearError, sendRequest} = useHttpClient();
 
     const auth = useContext(AuthContext);
+    
     const [currentStateOfInput, inputChangeHandler, setFormData] = useForm(
         {
             email:{
@@ -113,7 +115,7 @@ function Authenticate (){
             errorText='Please Enter a Valid Name' 
             onInput={inputChangeHandler} />
         }
-
+        {!loginMode && <ImageUpload center id='image'/>}
         <Input element='input'
             id='email' 
             type='text' 
