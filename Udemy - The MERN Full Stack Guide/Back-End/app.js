@@ -1,3 +1,6 @@
+//Inbuilt Modules
+const fs = require('fs');
+
 //3rd Party Modules
 const express = require('express');
 const mongoose = require('mongoose');
@@ -37,6 +40,15 @@ app.use((req, res, next)=>{
 });
 
 app.use((error, req, res, next)=>{
+    //If there exists a file in request object means we have to rollback 
+    // that upload of file because of any of the Error  
+    if(req.file){
+        fs.unlink(req.file.path, (err=>{
+            if (err) console.log(err);
+            else console.log("Deleted file!");
+        }));
+    }
+
     if(res.headerSent)  return next(error);
 
     res.status(error.code || 500); 
