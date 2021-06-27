@@ -1,5 +1,6 @@
 //Inbuilt Modules
 const fs = require('fs');
+const path = require('path');
 
 //3rd Party Modules
 const express = require('express');
@@ -13,6 +14,9 @@ const usersRoutes = require('./routes/users-routes');
 const app = express();
 
 app.use(express.json())
+
+//For Serving files because no one outside server can access our files without permission
+app.use('/uploads/images', express.static(path.join('uploads','images')))
 
 //For CORS Errors
 app.use((req, res, next) => {

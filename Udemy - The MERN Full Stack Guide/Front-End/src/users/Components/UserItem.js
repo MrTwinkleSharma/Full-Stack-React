@@ -13,10 +13,10 @@ function UserItem (props)
 {
     return <>
     <li className='user-item'>
-            <Card className='user-item__content'>
+            <Card className='user-item__content' style={{background:'#4d4d4d', padding:'0rem'}}>
             <Link to={`/places/users/${props.id}`}>
                 <div className='user-item__image'>
-                    <Avatar image={props.image} alt={props.name} />
+                    <Avatar image={`http://localhost:5000/${props.image}`} alt={props.name} />
                 </div>
                 <div className='user-item__info'>
                     <div >
