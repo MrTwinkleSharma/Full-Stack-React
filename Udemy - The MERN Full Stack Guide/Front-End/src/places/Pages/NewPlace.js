@@ -11,6 +11,7 @@ import { useHttpClient } from '../../shared/util/useHttpClient.js';
 import AuthContext from '../../shared/Context/auth-context.js';
 import LoadingSpinner from '../../shared/Components/UIElements/LoadingSpinner.js';
 import ErrorModal from '../../shared/Components/UIElements/ErrorModal.js';
+import ImageUpload from '../../shared/Components/FormElements/ImageUpload.js';
 
 //CSS Files
 import './PlaceForm.css';
@@ -31,6 +32,10 @@ function NewPlace() {
         address:{
             value:'',
             isValid:false
+        },
+        image:{
+            value:null,
+            isValid:false
         }
     }, false);
     
@@ -40,19 +45,20 @@ function NewPlace() {
     const addSubmitHandler = async (event) =>{
         event.preventDefault();
         try{
+            const formData = new FormData();
+            console.log(currentStateOfInput.inputs)
+            formData.append('title',currentStateOfInput.inputs.title.value);
+            formData.append('description',currentStateOfInput.inputs.description.value);
+            formData.append('address',currentStateOfInput.inputs.address.value);
+            formData.append('image', currentStateOfInput.inputs.image.value);
+            formData.append('creator', auth.userId);
+
+            console.log(formData);
             // const response  =
             await sendRequest({
                 api:'/api/places',
-                headers:{
-                    'Content-Type':"application/json ; charset=UTF-8"                    
-                },
                 method:'POST',    
-                body:{
-                    title:currentStateOfInput.inputs.title.value,
-                    description:currentStateOfInput.inputs.description.value,
-                    address:currentStateOfInput.inputs.address.value,
-                    creator: auth.userId
-                }
+                body:formData
             })
             history.push(`/places/users/${auth.userId}`);
         }
@@ -79,6 +85,11 @@ function NewPlace() {
             validators={[VALIDATOR_MINLENGTH(5)]} 
             errorText='Please Enter a Valid Description' 
             onInput={inputChangeHandler}/>
+
+            <ImageUpload center  
+            id='image' 
+            errorText={`Upload a Valid Image`} 
+            onInput={inputChangeHandler}/>        
             
             <Input element='input'
             id='address' 

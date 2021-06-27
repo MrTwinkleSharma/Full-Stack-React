@@ -1,3 +1,6 @@
+//Inbuilt Modules
+const fs = require('fs');
+
 //3rd Party Modules
 const { validationResult } = require('express-validator');
 const { startSession } = require('mongoose');
@@ -49,10 +52,11 @@ const getPlaceByPlaceId = async (req, res, next)=>{
 }
 const postPlaceForLoggedUser = async(req, res, next)=>{
     const errors = validationResult(req);
+    console.log(req.body);
     if(!errors.isEmpty()){
         console.log(errors);
         const error =  new HttpError('Invalid Inputs, Please check your Data.',422); 
-        throw error;
+        return next(error);
     }
     const { 
         title, 
@@ -70,7 +74,7 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
                 lat:11.1751448,
                 lng:98.0421422
                 },
-            image: "image url appears here"
+            image: req.file.path
     });
 
     let user;
@@ -159,9 +163,17 @@ const deletePlaceByPlaceId = async (req, res, next)=>{
     try{
         const deleteSession = await startSession();
             await deleteSession.startTransaction();
+            //Deleting Image
+            fs.unlink(place.image, (err=>{
+                if (err) console.log(err);
+                else console.log("Deleted file!");
+            }));
+            //Removing Place
             await place.remove({session:deleteSession});
+            //Pull place from creator array
             place.creator.places.pull(place);
             await place.creator.save({session:deleteSession});
+            
         await deleteSession.commitTransaction();
     }
     catch{

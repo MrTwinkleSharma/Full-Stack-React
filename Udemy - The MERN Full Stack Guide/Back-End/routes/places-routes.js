@@ -1,6 +1,8 @@
 //3rd Party Modules
 const { Router } = require('express');
 const { check } = require('express-validator');
+const fileUpload = require('../middleware/fileUpload');
+ 
 
 const router = Router();
 
@@ -15,6 +17,7 @@ router.get('/users/:userId', getPlacesByUserId);
 router.get('/:placeId',getPlaceByPlaceId);
 
 router.post('/',
+        fileUpload.single('image'),
         [
         check('title').not().isEmpty(), 
         check('description').isLength({min:5}), 
