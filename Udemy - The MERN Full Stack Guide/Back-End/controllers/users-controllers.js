@@ -1,6 +1,7 @@
 //3rd Party Modules
 const { validationResult } = require('express-validator');
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 //Local Modules
 const User = require('../models/user');
@@ -70,7 +71,16 @@ const signUp = async(req, res, next)=>{
         return next(error);
     }
 
-    res.status(201).json({success:true, data: newUser.toObject({getters:true})});
+    let token;
+    try{
+    token = jwt.sign({creator:newUser.id, email:newUser.email}, 'super_secret_code',{ expiresIn:'1h'})
+    }
+    catch(err){
+        const error = new HttpError("Couldn't Signp User, Something went wrong.", 500);
+        return next(error);
+    }
+
+    res.status(201).json({success:true, data: {userId:newUser.creator, email: newUser.email, token:token}});
 };
 
 
@@ -107,7 +117,18 @@ const logIn = async (req, res, next)=>{
         const error = Error("Couldn't Log In, Credentials may be Wrong", 401);
         return next(error);    
     }
-    res.status(200).json({success:true, message:`User ${existingUser.name} Successfully Logged In!`, data: existingUser.toObject({getters:true})});
+
+    let token;
+    try{
+    token = jwt.sign({userId:existingUser.id, email:existingUser.email}, 'super_secret_code',{ expiresIn:'1h'})
+    }
+    catch(err){
+        console.log(err);
+        const error = new HttpError("Couldn't Login User, Something went wrong.", 500);
+        return next(error);
+    }
+
+    res.status(200).json({success:true, data: {userId:existingUser.id, email:existingUser.email, token:token}});
 };
 
 

@@ -1,8 +1,10 @@
 //3rd Party Modules
 const { Router } = require('express');
 const { check } = require('express-validator');
+
+//Local Modules
 const fileUpload = require('../middleware/fileUpload');
- 
+
 const router = Router();
 const {
         signUp, 

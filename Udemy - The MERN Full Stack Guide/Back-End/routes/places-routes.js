@@ -1,8 +1,10 @@
 //3rd Party Modules
 const { Router } = require('express');
 const { check } = require('express-validator');
+
+//Local Modules
 const fileUpload = require('../middleware/fileUpload');
- 
+const checkAuth = require('../middleware/checkAuth');
 
 const router = Router();
 
@@ -15,6 +17,10 @@ const {
  
 router.get('/users/:userId', getPlacesByUserId);
 router.get('/:placeId',getPlaceByPlaceId);
+
+
+//Adding Middleware to verify only the valid token can send these requests below
+router.use(checkAuth);
 
 router.post('/',
         fileUpload.single('image'),

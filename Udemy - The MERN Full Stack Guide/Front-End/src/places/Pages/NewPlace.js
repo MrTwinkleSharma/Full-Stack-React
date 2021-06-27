@@ -59,7 +59,7 @@ function NewPlace() {
                 api:'/api/places',
                 method:'POST',    
                 body:formData
-            })
+                 })
             history.push(`/places/users/${auth.userId}`);
         }
         catch(err){}

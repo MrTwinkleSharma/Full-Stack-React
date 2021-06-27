@@ -83,7 +83,8 @@ function Authenticate (){
                 },
                 api:'/api/users/login'
             });
-            auth.login(response.data.id);
+            const {userId, email, token} = response.data;
+            auth.login(userId, token);
             }
             catch(err){}
         }
@@ -103,9 +104,11 @@ function Authenticate (){
                 body:formData, 
                 api:'/api/users/signup',
             });
-            auth.login(response.data.id);
+            
+            const {userId, email, token} = response.data;
+            auth.login(userId, token);
             }
-        catch(err){}
+            catch(err){}
         }
     }
     return <>
