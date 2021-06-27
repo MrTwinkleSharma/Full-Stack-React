@@ -1,5 +1,6 @@
 //3rd Party Modules
 const { validationResult } = require('express-validator');
+const bcryptjs = require('bcryptjs');
 
 //Local Modules
 const User = require('../models/user');
@@ -43,11 +44,20 @@ const signUp = async(req, res, next)=>{
         const error =  new HttpError('User Exists Already, Do Login',422); 
         return next(error);
     }
+    let hashedPassword;
+    try{
+        hashedPassword = await bcryptjs.hash(password, 12);
+    }
+    catch(err){      
+        error =  new HttpError("Couldn't Signup, Something went wrong.",500); 
+        return next(error);
+    }
+    
 
     const newUser = User({
         name, 
         email,
-        password,
+        password:hashedPassword,
         image:req.file.path,
         places:[]
     });
@@ -80,9 +90,22 @@ const logIn = async (req, res, next)=>{
         const error =  new HttpError("Couldn't Log In, Something went wrong.",500); 
         return next(error);
     }
-    if(!existingUser || existingUser.password!==password){
+    if(!existingUser){
         const error = Error("Couldn't Log In, Credentials may be Wrong", 401);
         return next(error);
+    }
+
+    let isValidPassword;
+    try{
+        isValidPassword = await bcryptjs.compare(password, existingUser.password);
+    }
+    catch(err){
+        const error =  new HttpError("Couldn't Log In, Something went wrong.",500); 
+        return next(error);        
+    }
+    if(!isValidPassword){
+        const error = Error("Couldn't Log In, Credentials may be Wrong", 401);
+        return next(error);    
     }
     res.status(200).json({success:true, message:`User ${existingUser.name} Successfully Logged In!`, data: existingUser.toObject({getters:true})});
 };
