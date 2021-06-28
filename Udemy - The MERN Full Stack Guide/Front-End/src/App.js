@@ -1,5 +1,5 @@
 //3rd Party Modules
-import React, {useState, useCallback, useEffect} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Route,Redirect,Switch} from 'react-router-dom';
 
 //Local Modules
@@ -13,45 +13,13 @@ import AuthContext from  './shared/Context/auth-context';
 
 //CSS Files
 import './index.css';
-let logoutTimer;
+import useAuth from './shared/util/authHook';
+
 function App (){
-  const [token, setToken] = useState();
-  const [tokenExpirationDate, setTokenExpirationDate] = useState();
-  const [userId, setUserId] = useState();
 
-  const login = useCallback((userId, token, expirationDate) => {    
-    setToken(token);
-    const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 15000);
-    setTokenExpirationDate(tokenExpirationDate);
-    localStorage.setItem('userData', JSON.stringify({token:token, userId:userId, expirationDate:tokenExpirationDate.toISOString()}));
-    setUserId(userId);
-  }, []);
+  const {token, userId, login, logout} = useAuth();
 
-  const logout = useCallback(() => {
-    setToken(null);
-    setTokenExpirationDate(null);
-    setUserId(null);
-    localStorage.removeItem('userData');
-  }, []);
   let routes;
-
-  useEffect(()=>{
-    const storedData = JSON.parse(localStorage.getItem('userData'));
-    if(storedData && storedData.token && new Date(storedData.expirationDate) > new Date())
-    login(storedData.userId, storedData.token, new Date(storedData.expirationDate));
-  },[login]);
-  
-  useEffect(()=>{
-    if(tokenExpirationDate && token){
-    const remainingTime = tokenExpirationDate.getTime() - new Date().getTime();
-    logoutTimer = setTimeout(logout, remainingTime);
-    }
-    else
-    {
-      clearTimeout(logoutTimer);
-    }
-  },[token, tokenExpirationDate,logout]);
-
   if(token){    
     routes = (<Switch>
       <Route path="/" exact>
