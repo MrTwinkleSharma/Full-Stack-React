@@ -1,5 +1,5 @@
 //3rd Party Modules
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {BrowserRouter as Router, Route,Redirect,Switch} from 'react-router-dom';
 
 //Local Modules
@@ -18,17 +18,26 @@ function App (){
   const [token, setToken] = useState();
   const [userId, setUserId] = useState();
 
-  const login = useCallback((userId, token) => {
-    console.log(token, 'came here');
+  const login = useCallback((userId, token) => {    
     setToken(token);
+    localStorage.setItem('userData', JSON.stringify({token:token, userId:userId}));
     setUserId(userId);
   }, []);
 
   const logout = useCallback(() => {
     setToken(null);
     setUserId(null);
+    localStorage.removeItem('userData')
   }, []);
   let routes;
+
+  useEffect(()=>{
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+    if(storedData && storedData.token)
+    login(storedData.userId, storedData.token);
+
+  },[login]);
+  
 
   if(token){
     
