@@ -7,6 +7,9 @@ const HttpError = require('../models/http-errors');
 module.exports = (req, res, next) =>{
     //We are extracting token from header we can use url also but not body
     //because get and other some request may not use body
+    if (req.method === 'OPTIONS') {
+        return next();
+    }
     try{
         const token = req.headers.authorization.split(' ')[1];  //Authorization: 'Bearer TOKEN'
         if(!token)
@@ -14,11 +17,11 @@ module.exports = (req, res, next) =>{
             throw new Error('Authentication Failed')
         }
         const decodedToken = jwt.verify(token, 'super_secret_code');
-        req.userData = decodedToken.userId;
+        req.userData = { userId: decodedToken.userId };
         next();
     }
     catch(err){
         const error = new HttpError('Authentication Failed', 401);
-        next(error);
+        return next(error);
     }
 }

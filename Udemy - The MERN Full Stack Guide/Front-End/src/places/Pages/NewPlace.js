@@ -58,8 +58,9 @@ function NewPlace() {
             await sendRequest({
                 api:'/api/places',
                 method:'POST',    
-                body:formData
-                 })
+                body:formData,
+                headers:{Authorization : 'Bearer ' + auth.token}
+            });
             history.push(`/places/users/${auth.userId}`);
         }
         catch(err){}

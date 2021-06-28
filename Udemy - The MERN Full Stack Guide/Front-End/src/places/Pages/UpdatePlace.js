@@ -31,11 +31,16 @@ function UpdatePlace() {
             // const response = 
             await sendRequest({
                 method:"PATCH",
-                body:{
+                body:JSON.stringify({
                     title:currentStateOfInput.inputs.title.value,
                     description:currentStateOfInput.inputs.description.value
+                }),
+                api:`/api/places/${placeId}`, 
+                headers:{
+                        'Content-Type':"application/json ; charset=UTF-8", 
+                        Authorization:'Bearer '+ auth.token                   
                 },
-                api:`/api/places/${placeId}`
+
             });            
             history.push(`/places/users/${auth.userId}`);
             }

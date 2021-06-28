@@ -37,9 +37,11 @@ function PlaceItem (props){
                 await sendRequest({
                     api:`/api/places/${props.id}`,
                     headers:{
-                        'Content-Type':"application/json ; charset=UTF-8"                    
+                        'Content-Type':"application/json ; charset=UTF-8", 
+                        Authorization:'Bearer '+ auth.token                   
                     },
-                    method:'DELETE'                 
+                    method:'DELETE'
+
                 });
             
                 props.onDelete(props.id);
