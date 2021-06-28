@@ -124,7 +124,11 @@ const patchUpdatePlaceByPlaceId = async (req, res, next)=>{
         const error = new HttpError("Couldn't Update the place, Something went wrong.",500);
         return next(error);
     } 
-
+    if(place.creator.toString() !==req.userData.userId)
+    {
+        const error = new HttpError("User is Not allowed to perform this Request.",401);
+        return next(error);
+    } 
     place.title = title;
     place.description = description;
 
@@ -160,6 +164,13 @@ const deletePlaceByPlaceId = async (req, res, next)=>{
         const error =  new HttpError('No Place Found for Given Place Id',404);  
         return next(error);
     }
+
+    if(place.creator.id!==req.userData.userId)
+    {
+        const error = new HttpError("User is Not allowed to perform this Request.",401);
+        return next(error);
+    } 
+
     try{
         const deleteSession = await startSession();
             await deleteSession.startTransaction();
