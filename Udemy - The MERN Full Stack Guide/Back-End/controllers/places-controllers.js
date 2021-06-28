@@ -62,14 +62,14 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
         title, 
         description, 
         address, 
-        creator,     
+        // creator,     //This is verified hence no need to extract it from here
         } = req.body;
 
     const createdPlace = new Place({
             title,
             description,
             address,
-            creator,
+            creator: req.userData.userId, 
             location:{
                 lat:11.1751448,
                 lng:98.0421422

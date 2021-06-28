@@ -101,7 +101,7 @@ const logIn = async (req, res, next)=>{
         return next(error);
     }
     if(!existingUser){
-        const error = Error("Couldn't Log In, Credentials may be Wrong", 401);
+        const error = Error("Couldn't Log In, Credentials may be Wrong", 403);
         return next(error);
     }
 
@@ -114,7 +114,7 @@ const logIn = async (req, res, next)=>{
         return next(error);        
     }
     if(!isValidPassword){
-        const error = Error("Couldn't Log In, Credentials may be Wrong", 401);
+        const error = Error("Couldn't Log In, Credentials may be Wrong", 403);
         return next(error);    
     }
 

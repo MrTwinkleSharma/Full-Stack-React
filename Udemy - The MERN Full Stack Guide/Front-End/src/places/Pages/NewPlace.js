@@ -51,7 +51,6 @@ function NewPlace() {
             formData.append('description',currentStateOfInput.inputs.description.value);
             formData.append('address',currentStateOfInput.inputs.address.value);
             formData.append('image', currentStateOfInput.inputs.image.value);
-            formData.append('creator', auth.userId);
 
             console.log(formData);
             // const response  =
