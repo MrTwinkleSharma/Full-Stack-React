@@ -13,34 +13,46 @@ import AuthContext from  './shared/Context/auth-context';
 
 //CSS Files
 import './index.css';
-
+let logoutTimer;
 function App (){
   const [token, setToken] = useState();
+  const [tokenExpirationDate, setTokenExpirationDate] = useState();
   const [userId, setUserId] = useState();
 
-  const login = useCallback((userId, token) => {    
+  const login = useCallback((userId, token, expirationDate) => {    
     setToken(token);
-    localStorage.setItem('userData', JSON.stringify({token:token, userId:userId}));
+    const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 15000);
+    setTokenExpirationDate(tokenExpirationDate);
+    localStorage.setItem('userData', JSON.stringify({token:token, userId:userId, expirationDate:tokenExpirationDate.toISOString()}));
     setUserId(userId);
   }, []);
 
   const logout = useCallback(() => {
     setToken(null);
+    setTokenExpirationDate(null);
     setUserId(null);
-    localStorage.removeItem('userData')
+    localStorage.removeItem('userData');
   }, []);
   let routes;
 
   useEffect(()=>{
-    const storedData = JSON.parse(localStorage.getItem('userData'))
-    if(storedData && storedData.token)
-    login(storedData.userId, storedData.token);
-
+    const storedData = JSON.parse(localStorage.getItem('userData'));
+    if(storedData && storedData.token && new Date(storedData.expirationDate) > new Date())
+    login(storedData.userId, storedData.token, new Date(storedData.expirationDate));
   },[login]);
   
+  useEffect(()=>{
+    if(tokenExpirationDate && token){
+    const remainingTime = tokenExpirationDate.getTime() - new Date().getTime();
+    logoutTimer = setTimeout(logout, remainingTime);
+    }
+    else
+    {
+      clearTimeout(logoutTimer);
+    }
+  },[token, tokenExpirationDate,logout]);
 
-  if(token){
-    
+  if(token){    
     routes = (<Switch>
       <Route path="/" exact>
       </Route>
