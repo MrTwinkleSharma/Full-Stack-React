@@ -1,19 +1,24 @@
 //3rd Party Modules
-import React from 'react';
+import React, {Suspense} from 'react';
 import {BrowserRouter as Router, Route,Redirect,Switch} from 'react-router-dom';
 
 //Local Modules
-import Users from './users/Pages/Users';
 import MainNavigation from './shared/Components/Navigation/MainNavigation';
-import UserPlaces from './places/Pages/UserPlaces';
-import NewPlace from '../src/places/Pages/NewPlace.js'
-import UpdatePlace from './places/Pages/UpdatePlace';
-import Authenticate from './users/Pages/Authenticate';
 import AuthContext from  './shared/Context/auth-context';
+import useAuth from './shared/util/authHook';
+import Card from './shared/Components/UIElements/Card';
+import LoadingSpinner from './shared/Components/UIElements/LoadingSpinner';
 
 //CSS Files
 import './index.css';
-import useAuth from './shared/util/authHook';
+
+//LazyLoading of Files for Code Splitting
+const Users = React.lazy(()=>import('./users/Pages/Users'));
+const UserPlaces = React.lazy(()=>import('./places/Pages/UserPlaces'));
+const NewPlace = React.lazy(()=>import('../src/places/Pages/NewPlace.js'));
+const UpdatePlace = React.lazy(()=>import('./places/Pages/UpdatePlace'));
+const Authenticate = React.lazy(()=>import('./users/Pages/Authenticate'));
+
 
 function App (){
 
@@ -68,8 +73,11 @@ function App (){
   return <Router>
   <AuthContext.Provider value={{isLoggedIn:!!token,token:token , userId:userId, login:login, logout:logout}}>
   <MainNavigation/>
-  <main>
-  {routes}
+  <main><Suspense fallback={<div className='center'>
+                <Card>
+                <LoadingSpinner />
+                </Card>
+            </div>} >{routes}</Suspense>
   </main>
   </AuthContext.Provider>
   </Router>
