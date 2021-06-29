@@ -1,5 +1,6 @@
 const multer = require('multer');
-const uuid = require('uuid/v1');
+const { v1: uuidv1 } = require('uuid');
+
 
 //Because Multer provides mime type and we will get the extension by accessing this object
 const MIME_TYPE_MAP = {
@@ -16,7 +17,7 @@ const fileUpload = multer({
         },
         filename:(req, fileExtracted, callBack)=>{
             const extensionOfFile = MIME_TYPE_MAP[fileExtracted.mimetype];
-            callBack(null, `${uuid()}.${extensionOfFile}`);
+            callBack(null, `${uuidv1()}.${extensionOfFile}`);
         }
     }),
     //Because we can't trust on Frontend validation, it's client side and anything can happen here.

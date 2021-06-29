@@ -79,9 +79,10 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
 
     let user;
     try{
-        user = await User.findById(creator);
+        user = await User.findById(createdPlace.creator);
     }
     catch{        
+        console.log(user);
         const error = new HttpError("Couldn't post Place, Please try again.", 500);
         return next(error);   
     }
@@ -98,7 +99,7 @@ const postPlaceForLoggedUser = async(req, res, next)=>{
         await postSession.commitTransaction();
     }
     catch{
-        const error = new HttpError("Couldn't post Place, Please try again.", 500); 
+        const error = new HttpError("Couldn't post Place, Pleaseg try again.", 500); 
         console.log(error);
         return next(error);
     }
