@@ -39,7 +39,7 @@ export const useAuth =  () =>{
   },[token, tokenExpirationDate,logout]);
 
      
-  return {token, userId};
+  return {token, userId, login , logout};
 }
 
 export default useAuth;

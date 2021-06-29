@@ -73,7 +73,7 @@ const signUp = async(req, res, next)=>{
 
     let token;
     try{
-    token = jwt.sign({creator:newUser.id, email:newUser.email}, 'super_secret_code',{ expiresIn:'1h'})
+    token = jwt.sign({creator:newUser.id, email:newUser.email}, process.env.JWT_KEY,{ expiresIn:'1h'})
     }
     catch(err){
         const error = new HttpError("Couldn't Signp User, Something went wrong.", 500);
@@ -120,7 +120,7 @@ const logIn = async (req, res, next)=>{
 
     let token;
     try{
-    token = jwt.sign({userId:existingUser.id, email:existingUser.email}, 'super_secret_code',{ expiresIn:'1h'})
+    token = jwt.sign({userId:existingUser.id, email:existingUser.email}, process.env.JWT_KEY,{ expiresIn:'1h'})
     }
     catch(err){
         console.log(err);

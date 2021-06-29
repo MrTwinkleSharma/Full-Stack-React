@@ -59,7 +59,7 @@ app.use((error, req, res, next)=>{
     res.json({success:false, message:error.message || "An Unknown error has been occured, Sorry for Inconvenience!"})
 });
 
-mongoose.connect('mongodb+srv://MrTwinkleSharma:Twinkle@451@mongodbcluster.mcnv5.mongodb.net/database?retryWrites=true&w=majority',{ useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex:true})
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@mongodbcluster.mcnv5.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,{ useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex:true})
 .then(()=>{
     app.listen(5000, ()=>{
         console.log("Server is listening on port 5000");

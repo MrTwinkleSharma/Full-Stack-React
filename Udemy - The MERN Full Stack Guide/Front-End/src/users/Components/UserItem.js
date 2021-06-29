@@ -16,7 +16,7 @@ function UserItem (props)
             <Card className='user-item__content' style={{background:'#4d4d4d', padding:'0rem'}}>
             <Link to={`/places/users/${props.id}`}>
                 <div className='user-item__image'>
-                    <Avatar image={`http://localhost:5000/${props.image}`} alt={props.name} />
+                    <Avatar image={`${process.env.REACT_APP_BACKEND_URL}/${props.image}`} alt={props.name} />
                 </div>
                 <div className='user-item__info'>
                     <div >

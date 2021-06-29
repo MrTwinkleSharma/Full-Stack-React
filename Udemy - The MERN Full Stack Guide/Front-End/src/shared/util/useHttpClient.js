@@ -12,7 +12,7 @@ export const useHttpClient =  () =>{
         console.log(requestObject);
         setIsLoading(true);
         try{
-            const response =  await fetch(`http://localhost:5000${requestObject.api}`, {
+            const response =  await fetch(`${process.env.REACT_APP_BACKEND_URL}${requestObject.api}`, {
                 method: requestObject.method, 
                 headers: requestObject.headers,
                 body: requestObject.body          
