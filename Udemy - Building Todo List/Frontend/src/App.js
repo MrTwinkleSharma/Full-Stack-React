@@ -6,7 +6,7 @@ function App() {
     //This Css class will give a container which is center aligned 
    <div className='ui container center aligned'>
    <h1>To Do Application</h1>
-    <Form type={["text"]} name={["title"]}/>
+    <Form/>
    </div>
 
   );
