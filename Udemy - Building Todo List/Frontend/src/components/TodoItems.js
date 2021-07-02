@@ -1,9 +1,11 @@
 import { useState } from "react";
 
+
 const TodoItems = (props) => {
     const [isEditing, setIsEditing] = useState();
     const [value, setValue] = useState(props);
     const [tempValue, setTempValue] = useState(props);
+    const [isCompleted, setIsCompleted] = useState();
 
     const editRequestClick = ()  => {
         setIsEditing(true);
@@ -31,6 +33,10 @@ const TodoItems = (props) => {
         })
     }
 
+    const completionHandler = ()  => {
+        setIsCompleted(true);
+    }
+
     return(
     <div className='row' >
         {isEditing ?
@@ -56,8 +62,8 @@ const TodoItems = (props) => {
         <div className='column five wide'>                  
             <div className="ui list">
                 <div className="item">
-                    <div className="content">
-                        <div className="header">
+                    <div className="content" style={(isCompleted) ? {color:'green'} : {} }>
+                        <div className={"ui header" + (isCompleted) ? " green" : ""}>
                         {value.title}
                         </div>
                         {value.description}
@@ -65,6 +71,14 @@ const TodoItems = (props) => {
                 </div>
             </div>
         </div>
+        <div className='column two wide'>
+            <button onClick={completionHandler} className='ui button circular icon blue'>
+                <i className={(isCompleted) ? 'calendar check outline icon white': 'calendar outline icon white'}></i>
+            </button>
+            <b style={{color:'#2185d0'}}>{isCompleted ? 'Done' : 'Pending'}</b>
+        </div>
+
+
         <div className='column two wide' onClick={editRequestClick}>
             <button type='submit' className='ui button circular icon black'>
                 <i className="edit icon white"></i>
@@ -72,16 +86,10 @@ const TodoItems = (props) => {
             <b>Edit</b>
         </div>
 
-        <div className='column two wide'>
-            <button type='submit' className='ui button circular icon blue'>
-                <i className="calendar check icon white"></i>
-            </button>
-            <b style={{color:'#2185d0'}}>Done</b>
-        </div>
-
+        
         <div className='column two wide'>
             <button type='submit' className='ui button circular icon red'>                
-                <i className="minus circle icon white"></i>
+                <i className="trash alternate outline icon white"></i>
             </button>
             <b style={{color:'#db2828'}}>Delete</b>
         </div>

@@ -1,18 +1,19 @@
-import TodoItems from "./TodoItems"
+import listArray from "./dummyList";
+import TodoItems from "./TodoItems";
 
-const List = (props) => {
+
+const List = () => {  
+
     return <div className='ui grid center aligned'>
-        <TodoItems 
-        title='Codechef Lunchtime' 
-        description='You must have to participate in the July lunchtime'/>
-        <TodoItems 
-        title="Complete Explore's Book App"
-        description="Mern application explore's book is pending"/>
-        <TodoItems 
-        title="E-Commerce React & React Native" 
-        description='Main Project as MERN Developer'/>
-    </div>
-
+        {listArray.map(todo =>  
+            <TodoItems 
+                key={todo.title} 
+                title={todo.title}
+                description={todo.description}
+                isCompleted={todo.isCompleted}
+            />    
+        )}
+        </div>;
 };
 
 export default List;
