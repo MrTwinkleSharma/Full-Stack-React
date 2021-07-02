@@ -7,10 +7,15 @@ import dummyList from './dummyList';
 function App() {
   const [list, setList] = useState(dummyList);
 
-  const addTodo = (task)=>{
+  const addTask = (task)=>{
     console.log(task);
     setList(prevList=>[...prevList, task]); 
   }
+  const deleteTask = (taskId)=>{
+    console.log(taskId);
+    setList(prevList=>prevList.filter((prevListItem)=>taskId!==prevListItem.title)); 
+  }
+
 
   return(  
     <div className='ui container center aligned'>
@@ -18,9 +23,9 @@ function App() {
    <h1>To Do Application</h1>
    </Section>
    <Section>
-    <Form addTodo={addTodo}/>
+    <Form addTask={addTask}/>
     </Section>
-    <List list={list}/>
+    <List list={list} deleteTask={deleteTask}/>
    </div>
   );
 }

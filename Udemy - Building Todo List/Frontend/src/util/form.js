@@ -31,7 +31,7 @@ const Form = (props) =>{
             description:'',
             isCompleted:false
         });
-        props.addTodo(task);
+        props.addTask(task);
         console.log(task);    
     }
 

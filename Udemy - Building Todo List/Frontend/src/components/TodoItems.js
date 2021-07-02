@@ -47,6 +47,11 @@ const TodoItems = (props) => {
         setIsCompleted(prevState=>!prevState);
     }
 
+    const taskDeleteHandler = ()  => {
+        console.log(props.id);  
+        props.deleteTask(props.id);      
+    }
+
     return(
     <div className='row' >
         {isEditing ?
@@ -96,8 +101,8 @@ const TodoItems = (props) => {
         </div>
 
 
-        <div className='column two wide' onClick={editRequestClick}>
-            <button type='submit' className='ui button circular icon black'>
+        <div className='column two wide' >
+            <button type='submit' onClick={editRequestClick} className='ui button circular icon black'>
                 <i className="edit icon white"></i>
             </button>
             <b>Edit</b>
@@ -105,7 +110,7 @@ const TodoItems = (props) => {
 
         
         <div className='column two wide'>
-            <button type='submit' className='ui button circular icon red'>                
+            <button type='submit' onClick={taskDeleteHandler} className='ui button circular icon red'>                
                 <i className="trash alternate outline icon white"></i>
             </button>
             <b style={{color:'#db2828'}}>Delete</b>
