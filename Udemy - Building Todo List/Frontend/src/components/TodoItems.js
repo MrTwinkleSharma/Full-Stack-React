@@ -43,7 +43,7 @@ const TodoItems = (props) => {
     }
 
     const completionHandler = ()  => {
-        setIsCompleted(true);
+        setIsCompleted(prevState=>!prevState);
     }
 
     return(
