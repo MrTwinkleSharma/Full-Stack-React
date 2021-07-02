@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || '5000';
 
 
+app.use(express.json())
 app.use('/todo', todoRoutes);
 
 app.get('/', (req, res)=>{
@@ -11,5 +12,5 @@ app.get('/', (req, res)=>{
 });
 
 app.listen(PORT, ()=>{
-console.log("Server is Listening on Port "+PORT);
+console.log("Server is Listening on Port " + PORT);
 })
