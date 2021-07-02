@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Form = () =>{
+const Form = (props) =>{
     const [task, setTask] = useState({
         title:'',
         description:'',
@@ -31,8 +31,8 @@ const Form = () =>{
             description:'',
             isCompleted:false
         });
-        console.log(task)
-    
+        props.addTodo(task);
+        console.log(task);    
     }
 
     return <form className='ui form' onSubmit={taskSubmitHandler}>
@@ -54,5 +54,6 @@ const Form = () =>{
     </form>
     
 }
+
 
 export default Form;

@@ -1,11 +1,10 @@
-import listArray from "./dummyList";
 import TodoItems from "./TodoItems";
 
 
-const List = () => {  
+const List = (props) => {  
 
     return <div className='ui grid center aligned'>
-        {listArray.map(todo =>  
+        {props.list.map(todo =>  
             <TodoItems 
                 key={todo.title} 
                 title={todo.title}
