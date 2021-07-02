@@ -24,6 +24,13 @@ const Form = () =>{
 
     const taskSubmitHandler = (event) =>{
         event.preventDefault();
+        if(task.title.trim()==='' || task.description.trim()==='' ) return;
+        
+        setTask({
+            title:'',
+            description:'',
+            isCompleted:false
+        });
         console.log(task)
     
     }
