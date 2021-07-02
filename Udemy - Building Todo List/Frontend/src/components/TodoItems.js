@@ -50,7 +50,7 @@ const TodoItems = (props) => {
     <div className='row' >
         {isEditing ?
         <>
-        <div className='column nine wide'> 
+        <div className='column ten wide'> 
             <div className='ui input fluid'>
                 <input 
                     onChange={inputChangeHandler}
@@ -67,7 +67,7 @@ const TodoItems = (props) => {
                 />
             </div>           
         </div>
-        <div className='column two wide' onClick={editDoneClick} >
+        <div className='column one wide' onClick={editDoneClick} >
             <button type='submit' className='ui button circular icon green'>                
                 <i className="check circle icon white"></i>
             </button>
