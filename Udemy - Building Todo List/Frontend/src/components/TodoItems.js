@@ -17,7 +17,7 @@ const TodoItems = (props) => {
         const key = event.keyCode;
         
         //Key is Enter || Exit
-        if(key===13)
+        if(key===13 && tempValue.title.trim()!=='' && tempValue.description.trim()!=='' )
         {
             setValue(tempValue);
             setIsEditing(false);
@@ -27,6 +27,7 @@ const TodoItems = (props) => {
         }
     }
     const inputChangeHandler = (event)  => {
+        
         if(event.target.name==='title'){
             setTempValue({
                 ...tempValue,
