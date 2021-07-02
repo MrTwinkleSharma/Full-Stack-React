@@ -5,7 +5,7 @@ const TodoItems = (props) => {
     const [isEditing, setIsEditing] = useState();
     const [value, setValue] = useState(props);
     const [tempValue, setTempValue] = useState(props);
-    const [isCompleted, setIsCompleted] = useState();
+    const [isCompleted, setIsCompleted] = useState(props.isCompleted);
 
     const editRequestClick = ()  => {
         setIsEditing(true);
@@ -27,10 +27,19 @@ const TodoItems = (props) => {
         }
     }
     const inputChangeHandler = (event)  => {
-        setTempValue({
-            ...value,
-            title:event.target.value
-        })
+        if(event.target.name==='title'){
+            setTempValue({
+                ...tempValue,
+                title:event.target.value
+            });
+        
+        }
+        if(event.target.name==='description'){
+            setTempValue({
+                ...tempValue,
+                description:event.target.value
+            });
+        }
     }
 
     const completionHandler = ()  => {
@@ -48,6 +57,13 @@ const TodoItems = (props) => {
                     onKeyDown={handleEnterAndESC}
                     autoFocus={true}
                     value={tempValue.title}
+                    name='title'
+                />
+                <input 
+                    onChange={inputChangeHandler}
+                    onKeyDown={handleEnterAndESC}
+                    value={tempValue.description}
+                    name='description'
                 />
             </div>           
         </div>
