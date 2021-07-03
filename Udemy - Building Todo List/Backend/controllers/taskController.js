@@ -31,7 +31,8 @@ const postTask = async (req, res) =>{
 
 const patchTask = async (req, res) =>{
     const {taskId} = req.params;
-    const {title, description} = req.body;
+    const {title, description, isCompleted} = req.body;
+    
     let existingTask;
     try{
         existingTask = await TaskModel.findById(taskId);
@@ -45,8 +46,15 @@ const patchTask = async (req, res) =>{
         res.status(404).json({success:false, message:"No task found with given id!"});
     }
     try{
+        if(title)
         existingTask.title = title;
+       
+        if(description)
         existingTask.description = description;
+
+        if(isCompleted)
+        existingTask.isCompleted = isCompleted;
+
         await existingTask.save();
     }
     catch(err){

@@ -57,7 +57,19 @@ const TodoItems = (props) => {
     }
 
     const completionHandler = ()  => {
-        setIsCompleted(prevState=>!prevState);
+        async function patchRequest(){
+            await axios({
+            method: "PATCH",
+            url: `http://localhost:5000/todo/${props.id}`,
+            data: JSON.stringify({isCompleted:!isCompleted}),
+            headers: { "Content-Type": "application/json" },
+          }).then(()=>{
+            setIsCompleted(prevState=>!prevState);
+        }).catch((err)=>{
+            console.log(err);
+          })
+        }patchRequest();        
+            
     }
 
     const taskDeleteHandler = ()  => {
