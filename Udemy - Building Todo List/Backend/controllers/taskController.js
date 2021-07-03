@@ -1,8 +1,14 @@
-const dummyList = require('../dummyList.js');
 const TaskModel = require('../models/TaskModel.js');
 
 const getTasks = async (req, res) =>{
-    const list = await TaskModel.find();
+    let list;
+    try{
+    list = await TaskModel.find();
+    }
+    catch(err){
+        // throw new Error("Couldn't Find the Todo List due to Server Problem.");
+        res.status(500).json({success:false, message:"Couldn't add the Todo in List due to Server Problem."});
+    }
     res.status(200).json({success:true, data:list})
 }
 
@@ -13,37 +19,64 @@ const postTask = async (req, res) =>{
         description,
         isCompleted:false
     });
-
-    await task.save();
+    try{
+        await task.save();
+    }
+    catch(err){
+        // throw new Error("Couldn't Find the Todo List due to Server Problem.");
+        res.status(500).json({success:false, message:"Couldn't add the Todo in List due to Server Problem."});   
+    }
     res.status(201).json({success:true, data:task});
 }
 
 const patchTask = async (req, res) =>{
     const {taskId} = req.params;
     const {title, description} = req.body;
-    
-    const existingTask = await TaskModel.findById(taskId);
+    let existingTask;
+    try{
+        existingTask = await TaskModel.findById(taskId);
+    }
+    catch(err){
+        res.status(500).json({success:false, message:"Couldn't update the Todo in List due to Server Problem."});
+    }
+
     if(!existingTask)
     {
         res.status(404).json({success:false, message:"No task found with given id!"});
     }
-    existingTask.title = title;
-    existingTask.description = description;
-    
+    try{
+        existingTask.title = title;
+        existingTask.description = description;
+        await existingTask.save();
+    }
+    catch(err){
+        res.status(500).json({success:false, message:"Couldn't update the Todo in List due to Server Problem."});
+    }
+
     
     res.status(200).json({success:true, data:existingTask}); 
 }
 
 const deleteTask = async (req, res) =>{
     const {taskId} = req.params;
-
-    const existingTask = await TaskModel.findById(taskId);
+    let existingTask;
+    try{
+    existingTask = await TaskModel.findById(taskId);
+    }
+    catch(err){
+        res.status(500).json({success:false, message:"Couldn't Delete the Todo in List due to Server Problem."});
+    }
     if(!existingTask)
     {
         res.status(404).json({success:false, message:"No task found with given id!"});
     }
-    await existingTask.remove();
-    
+    try{
+        await existingTask.remove();
+    }
+    catch(err){
+        res.status(500).json({success:false, message:"Couldn't Delete the Todo in List due to Server Problem."});
+    }
+
     res.status(200).json({success:true, message:"Task deleted Successfully!"}); 
 }
 
