@@ -1,9 +1,9 @@
 import { useState } from "react";
+import axios from 'axios';
 
 
 const TodoItems = (props) => {
     const [isEditing, setIsEditing] = useState();
-    const [value, setValue] = useState(props);
     const [tempValue, setTempValue] = useState(props);
     const [isCompleted, setIsCompleted] = useState(props.isCompleted);
 
@@ -19,7 +19,14 @@ const TodoItems = (props) => {
         //Key is Enter || Exit
         if(key===13 && tempValue.title.trim()!=='' && tempValue.description.trim()!=='' )
         {
-            setValue(tempValue);
+            async function patchRequest(){
+                await axios({
+                method: "PATCH",
+                url: `http://localhost:5000/todo/${props.id}`,
+                data: JSON.stringify(tempValue),
+                headers: { "Content-Type": "application/json" },
+              })
+            }patchRequest();
             setIsEditing(false);
         }
         if(key===27){
@@ -86,9 +93,9 @@ const TodoItems = (props) => {
                 <div className="item">
                     <div className="content" style={(isCompleted) ? {color:'green'} : {} }>
                         <div className={"ui header" + (isCompleted) ? " green" : ""}>
-                        {value.title}
+                        {props.title}
                         </div>
-                        {value.description}
+                        {props.description}
                     </div>
                 </div>
             </div>
