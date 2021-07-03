@@ -52,7 +52,7 @@ const patchTask = async (req, res) =>{
         if(description)
         existingTask.description = description;
 
-        if(isCompleted)
+        if(isCompleted==false || isCompleted==true)
         existingTask.isCompleted = isCompleted;
 
         await existingTask.save();

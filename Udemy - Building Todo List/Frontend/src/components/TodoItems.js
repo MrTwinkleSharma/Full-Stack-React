@@ -37,6 +37,7 @@ const TodoItems = (props) => {
         }
         if(key===27){
             setIsEditing(false);
+            setTempValue(props);      
         }
     }
     const inputChangeHandler = (event)  => {
@@ -77,7 +78,8 @@ const TodoItems = (props) => {
         props.deleteTask(props.id);      
     }
 
-    return(
+    return(<>
+     
     <div className='row' >
         {isEditing ?
         <>
@@ -143,6 +145,7 @@ const TodoItems = (props) => {
         </>
         }
     </div>
+    </>
     
 )
 

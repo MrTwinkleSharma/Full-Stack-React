@@ -43,7 +43,7 @@ const Form = (props) =>{
                     <input type='text' name='title' placeholder='Enter some task title to do!' value={task.title} onChange={handleTaskInputChange}/>
                 </div>
                 <div className='column five wide'>
-                    <input type='text' name='description' placeholder='Enter some task descritpion to do!' value={task.description} onChange={handleTaskInputChange}/>
+                    <input type='text' name='description' placeholder='Enter some task description!' value={task.description} onChange={handleTaskInputChange}/>
                 </div>
                 <div className='column one wide'> 
                     <button type='submit' className='ui button circular icon green'><i className='plus icon white' ></i></button>

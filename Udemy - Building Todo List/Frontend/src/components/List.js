@@ -6,7 +6,9 @@ const List = (props) => {
     if(props.list.length===0)
     {
         return <div className='ui grid center aligned'>
-                No items are Found!
+                <div className='row'>
+                    <div className='column twelve wide' style={{border:'1px solid black' }}> No items are Found!</div>
+                </div>
             </div>
     }
 
