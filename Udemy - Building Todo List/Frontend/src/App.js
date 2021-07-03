@@ -26,10 +26,14 @@ function App() {
       url: "http://localhost:5000/todo",
       data: JSON.stringify(task),
       headers: { "Content-Type": "application/json" },
+    }).then(()=>{
+      setListChanged(prevState=>!prevState);
+    }).catch((err)=>{
+      console.log(err);
     })
-    }postRequest();
-    setListChanged(prevState=>!prevState);
 
+    }postRequest();
+    
   }
 
   const deleteTask = (taskId)=>{
@@ -39,9 +43,13 @@ function App() {
       method: "DELETE",
       url: `http://localhost:5000/todo/${taskId}`,
       headers: { "Content-Type": "application/json" },
+    }).then(()=>{
+      setListChanged(prevState=>!prevState);
+    }).catch((err)=>{
+      console.log(err);
     })
-    }deleteRequest();
-    setListChanged(prevState=>!prevState);
+    }
+    deleteRequest();
   }
 
   return<>
@@ -62,7 +70,7 @@ function App() {
         <p></p>
         </div>
         :
-        <List list={list} deleteTask={deleteTask}/>
+        <List list={list} deleteTask={deleteTask} setListChanged={setListChanged}/>
         }
         </div>
       

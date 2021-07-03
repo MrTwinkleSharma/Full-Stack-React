@@ -9,7 +9,7 @@ const getTasks = async (req, res) =>{
         // throw new Error("Couldn't Find the Todo List due to Server Problem.");
         res.status(500).json({success:false, message:"Couldn't add the Todo in List due to Server Problem."});
     }
-    res.status(200).json({success:true, data:list})
+    res.status(200).json({success:true, data:list.map(listItem =>listItem.toObject({getters:true}))})
 }
 
 const postTask = async (req, res) =>{

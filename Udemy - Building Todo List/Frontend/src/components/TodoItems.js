@@ -25,9 +25,15 @@ const TodoItems = (props) => {
                 url: `http://localhost:5000/todo/${props.id}`,
                 data: JSON.stringify(tempValue),
                 headers: { "Content-Type": "application/json" },
+              }).then(()=>{
+                setIsEditing(false);
+                props.setListChanged(prevState=>!prevState);
+            }).catch((err)=>{
+                console.log(err);
               })
             }patchRequest();
-            setIsEditing(false);
+           
+           
         }
         if(key===27){
             setIsEditing(false);
