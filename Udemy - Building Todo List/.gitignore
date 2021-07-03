@@ -2,4 +2,6 @@
 
 # dependencies
 node_modules/
-Backend/nodemon.json
+
+
+/Backend/nodemon.json

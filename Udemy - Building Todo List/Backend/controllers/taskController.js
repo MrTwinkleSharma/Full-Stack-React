@@ -1,6 +1,7 @@
 const dummyList = require('../dummyList.js');
 
 const getTasks = (req, res) =>{
+    
     res.status(200).json({success:true, data:dummyList})
 }
 

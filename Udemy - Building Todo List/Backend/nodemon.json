@@ -1,7 +1,0 @@
-{
-  "env":{
-      "DB_USER":"MrTwinkleSharma",
-      "DB_PASS":"Twinkle@451",
-      "DB_NAME":"todolistDB"
-  }
-}
